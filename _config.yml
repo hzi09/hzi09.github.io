@@ -323,3 +323,10 @@ defaults:
       comments: # true
       share: true
       related: true
+
+    # 카테고리
+  - scope:
+      path: ""  # 모든 페이지에 적용
+    values:
+      sidebar:
+        nav : "docs"
