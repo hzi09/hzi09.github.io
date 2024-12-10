@@ -13,15 +13,19 @@ main:
 
 
 docs :
+  - title : "🗂️Note"
+    children : 
+      - title : "BLOG"
+        url : /ategories/blog
+        
   - title : "🗂️Python"
     children :
-      - title : "Python 자습서"
+      - title : "Python 공부기록"
         url : /categories/Python
-
-
 
   - title : "🗂️Coding Test"
     children : 
       - title : "BOJ"
-        url : /categories/BOJ
+        url : /categories/boj
       - title : "Programmers"
+        url : /categories/programmers
