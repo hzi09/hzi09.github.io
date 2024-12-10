@@ -16,8 +16,8 @@ docs :
   - title : "🗂️Note"
     children : 
       - title : "BLOG"
-        url : /ategories/blog
-        
+        url : /categories/blog
+
   - title : "🗂️Python"
     children :
       - title : "Python 공부기록"
