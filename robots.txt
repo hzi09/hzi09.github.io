@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hzi09.github.io/sitemap.xml
