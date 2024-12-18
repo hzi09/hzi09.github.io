@@ -17,6 +17,8 @@ docs :
     children : 
       - title : "BLOG"
         url : /categories/blog
+      - title : "TIL/WIL"
+        url : /categories/ilearn
 
   - title : "🗂️Python"
     children :
