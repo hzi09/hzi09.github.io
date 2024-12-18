@@ -18,7 +18,7 @@ docs :
       - title : "BLOG"
         url : /categories/blog
         category : BLOG
-      - title : "TIL&WIL"
+      - title : "TIL"
         url : /categories/til
         category : TIL
 
