@@ -17,7 +17,7 @@ types: posts
 <div class="notice--info">{{ notice-2 | markdownify }}</div>
 
 
-{% assign posts = site.categories['boj'] %}
+{% assign posts = site.categories.BOJ %}
 {% for post in posts %}
  {% include archive-single.html type=page.entries_layout %} 
 {% endfor %}

@@ -17,17 +17,22 @@ docs :
     children : 
       - title : "BLOG"
         url : /categories/blog
+        category : BLOG
       - title : "TIL&WIL"
-        url : /categories/TIL
+        url : /categories/til
+        category : TIL
 
   - title : "🗂️Python"
     children :
       - title : "Python 공부기록"
-        url : /categories/python
+        url : /categories/python_study
+        category : Python_study
 
   - title : "🗂️Coding Test"
     children : 
       - title : "BOJ"
         url : /categories/boj
+        category : BOJ
       - title : "Programmers"
         url : /categories/programmers
+        category : Programmers
