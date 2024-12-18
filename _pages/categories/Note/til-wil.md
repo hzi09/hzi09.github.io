@@ -1,5 +1,5 @@
 ---
-title: "TIL/WIL"
+title: "TIL&WIL"
 layout: archive
 permalink: /categories/ilearn
 author_profile: true
