@@ -21,7 +21,7 @@ docs :
   - title : "🗂️Python"
     children :
       - title : "Python 공부기록"
-        url : /categories/Python
+        url : /categories/python
 
   - title : "🗂️Coding Test"
     children : 
