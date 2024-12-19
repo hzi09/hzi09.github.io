@@ -1,7 +1,7 @@
 ---
 title: "TIL"
 layout: archive
-permalink: /categories/TIL
+permalink: /categories/til
 author_profile: true
 types: posts
 ---
