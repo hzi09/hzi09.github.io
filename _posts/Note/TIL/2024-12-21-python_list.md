@@ -8,6 +8,8 @@ tags:
     - 내일배움캠프
     - 내배캠
     - 스파르타내일배움캠프
+    - Python
+    - 리스트
 
 toc: True
 toc_sticky: True
