@@ -1,5 +1,5 @@
 ---
-title:  "[TIL]내일배움캠프 25일차_[Python] 재귀함수(Recursion Function)" 
+title:  "[TIL] 내일배움캠프 25일차_[Python] 재귀함수(Recursion Function)" 
 
 categories: 
     - TIL

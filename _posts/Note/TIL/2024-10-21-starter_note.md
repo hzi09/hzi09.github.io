@@ -1,5 +1,5 @@
 ---
-title:  "[TIL] 241021_스타터노트" 
+title:  "[TIL] 내일배움캠프 사전캠프 1일차_[Start] 스타터노트" 
 
 categories: 
     - TIL

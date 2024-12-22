@@ -1,5 +1,5 @@
 ---
-title:  "[TIL]내일배움캠프 27일차_[Python] 리스트(List)" 
+title:  "[TIL] 내일배움캠프 27일차_[Python] 리스트(List)" 
 
 categories: 
     - TIL
