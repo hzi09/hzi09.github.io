@@ -5,3 +5,5 @@ gem "minimal-mistakes-jekyll"
 
 # Dependency Error: Yikes!
 gem "kramdown-parser-gfm"
+
+gem 'jekyll-sitemap'
