@@ -27,12 +27,9 @@ docs :
       - title : "Python 공부기록"
         url : /categories/python_study
         category : Python_study
-
-  - title : "🗂️Coding Test"
-    children : 
       - title : "BOJ"
-        url : /categories/boj
-        category : BOJ
+        url : /categories/python_boj
+        category : Python_BOJ
       - title : "Programmers"
-        url : /categories/programmers
-        category : Programmers
+        url : /categories/python_programmers
+        category : Python_Programmers
