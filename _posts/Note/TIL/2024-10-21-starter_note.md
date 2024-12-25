@@ -4,7 +4,8 @@ title:  "[TIL] 내일배움캠프 사전캠프 1일차_[Start] 스타터노트"
 categories: 
     - TIL
 tags: 
-    - [TIL]
+    - TIL
+    - 내일배움캠프
 
 toc: True
 toc_sticky: True

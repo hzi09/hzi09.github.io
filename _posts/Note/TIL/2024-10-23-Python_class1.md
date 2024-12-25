@@ -6,8 +6,6 @@ categories:
 tags: 
     - TIL
     - 내일배움캠프
-    - 내배캠
-    - 스파르타내일배움캠프
     - Python
 
 toc: True
