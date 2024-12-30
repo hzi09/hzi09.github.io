@@ -1,5 +1,5 @@
 ---
-title:  "[TIL] 내일배움캠프 30일차_[Python] 머신러닝 알고리즘" 
+title:  "[TIL] 내일배움캠프 30일차_[ML] 머신러닝 알고리즘" 
 
 categories: 
     - TIL
