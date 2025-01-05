@@ -33,3 +33,12 @@ docs :
       - title : "Programmers"
         url : /categories/python_programmers
         category : Python_Programmers
+
+  - title : "🗂️Git"
+    children :
+      - title : "Git 공부기록"
+        url : /categories/git_study
+        category : Git_Study
+      - title : "GitHub Page"
+        url : /categories/github_page
+        category : GitHub_Page
