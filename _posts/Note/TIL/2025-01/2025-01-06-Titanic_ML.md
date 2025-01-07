@@ -1,5 +1,5 @@
 ---
-title:  "[TIL] 내일배움캠프 42일차_[ML] 타이타닉 데이터를 사용한 머신러닝 " 
+title:  "[TIL] 내일배움캠프 42일차_[ML] Titanic 데이터를 사용한 머신러닝(1)" 
 
 categories: 
     - TIL
