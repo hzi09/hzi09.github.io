@@ -168,10 +168,10 @@ toc_sticky: True
 
 ## 5. 폼 태그
 - 사용자로부터 데이터를 입력받을 때 사용
-  - action: 데이터를 보낼 URL
-  - method: 데이터 전송 방식 (GET 또는 POST)
+  - `action`: 데이터를 보낼 URL
+  - `method`: 데이터 전송 방식 (`GET` 또는 `POST`)
 
-```html
+```HTML
 <form action="/submit" method="post">
     <label for="name">이름:</label>
     <input type="text" id="name" name="name">
