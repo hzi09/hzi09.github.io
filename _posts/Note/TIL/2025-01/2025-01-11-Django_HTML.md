@@ -170,6 +170,7 @@ toc_sticky: True
 - 사용자로부터 데이터를 입력받을 때 사용
   - action: 데이터를 보낼 URL
   - method: 데이터 전송 방식 (GET 또는 POST)
+
 ```html
 <form action="/submit" method="post">
     <label for="name">이름:</label>
@@ -177,6 +178,8 @@ toc_sticky: True
     <button type="submit">제출</button>
 </form>
 ```
+
+<br>
 
 ## 6. 표(Table) 태그
 - 데이터를 표로 정리할 때 사용
