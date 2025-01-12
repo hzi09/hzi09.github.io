@@ -25,21 +25,21 @@ toc_sticky: True
 
 ### HTML 문서의 기본 구조
 - HTML 문서는 아래와 같은 기본 구조를 가짐
-    ```html
-    <!DOCTYPE html> <!-- HTML5 문서임을 선언 -->
-    <html lang="ko"> <!-- 언어 설정 -->
-    <head>
-        <meta charset="UTF-8"> <!-- 문서의 문자 인코딩 설정 -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 웹 설정 -->
-        <title>문서 제목</title> <!-- 브라우저 탭에 표시될 제목 -->
-    </head>
-    <body>
-        <!-- 본문 내용 -->
-        <h1>HTML 기초 문법</h1>
-        <p>HTML은 HyperText Markup Language의 약자입니다.</p>
-    </body>
-    </html>   
-    ```
+```html
+<!DOCTYPE html> <!-- HTML5 문서임을 선언 -->
+<html lang="ko"> <!-- 언어 설정 -->
+<head>
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 웹 설정 -->
+    <title>문서 제목</title> <!-- 브라우저 탭에 표시될 제목 -->
+</head>
+<body>
+    <!-- 본문 내용 -->
+    <h1>HTML 기초 문법</h1>
+    <p>HTML은 HyperText Markup Language의 약자입니다.</p>
+</body>
+</html>   
+```
 
 <br>
 
@@ -48,11 +48,11 @@ toc_sticky: True
 ### 제목 태그
 - 제목을 표시할 때 사용
 - `<h1>`은 가장 큰 제목, `<h6>`은 가장 작은 제목
-    ```html
-    <h1>제목 1</h1>
-    <h2>제목 2</h2>
-    <h3>제목 3</h3>
-    ```
+```html
+<h1>제목 1</h1>
+<h2>제목 2</h2>
+<h3>제목 3</h3>
+```
 
 <h1>제목 1</h1>
 <h2>제목 2</h2>
@@ -61,10 +61,10 @@ toc_sticky: True
 
 ### 문단 태그
 - 문단을 작성할 때 사용
-    ```html
-    <p>이것은 문단입니다.</p>
-    <p>HTML은 간단한 마크업 언어입니다.</p>
-    ```
+```html
+<p>이것은 문단입니다.</p>
+<p>HTML은 간단한 마크업 언어입니다.</p>
+```
 
 <p>이것은 문단입니다.</p>
 <p>HTML은 간단한 마크업 언어입니다.</p>   
@@ -72,13 +72,13 @@ toc_sticky: True
 
 ### 리스트 태그
 - 순서 없는 리스트 : `<ul>`과 `<li>`사용
-    ```html
-    <ul>
-        <li>사과</li>
-        <li>바나나</li>
-        <li>체리</li>
-    </ul>
-    ```
+```html
+<ul>
+    <li>사과</li>
+    <li>바나나</li>
+    <li>체리</li>
+</ul>
+```
 
 
 <ul>
@@ -89,13 +89,13 @@ toc_sticky: True
 <hr> 
 
 - 순서 있는 리스트 : `<ol>`과 `<li>` 사용
-    ```html
-    <ol>
-        <li>첫 번째</li>
-        <li>두 번째</li>
-        <li>세 번째</li>
-    </ol>
-    ```
+```html
+<ol>
+    <li>첫 번째</li>
+    <li>두 번째</li>
+    <li>세 번째</li>
+</ol>
+```
 
 
 <ol>
@@ -171,7 +171,7 @@ toc_sticky: True
   - `action`: 데이터를 보낼 URL
   - `method`: 데이터 전송 방식 (`GET` 또는 `POST`)
 
-```HTML
+```html
 <form action="/submit" method="post">
     <label for="name">이름:</label>
     <input type="text" id="name" name="name">
