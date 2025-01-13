@@ -165,6 +165,7 @@ footer:
 include:
   - .htaccess
   - _pages
+  - sitemap.xml
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -259,7 +260,7 @@ pagination:
 # Plugins (previously gems:)
 plugins:
   - jekyll-paginate
-  - jekyll-sitemap
+  # - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
