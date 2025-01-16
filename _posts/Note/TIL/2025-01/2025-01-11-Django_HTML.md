@@ -25,7 +25,10 @@ toc_sticky: True
 
 ### HTML 문서의 기본 구조
 - HTML 문서는 아래와 같은 기본 구조를 가짐
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <!DOCTYPE html> <!-- HTML5 문서임을 선언 -->
 <html lang="ko"> <!-- 언어 설정 -->
 <head>
@@ -39,7 +42,9 @@ toc_sticky: True
     <p>HTML은 HyperText Markup Language의 약자입니다.</p>
 </body>
 </html>   
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <br>
 
@@ -48,11 +53,16 @@ toc_sticky: True
 ### 제목 태그
 - 제목을 표시할 때 사용
 - `<h1>`은 가장 큰 제목, `<h6>`은 가장 작은 제목
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <h1>제목 1</h1>
 <h2>제목 2</h2>
 <h3>제목 3</h3>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <h1>제목 1</h1>
 <h2>제목 2</h2>
@@ -61,10 +71,15 @@ toc_sticky: True
 
 ### 문단 태그
 - 문단을 작성할 때 사용
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <p>이것은 문단입니다.</p>
 <p>HTML은 간단한 마크업 언어입니다.</p>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <p>이것은 문단입니다.</p>
 <p>HTML은 간단한 마크업 언어입니다.</p>   
@@ -72,13 +87,18 @@ toc_sticky: True
 
 ### 리스트 태그
 - 순서 없는 리스트 : `<ul>`과 `<li>`사용
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <ul>
     <li>사과</li>
     <li>바나나</li>
     <li>체리</li>
 </ul>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 
 <ul>
@@ -89,13 +109,18 @@ toc_sticky: True
 <hr> 
 
 - 순서 있는 리스트 : `<ol>`과 `<li>` 사용
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <ol>
     <li>첫 번째</li>
     <li>두 번째</li>
     <li>세 번째</li>
 </ol>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 
 <ol>
@@ -110,9 +135,14 @@ toc_sticky: True
 - 링크를 생성할 때 `<a>` 태그를 사용
   - `href`: 링크 주소
   - `target="_blank"`: 새 탭에서 열기
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <a href="https://www.google.com" target="_blank">구글로 이동</a>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <a href="https://www.google.com" target="_blank">구글로 이동</a>
 
@@ -124,9 +154,14 @@ toc_sticky: True
   - src: 이미지 경로
   - alt: 이미지가 로드되지 않을 때 표시할 텍스트
   - width/height: 이미지 크기 조절
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <img src="image.jpg" alt="이미지 설명" width="300">
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <hr>
 
@@ -134,11 +169,15 @@ toc_sticky: True
 ### 강조 태그
 - 텍스트를 강조하거나 스타일을 추가할 때 사용
 
-```html
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <strong>굵게 표시</strong>
 <em>기울임 표시</em>
 <u>밑줄 표시</u>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <strong>굵게 표시</strong>
 <em>기울임 표시</em>
@@ -150,19 +189,29 @@ toc_sticky: True
 ## 3. HTML 속성 (Attributes)
 - HTML 태그에는 속성을 추가하여 태그의 동작이나 스타일을 정의할 수 있음
 - 속성은 `속성이름="값"` 형식으로 작성
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <a href="https://www.example.com" target="_blank">링크</a>
 <img src="logo.png" alt="로고 이미지">
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <br>
 
 ## 4. 주석
 - HTML에서 주석은 `<!--`와 `-->` 사이에 작성
 - 브라우저에 표시되지 않음
-```html
+
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <!-- 이 부분은 주석입니다 -->
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <br>
 
@@ -171,13 +220,17 @@ toc_sticky: True
   - `action`: 데이터를 보낼 URL
   - `method`: 데이터 전송 방식 (`GET` 또는 `POST`)
 
-```html
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <form action="/submit" method="post">
     <label for="name">이름:</label>
     <input type="text" id="name" name="name">
     <button type="submit">제출</button>
 </form>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <br>
 
@@ -188,7 +241,9 @@ toc_sticky: True
   - `<th>`: 제목 셀
   - `<td>`: 데이터 셀
 
-```html
+<div style="margin-left: 2em;">
+{% highlight html %}
+{% raw %}
 <table border="1">
     <tr>
         <th>이름</th>
@@ -201,7 +256,9 @@ toc_sticky: True
         <td>개발자</td>
     </tr>
 </table>
-```
+{% endraw %}
+{% endhighlight %}
+</div>
 
 <table border="1">
     <tr>
