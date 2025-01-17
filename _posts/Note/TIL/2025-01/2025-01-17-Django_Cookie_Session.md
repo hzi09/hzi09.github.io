@@ -1,5 +1,5 @@
 ---
-title:  "[TIL] 내일배움캠프 00일차_[Django] 쿠키(Cookie)와 세션(Session)" 
+title:  "[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)" 
 
 categories: 
     - TIL
