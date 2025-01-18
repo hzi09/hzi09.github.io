@@ -6,6 +6,9 @@ categories:
 tags: 
     - TIL
     - 내일배움캠프
+    - Django
+    - Cookie
+    - Session
 
 
 toc: True
