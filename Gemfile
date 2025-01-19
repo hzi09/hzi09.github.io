@@ -7,3 +7,4 @@ gem "minimal-mistakes-jekyll"
 gem "kramdown-parser-gfm"
 
 gem 'jekyll-sitemap'
+gem 'jekyll-feed'
