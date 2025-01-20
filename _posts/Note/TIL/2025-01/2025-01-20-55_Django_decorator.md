@@ -6,7 +6,8 @@ categories:
 tags: 
     - TIL
     - 내일배움캠프
-
+    - Django
+    - 데코레이터
 
 toc: True
 toc_sticky: True
