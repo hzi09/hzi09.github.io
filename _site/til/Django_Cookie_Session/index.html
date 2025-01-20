@@ -1,0 +1,994 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session) | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)">
+<meta property="og:url" content="https://hzi09.github.io/til/Django_Cookie_Session/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-01-17T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/Django_Cookie_Session/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2025-01-17T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/Django_Cookie_Session/" itemprop="url">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#http의-특징">HTTP의 특징</a></li><li><a href="#쿠키cookie">🍪쿠키(Cookie)</a><ul><li><a href="#쿠키란">쿠키란?</a></li><li><a href="#쿠키의-특징">쿠키의 특징</a></li><li><a href="#쿠기의-활용-예시">쿠기의 활용 예시</a></li></ul></li><li><a href="#세션session">세션(Session)</a><ul><li><a href="#세션이란">세션이란?</a></li><li><a href="#세션의-특징">세션의 특징</a></li></ul></li><li><a href="#쿠키와-세션의-비교">쿠키와 세션의 비교</a></li><li><a href="#활용--로그인-유지-기능-구현">활용 : 로그인 유지 기능 구현</a><ul><li><a href="#쿠키-생성">쿠키 생성</a></li><li><a href="#쿠키-읽기">쿠키 읽기</a></li><li><a href="#django-예제-코드">Django 예제 코드</a></li></ul></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="http의-특징">HTTP의 특징</h2>
+
+<ul>
+  <li>HTTP는 상태를 유지하지 않는(stateless) 프로토콜</li>
+  <li>따라서, 사용자가 로그인 시 입력한 아이디와 비밀번호 정보는 HTTP 통신 중 POST 방식으로 서버에 전달되지만, 이 정보는 저장되지 않음</li>
+  <li>이를 해결하기 위해 로그인 유지 기능이 필요하며, 이를 구현하는 방법으로 <strong>쿠키(Cookie)</strong>와 <strong>세션(Session)</strong>을 사용</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="쿠키cookie">🍪쿠키(Cookie)</h2>
+<h3 id="쿠키란">쿠키란?</h3>
+<ul>
+  <li>쿠키는 클라이언트(웹 브라우저) 로컬에 저장되는 키-값 쌍으로 이루어진 작은 데이터 파일</li>
+  <li>이를 통해 서버와 클라이언트 간 상태 정보를 유지할 수 있음</li>
+</ul>
+
+<h3 id="쿠키의-특징">쿠키의 특징</h3>
+<ul>
+  <li>만료 시점
+    <ul>
+      <li>쿠키에는 유효기간을 설정할 수 있음</li>
+      <li>브라우저가 종료되더라도 유효기간이 남아 있으면 쿠키는 유지</li>
+    </ul>
+  </li>
+  <li>구성 요소
+    <ul>
+      <li><strong>이름</strong>: 각 쿠키를 식별하는 고유 이름</li>
+      <li><strong>값</strong>: 쿠키와 관련된 데이터</li>
+      <li><strong>유효시간</strong>: 쿠키의 유지 시간</li>
+      <li><strong>도메인</strong>: 쿠키를 전송할 도메인</li>
+      <li><strong>경로</strong>: 쿠키를 전송할 경로</li>
+    </ul>
+  </li>
+  <li>용량 제한
+    <ul>
+      <li>하나의 쿠키는 최대 4KB</li>
+      <li>한 도메인당 최대 20개</li>
+      <li>전체 브라우저에서 최대 300개</li>
+    </ul>
+  </li>
+  <li>동작 방식
+    <ol>
+      <li>클라이언트가 페이지 요청</li>
+      <li>서버가 쿠키 생성</li>
+      <li>HTTP 응답 헤더에 쿠키 포함</li>
+      <li>브라우저가 쿠키를 저장</li>
+      <li>같은 요청 시 HTTP 헤더에 쿠키 포함</li>
+      <li>서버는 쿠키를 읽어 상태를 업데이트</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="쿠기의-활용-예시">쿠기의 활용 예시</h3>
+<ul>
+  <li>로그인 시 “아이디와 비밀번호 저장” 여부</li>
+  <li>로그인하지 않은 상태에서 장바구니에 담긴 품목 유지</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="세션session">세션(Session)</h2>
+<h3 id="세션이란">세션이란?</h3>
+<ul>
+  <li>세션은 일정 시간 동안 같은 사용자로부터 들어오는 일련의 요청을 하나의 상태로 보고, 그 상태를 유지하는 기술</li>
+  <li>서버에서 정보를 관리하며, 클라이언트를 식별하기 위해 세션 ID를 사용</li>
+</ul>
+
+<h3 id="세션의-특징">세션의 특징</h3>
+<ul>
+  <li>만료 시점
+    <ul>
+      <li>브라우저가 종료되거나 세션 유효시간이 끝날 때</li>
+    </ul>
+  </li>
+  <li>장단점
+    <ul>
+      <li>장점 : 클라이언트 정보가 서버에 저장되어 보안에 강함</li>
+      <li>단점 : 사용자가 많아지면 서버 메모리 사용량이 증가하여 성능 저하 발생 가능</li>
+    </ul>
+  </li>
+  <li>동작 방식
+    <ol>
+      <li>클라이언트가 서버에 접속 시 세션 ID 발급</li>
+      <li>클라이언트는 세션 ID를 쿠키에 저장</li>
+      <li>이후 요청 시 세션 ID를 서버로 전달</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="쿠키와-세션의-비교">쿠키와 세션의 비교</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>항목</strong></th>
+      <th style="text-align: center"><strong>쿠키</strong></th>
+      <th style="text-align: center"><strong>세션</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>저장 위치</strong></td>
+      <td style="text-align: center">클라이언트</td>
+      <td style="text-align: center">서버</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>보안</strong></td>
+      <td style="text-align: center">상대적으로 낮음</td>
+      <td style="text-align: center">상대적으로 높음</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>속도</strong></td>
+      <td style="text-align: center">빠름</td>
+      <td style="text-align: center">느림</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>유효 시간</strong></td>
+      <td style="text-align: center">설정된 만료 시간까지 유지</td>
+      <td style="text-align: center">브라우저 종료 시 삭제 가능</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<h2 id="활용--로그인-유지-기능-구현">활용 : 로그인 유지 기능 구현</h2>
+<h3 id="쿠키-생성">쿠키 생성</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">set_cookie(name, value, max_age=None)</code></li>
+  <li>인수
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">name</code>: 쿠키 이름(필수)</li>
+      <li><code class="language-plaintext highlighter-rouge">value</code>: 저장할 값(필수)</li>
+      <li><code class="language-plaintext highlighter-rouge">max_age</code>: 쿠키 유효시간(초, 선택)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="쿠키-읽기">쿠키 읽기</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">request.COOKIES[name]</code></li>
+  <li>쿠키는 딕셔너리와 비슷한 속성을 가지며, 쿠키 데이터를 문자열로 반환</li>
+</ul>
+
+<h3 id="django-예제-코드">Django 예제 코드</h3>
+
+<h4>로그인</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># 이미 로그인 쿠키가 있는 경우 처리
+</span>    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">COOKIES</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">COOKIES</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span>  <span class="c1"># 쿠키에서 저장된 사용자 이름을 가져옴
+</span>        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">COOKIES</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>  <span class="c1"># 쿠키에서 저장된 비밀번호를 가져옴
+</span>        <span class="c1"># 사용자 인증
+</span>        <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># 인증 성공 시
+</span>            <span class="n">auth</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>  <span class="c1"># 사용자 세션 생성 및 로그인
+</span>            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">"account:home"</span><span class="p">)</span>  <span class="c1"># 홈 페이지로 리다이렉트
+</span>
+    <span class="c1"># POST 요청 처리: 로그인 폼 제출 시
+</span>    <span class="k">elif</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'username'</span><span class="p">]</span>  <span class="c1"># 입력받은 사용자 이름
+</span>        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span>  <span class="c1"># 입력받은 비밀번호
+</span>        <span class="c1"># 사용자 인증
+</span>        <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># 인증 성공 시
+</span>            <span class="n">auth</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>  <span class="c1"># 사용자 세션 생성 및 로그인
+</span>            <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="s">"account:home"</span><span class="p">)</span>  <span class="c1"># 홈 페이지로 리다이렉트
+</span>
+            <span class="c1"># 로그인 유지 체크박스가 선택된 경우 쿠키 설정
+</span>            <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'keep_login'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'TRUE'</span><span class="p">:</span>
+                <span class="n">response</span><span class="p">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>  <span class="c1"># 쿠키에 사용자 이름 저장
+</span>                <span class="n">response</span><span class="p">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">'password'</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>  <span class="c1"># 쿠키에 비밀번호 저장
+</span>            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># 인증 실패 시
+</span>            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'account/login.html'</span><span class="p">,</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="s">'Invalid credentials'</span><span class="p">})</span>
+
+    <span class="c1"># 기본 로그인 페이지 렌더링
+</span>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'account/login.html'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4>로그아웃</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># 홈 페이지 렌더링
+</span>    <span class="n">response</span> <span class="o">=</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'account/home.html'</span><span class="p">)</span>
+    <span class="c1"># 쿠키 삭제
+</span>    <span class="n">response</span><span class="p">.</span><span class="n">delete_cookie</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span>  <span class="c1"># 사용자 이름 쿠키 삭제
+</span>    <span class="n">response</span><span class="p">.</span><span class="n">delete_cookie</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>  <span class="c1"># 비밀번호 쿠키 삭제
+</span>    <span class="c1"># 사용자 로그아웃
+</span>    <span class="n">auth</span><span class="p">.</span><span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>  <span class="c1"># 홈 페이지 응답 반환
+</span></code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 191-200</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 82-83</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 심화 강의 13-14강</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />WIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘은 동생 생일이었다. 영국에 가는 중이라고…🥹 부러워.. 나는 12시간 앉아서 공부하고 있는데.. 나도 언능 취뽀해서 해외여행 다녀야지😁!! 이번주도 마무리!! 내일은 조금 쉬엄쉬엄 공부해야지😭 이번주는 유독 컨디션도 안좋고 잠도 잘 못깨는 일주일이었다. 다시 영양제 잘 챙겨야지..💊</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#cookie" class="page__taxonomy-item p-category" rel="tag">Cookie</a><span class="sep">, </span>
+    
+      <a href="/tags/#django" class="page__taxonomy-item p-category" rel="tag">Django</a><span class="sep">, </span>
+    
+      <a href="/tags/#session" class="page__taxonomy-item p-category" rel="tag">Session</a><span class="sep">, </span>
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/Django_Field/" class="pagination--pager" title="[TIL] 내일배움캠프 51일차_[Django] Model Field">이전</a>
+    
+    
+      <a href="/til/Week8_WIL/" class="pagination--pager" title="[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Field/" rel="permalink">[TIL] 내일배움캠프 51일차_[Django] Model Field
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-16T00:00:00+09:00">January 16, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

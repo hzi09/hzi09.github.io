@@ -1,0 +1,1161 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 42일차_[ML] Titanic 데이터를 사용한 머신러닝(1) | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 42일차_[ML] Titanic 데이터를 사용한 머신러닝(1)">
+<meta property="og:url" content="https://hzi09.github.io/til/Titanic_ML/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-01-06T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/Titanic_ML/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 42일차_[ML] Titanic 데이터를 사용한 머신러닝(1)">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2025-01-06T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/Titanic_ML/" itemprop="url">[TIL] 내일배움캠프 42일차_[ML] Titanic 데이터를 사용한 머신러닝(1)
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-06T00:00:00+09:00">January 6, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#타이타닉-데이터-확인">타이타닉 데이터 확인</a><ul><li><a href="#데이터-로드">데이터 로드</a></li></ul></li><li><a href="#데이터-전처리">데이터 전처리</a><ul><li><a href="#결측치-처리">결측치 처리</a></li><li><a href="#필요-없는-컬럼-제거">필요 없는 컬럼 제거</a></li><li><a href="#범주형-데이터-처리">범주형 데이터 처리</a></li><li><a href="#데이터-전처리-함수">데이터 전처리 함수</a></li></ul></li><li><a href="#데이터-분리">데이터 분리</a></li><li><a href="#모델-학습">모델 학습</a></li><li><a href="#평가">평가</a><ul><li><a href="#결과-시각화">결과 시각화</a></li></ul></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="타이타닉-데이터-확인">타이타닉 데이터 확인</h2>
+<ul>
+  <li>Passengerid: 탑승자 데이터 일련번호</li>
+  <li>survived: 생존 여부, 0 = 사망, 1 = 생존</li>
+  <li>Pclass: 티켓의 선실 등급, 1 = 일등석, 2 = 이등석, 3 = 삼등석</li>
+  <li>sex: 탑승자 성별</li>
+  <li>name: 탑승자 이름</li>
+  <li>Age: 탑승자 나이</li>
+  <li>sibsp: 같이 탑승한 형제자매 또는 배우자 인원수</li>
+  <li>parch: 같이 탑승한 부모님 또는 어린이 인원수</li>
+  <li>ticket: 티켓 번호</li>
+  <li>fare: 요금</li>
+  <li>cabin: 선실 번호</li>
+  <li>embarked: 중간 정착 항구 C = Cherbourg, Q = Queenstown, S = Southampton</li>
+</ul>
+
+<h3 id="데이터-로드">데이터 로드</h3>
+<ul>
+  <li>데이터를 알아야 머신러닝을 시작할 수 있기 때문에 데이터를 불러오고 데이터를 확인하는 과정을 거침
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+  <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'./titanic.csv'</span><span class="p">)</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="s">'Train 데이터 정보'</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">info</span><span class="p">())</span>
+  <span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>데이터 불러오기
+        <ul>
+          <li>Pandas 라이브러리의 <code class="language-plaintext highlighter-rouge">read_csv()</code>를 통해 CSV 파일의 데이터를 불러옴</li>
+        </ul>
+      </li>
+      <li>데이터 정보 확인하기
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">info()</code>를 사용하면 컬럼, Null 값이 아닌 데이터 갯수, 데이터 타입 등을 확인가능</li>
+        </ul>
+      </li>
+      <li>데이터 미리보기
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">head()</code>를 사용하면 데이터를 미리볼 수 있음!</li>
+          <li>기본값은 5개이지만 내가 셋팅한만큼 확인 가능</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>결과
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Train 데이터 정보
+  &lt;class 'pandas.core.frame.DataFrame'&gt;
+  RangeIndex: 891 entries, 0 to 890
+  Data columns (total 12 columns):
+  #   Column       Non-Null Count  Dtype  
+  ---  ------       --------------  -----  
+  0   PassengerId  891 non-null    int64  
+  1   Survived     891 non-null    int64  
+  2   Pclass       891 non-null    int64  
+  3   Name         891 non-null    object 
+  4   Sex          891 non-null    object 
+  5   Age          714 non-null    float64
+  6   SibSp        891 non-null    int64  
+  7   Parch        891 non-null    int64  
+  8   Ticket       891 non-null    object 
+  9   Fare         891 non-null    float64
+  10  Cabin        204 non-null    object 
+  11  Embarked     889 non-null    object 
+  dtypes: float64(2), int64(5), object(5)
+  memory usage: 83.7+ KB
+  None
+</code></pre></div>    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center"> </th>
+          <th style="text-align: right">PassengerId</th>
+          <th style="text-align: right">Survived</th>
+          <th style="text-align: right">Pclass</th>
+          <th style="text-align: right">Name</th>
+          <th style="text-align: right">Sex</th>
+          <th style="text-align: right">Age</th>
+          <th style="text-align: right">SibSp</th>
+          <th style="text-align: right">Parch</th>
+          <th style="text-align: right">Ticket</th>
+          <th style="text-align: right">Fare</th>
+          <th style="text-align: right">Cabin</th>
+          <th style="text-align: right">Embarked</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">0</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">Braund, Mr. Owen Harris</td>
+          <td style="text-align: right">male</td>
+          <td style="text-align: right">22.0</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">A/5 21171</td>
+          <td style="text-align: right">7.2500</td>
+          <td style="text-align: right">NaN</td>
+          <td style="text-align: right">S</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">Cumings, Mrs. John Bradley (Florence Briggs Th…</td>
+          <td style="text-align: right">female</td>
+          <td style="text-align: right">38.0</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">PC 17599</td>
+          <td style="text-align: right">71.2833</td>
+          <td style="text-align: right">C85</td>
+          <td style="text-align: right">C</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">Heikkinen, Miss. Laina</td>
+          <td style="text-align: right">female</td>
+          <td style="text-align: right">26.0</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">STON/O2. 3101282</td>
+          <td style="text-align: right">7.9250</td>
+          <td style="text-align: right">NaN</td>
+          <td style="text-align: right">S</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="데이터-전처리">데이터 전처리</h2>
+<h3 id="결측치-처리">결측치 처리</h3>
+<ul>
+  <li>Age : 평균 값으로 채우기</li>
+  <li>Cabin : N으로 채우기</li>
+  <li>Embarked : N으로 채우기</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span><span class="p">[</span><span class="s">'Age'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Age'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Age'</span><span class="p">].</span><span class="n">mean</span><span class="p">())</span>
+    <span class="n">df</span><span class="p">[</span><span class="s">'Cabin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Cabin'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="s">'N'</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s">'Embarked'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Embarked'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="s">'N'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="필요-없는-컬럼-제거">필요 없는 컬럼 제거</h3>
+<ul>
+  <li>PassengerId</li>
+  <li>Name</li>
+  <li>Ticket</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">drop_features</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'PassengerId'</span><span class="p">,</span> <span class="s">'Name'</span><span class="p">,</span> <span class="s">'Ticket'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="범주형-데이터-처리">범주형 데이터 처리</h3>
+<ul>
+  <li>Sex : 숫자형 변환</li>
+  <li>Embarked : 숫자형 변환</li>
+  <li>Cabin : 첫 번째 문자만 추출 후 숫자형 변환</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="k">def</span> <span class="nf">format_features</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span><span class="p">[</span><span class="s">'Cabin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Cabin'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">).</span><span class="nb">str</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Cabin'</span><span class="p">,</span> <span class="s">'Sex'</span><span class="p">,</span> <span class="s">'Embarked'</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+        <span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">feature</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="데이터-전처리-함수">데이터 전처리 함수</h3>
+<ul>
+  <li>위에서 만든 세개의 함수를 하나의 함수로 만들어줌
+    <ul>
+      <li>결측치 처리 함수</li>
+      <li>필요없는 컬럼 제거 함수</li>
+      <li>범주형 데이터 처리 함수</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">transform_features</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">drop_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">format_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="데이터-분리">데이터 분리</h2>
+<ul>
+  <li>머신러닝 모델로 데이터를 학습/예측하기 위해 데이터셋을 분리
+    <ul>
+      <li>사이킷런의 <code class="language-plaintext highlighter-rouge">model_selection</code> 의 <code class="language-plaintext highlighter-rouge">train_test_split</code> 함수를 활용</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">train_test_split()</code> 함수의 파라미터
+    <ul>
+      <li>test_size(기본값 : 0.25)
+        <ul>
+          <li>전체 데이터셋에서 테스트 데이터셋 크기를 얼마로 샘플링할 것인지 결정</li>
+        </ul>
+      </li>
+      <li>train_size :
+        <ul>
+          <li>전체 데이터셋에서 학습 데이터셋 크기를 얼마로 샘플링할 것인지 결정.</li>
+          <li>test_size를 주로 활용하기 때문에, 잘 쓰이지는 않음</li>
+        </ul>
+      </li>
+      <li>shuffle(기본값: True)
+        <ul>
+          <li>데이터를 분리하기 전에 데이터를 섞을지 결정하는 파라미터</li>
+          <li>데이터를 분산시켜 보다 효율적인 학습/테스트 데이터 세트를 만드는데 사용</li>
+        </ul>
+      </li>
+      <li>random_state : 난수값을 지정하면 여러 번 다시 수행해도 동일한 결과가 나오게 해줍니다.</li>
+    </ul>
+  </li>
+  <li>train_test_split의 반환 값은 튜플형태로 아래의 순서
+    <ul>
+      <li>(1) 학습 데이터셋</li>
+      <li>(2) 테스트 데이터셋</li>
+      <li>(3) 학습 데이터셋의 레이블</li>
+      <li>(4) 테스트 데이터셋</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_titanic_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Survived'</span><span class="p">]</span>
+<span class="n">X_titanic_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'Survived'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">X_titanic_df</span> <span class="o">=</span> <span class="n">transform_features</span><span class="p">(</span><span class="n">X_titanic_df</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_titanic_df</span><span class="p">,</span> <span class="n">y_titanic_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="n">X_titanic_df</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="모델-학습">모델 학습</h2>
+<ul>
+  <li>DecisionTreeClassifier</li>
+  <li>RandomForestClassifier</li>
+  <li>LogisticRegression</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="c1"># 모델 정의
+</span><span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'DecisionTree'</span><span class="p">:</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">44</span><span class="p">),</span>
+    <span class="s">'RandomForest'</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">44</span><span class="p">),</span>
+    <span class="s">'LogisticRegression'</span> <span class="p">:</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s">'liblinear'</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="평가">평가</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">evaluate_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> 정확도: </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Confusion Matrix:</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Classification Report:</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="c1"># 모델 평가
+</span><span class="n">results</span> <span class="o">=</span> <span class="n">evaluate_models</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>결과</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  DecisionTree 정확도: 0.8045
+  Confusion Matrix:
+  [[101  17]
+  [ 18  43]]
+  Classification Report:
+              precision    recall  f1-score   support
+
+          0       0.85      0.86      0.85       118
+          1       0.72      0.70      0.71        61
+
+      accuracy                           0.80       179
+  macro avg       0.78      0.78      0.78       179
+  weighted avg       0.80      0.80      0.80       179
+
+  RandomForest 정확도: 0.8436
+  Confusion Matrix:
+  [[106  12]
+  [ 16  45]]
+  Classification Report:
+              precision    recall  f1-score   support
+
+          0       0.87      0.90      0.88       118
+          1       0.79      0.74      0.76        61
+
+      accuracy                           0.84       179
+  macro avg       0.83      0.82      0.82       179
+  weighted avg       0.84      0.84      0.84       179
+
+  LogisticRegression 정확도: 0.8659
+  Confusion Matrix:
+  [[108  10]
+  [ 14  47]]
+  Classification Report:
+              precision    recall  f1-score   support
+
+          0       0.89      0.92      0.90       118
+          1       0.82      0.77      0.80        61
+
+      accuracy                           0.87       179
+  macro avg       0.85      0.84      0.85       179
+  weighted avg       0.86      0.87      0.86       179
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="결과-시각화">결과 시각화</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">results</span><span class="p">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">results</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Model Accuracy Comparison'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>결과</li>
+</ul>
+
+<p><img src="https://github.com/user-attachments/assets/8253fd63-4649-4280-96a9-fef73d19c7b6" alt="image" /></p>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 81-90</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코트카타 59-60</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 강의 17강까지</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  장고강의 들으면서 정신없지만, 혹시 나중에 어떤걸 하게 될지 모르니까 머신러닝 공부도 꾸준히 하려고.. 학습반에서 했던 내용을 정리해봤다. 반도 못하긴 했지만..🤔 공부하려고 빌려온 책도 펴봐야하는데 지금은 장고 쫓아가기도 너무 버겁다😰 하루가 40시간이면 좋겠어..</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D" class="page__taxonomy-item p-category" rel="tag">머신러닝</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2025-01-06T00:00:00+09:00">January 6, 2025</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/Euclidean_algorithm/" class="pagination--pager" title="[TIL] 내일배움캠프 41일차_[Algorithm] 유클리드 호제법(Euclidean algorithm)">이전</a>
+    
+    
+      <a href="/til/Titanic_ML2/" class="pagination--pager" title="[TIL] 내일배움캠프 42일차_[ML] Titanic 데이터를 사용한 머신러닝(2)">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

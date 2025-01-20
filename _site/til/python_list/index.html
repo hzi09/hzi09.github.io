@@ -1,0 +1,1055 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 27일차_[Python] 리스트(List) | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 27일차_[Python] 리스트(List)">
+<meta property="og:url" content="https://hzi09.github.io/til/python_list/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-12-21T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/python_list/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 27일차_[Python] 리스트(List)">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2024-12-21T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/python_list/" itemprop="url">[TIL] 내일배움캠프 27일차_[Python] 리스트(List)
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-12-21T00:00:00+09:00">December 21, 2024</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#0-리스트">0. 리스트</a></li><li><a href="#1-리스트-선언-및-요소-접근">1. 리스트 선언 및 요소 접근</a></li><li><a href="#2-리스트-연산">2. 리스트 연산</a></li><li><a href="#3-리스트-메서드">3. 리스트 메서드</a></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="0-리스트">0. 리스트</h2>
+<ul>
+  <li>순서가 있는 수정가능한 객체의 집합</li>
+  <li>수정, 삭제, 추가가 가능</li>
+  <li>
+    <p>list는 대괄호 <code class="language-plaintext highlighter-rouge">[]</code>로 작성되어지며, 내부원소는 <code class="language-plaintext highlighter-rouge">,</code>로 구분됨</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">squares</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span>  <span class="c1"># &lt;class 'list'&gt;
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="1-리스트-선언-및-요소-접근">1. 리스트 선언 및 요소 접근</h2>
+
+<h3>리스트 선언</h3>
+
+<ul>
+  <li>파이썬에서 리스트를 생성하는 방법은 <code class="language-plaintext highlighter-rouge">[]</code>에 자료를 쉼표로 구분해서 입력</li>
+  <li><code class="language-plaintext highlighter-rouge">[]</code> 내부에 넣는 자료를 <strong>요소(element)</strong>라고 하고 함
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">int_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>           <span class="c1"># int만으로 구성된 리스트
+</span><span class="n">str_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">]</span>   <span class="c1"># str만으로 구성된 리스트
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3>요소 접근</h3>
+
+<ul>
+  <li>리스트 안에 있는 요소에 접근하기 위해서는 <code class="language-plaintext highlighter-rouge">리스트[숫자]</code>를 사용한다.
+    <ul>
+      <li>여기서 <code class="language-plaintext highlighter-rouge">[]</code>안에 들어간 숫자를 <strong>인덱스(index)</strong>라고 부름</li>
+    </ul>
+  </li>
+  <li>리스트의 요소는 0부터 시작</li>
+  <li>슬라이싱(slicing)도 사용 가능
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">str_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">]</span>
+
+<span class="n">str_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1"># a
+</span><span class="n">srt_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>   <span class="c1"># d
+</span><span class="n">str_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># ['b', 'c']
+</span></code></pre></div>    </div>
+  </li>
+  <li>요소에는 다양하게 접근이 가능
+    <ul>
+      <li>대괄호 안에 음수를 넣어 뒤에서부터 요소 선택 가능(맨 끝 요소가 ‘-1’)
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="s">'강아지'</span><span class="p">,</span> <span class="s">'고양이'</span><span class="p">,</span> <span class="s">'햄스터'</span><span class="p">,</span> <span class="s">'이구아나'</span><span class="p">]</span>
+
+<span class="n">list_a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># '이구아나'
+</span><span class="n">list_a</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="c1"># '강아지'
+</span></code></pre></div>        </div>
+      </li>
+      <li>리스트 접근 연산자를 이중으로 사용 가능
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="s">'강아지'</span><span class="p">,</span> <span class="s">'고양이'</span><span class="p">,</span> <span class="s">'햄스터'</span><span class="p">,</span> <span class="s">'이구아나'</span><span class="p">]</span>
+
+<span class="n">list_a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>      <span class="c1"># '이구아나'
+</span><span class="n">list_a</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>   <span class="c1"># '아'
+</span></code></pre></div>        </div>
+      </li>
+      <li>리스트 안에 리스트 사용 가능
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list_a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+
+<span class="n">list_a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>     <span class="c1"># [1, 2, 3]
+</span><span class="n">list_a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 1
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-리스트-연산">2. 리스트 연산</h2>
+<ul>
+  <li>문자열에 적용할 수 있는 연산자는 리스트에서도 활용 가능</li>
+</ul>
+
+<h3>리스트 연결</h3>
+
+<ul>
+  <li>문자열 연결 연산자 <code class="language-plaintext highlighter-rouge">+</code>를 사용하여 두개의 리스트를 연결 가능
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">list_b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+
+<span class="n">list_a</span> <span class="o">+</span> <span class="n">list_b</span>  <span class="c1"># [1, 2, 3, 4, 5, 6, 7]
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3>리스트 반복</h3>
+
+<ul>
+  <li>문자열 반복 연산자 <code class="language-plaintext highlighter-rouge">*</code>를 사용하여 리스트를 반복 가능
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="n">list_a</span> <span class="o">*</span> <span class="mi">3</span>  <span class="c1"># [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3>리스트 길이</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">len()</code> 함수는 괄호 내부에 문자열을 넣으면 글자 수(=길이)를 세어주는 함수</li>
+  <li>리스트에도 <code class="language-plaintext highlighter-rouge">len()</code>함수를 사용할 수 있으며 괄호 내부에 리스트를 넣으면 요소의 개수를 세어줌
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">list_list_a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+  
+<span class="nb">len</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span> <span class="c1"># 4
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3-리스트-메서드">3. 리스트 메서드</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">list.append(x)</code>
+    <ul>
+      <li>리스트의 끝에 하나의 요소를 추가
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># [1, 2, 3, 4]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.extend(iterable)</code>
+    <ul>
+      <li>리스트의 끝에 반복 가능한 객체(iterable)의 모든 요소를 추가하여 확장
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">my_list</span><span class="p">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1"># [1, 2, 3, 4, 5]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.insert(i, x)</code>
+    <ul>
+      <li>리스트의 지정된 위치에 요소를 삽입</li>
+      <li>첫 번째 인자 <code class="language-plaintext highlighter-rouge">i</code>는 삽입될 위치의 <strong>인덱스</strong>를 나타냄
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># [1, 5, 2, 3]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.remove(x)</code>
+    <ul>
+      <li>리스트에서 값이 <code class="language-plaintext highlighter-rouge">x</code>와 같은 <strong>첫 번째 항목</strong>을 삭제
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># [1, 3, 2]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.pop([i])</code>
+    <ul>
+      <li>리스트의 지정된 위치의 요소를 제거하고 반환</li>
+      <li>인덱스 <code class="language-plaintext highlighter-rouge">i</code>를 지정하지 않으면, 마지막 요소를 제거하고 반환</li>
+      <li>만약 리스트가 비어있거나 인덱스 범위를 벗어나면 <code class="language-plaintext highlighter-rouge">IndexError</code> 발생
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">my_list</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 인덱스 1의 항목 제거
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>     <span class="c1"># 2
+</span><span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>  <span class="c1"># [1, 3]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.clear()</code>
+    <ul>
+      <li>리스트의 모든 요소를 제거
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>  <span class="c1"># []
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.index(x[, start[, end]])</code>
+    <ul>
+      <li>리스트에서 값이 <code class="language-plaintext highlighter-rouge">x</code>와 같은 첫 번째 요소의 인덱스를 반환</li>
+      <li>선택적 인자 <code class="language-plaintext highlighter-rouge">start</code>와 <code class="language-plaintext highlighter-rouge">end</code>를 사용하여 검색 범위 제한 가능</li>
+      <li>반환된 인덱스는 전체 리스트의 시작을 기준으로 계산</li>
+      <li>값이 존재하지 않으면 <code class="language-plaintext highlighter-rouge">ValueError</code> 발생
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    
+<span class="c1"># 첫 번째 2의 인덱스
+</span><span class="n">my_list</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># 1
+</span>
+<span class="c1"># 인덱스 2부터 검색
+</span><span class="n">my_list</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 3
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.count(x)</code>
+    <ul>
+      <li>리스트에서 값 <code class="language-plaintext highlighter-rouge">x</code>가 등장하는 횟수를 반환
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># 2의 갯수 세기
+</span><span class="n">my_list</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 3
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.sort(*, key=None, reverse=False)</code>
+    <ul>
+      <li>리스트의 항목을 정렬</li>
+      <li><code class="language-plaintext highlighter-rouge">reverse</code> : <code class="language-plaintext highlighter-rouge">True</code>로 설정하면 내림차순 정렬, 기본값은 <code class="language-plaintext highlighter-rouge">False</code>로 오름차순</li>
+      <li>원본 리스트가 변경되며, 새로운 리스트를 반환하지 않음!
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>  <span class="c1"># [1, 2, 3]
+</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>  <span class="c1"># [3, 2, 1]
+</span></code></pre></div>        </div>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">key</code> : 정렬 기준을 정의
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s">"apple"</span><span class="p">,</span> <span class="s">"banana"</span><span class="p">,</span> <span class="s">"cherry"</span><span class="p">,</span> <span class="s">"date"</span><span class="p">]</span>
+    
+<span class="c1"># 길이를 기준으로 정렬
+</span><span class="n">words</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>  <span class="c1"># ['date', 'apple', 'banana', 'cherry']
+</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="c1"># 절댓값을 기준으로 정렬
+</span><span class="n">numbers</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">abs</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>  <span class="c1"># [1, 3, 4, -6, -10]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.reverse()</code>
+    <ul>
+      <li>리스트의 요소들을 반대로 뒤집어 줌</li>
+      <li><code class="language-plaintext highlighter-rouge">list.sort()</code>와 마찬가지로 원본 리스트가 변경되며, 새로운 리스트를 반환하지 않음!
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="n">rint</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>  <span class="c1"># [3, 2, 1]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">list.copy()</code>
+    <ul>
+      <li>리스트의 복사본을 봔환
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">new_list</span> <span class="o">=</span> <span class="n">my_list</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span>  <span class="c1"># [1, 2, 3]
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<p>  리스트를 많이 쓰지만, 그때그때 검색해보면서 공부를 하다보니 모르는 것이 많았던 것 같아서 다시 한번 정리를 해보았다. 확실히 정리하고 나니까 이해가 더 잘된다.</p>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 2문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />클래스 복습</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />리스트 복습</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘은 강아지들이랑 일정이 있어서 나갔다 오느라고 공부를 거의 못했다. 그래도 최근에 백준 코딩테스트를 할 때마다 못풀겠어서 다른 문제로 넘어가서 문제를 풀고 그랬는데, 조금만 생각해도 문제를 풀 수 있게 되었다. 조금 성장해버린~</p>
+
+<p>  내일도 일정이 있어서 오전이랑 저녁에만 공부할 수 있긴한데, 그래도 코딩테스트 열심히 해야겠다. 내일은 머신러닝도 살짝 해봐야지.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a><span class="sep">, </span>
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%A6%AC%EC%8A%A4%ED%8A%B8" class="page__taxonomy-item p-category" rel="tag">리스트</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2024-12-21T00:00:00+09:00">December 21, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/Week4_WIL/" class="pagination--pager" title="[WIL] 내일배움캠프 4주차 - AI 서비스 개발 9기">이전</a>
+    
+    
+      <a href="/til/GIT_class_5/" class="pagination--pager" title="[TIL] 내일배움캠프 28일차_[Git] Github로 협업하기">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1893 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://hzi09.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://hzi09.github.io/" rel="alternate" type="text/html" /><updated>2025-01-20T20:19:58+09:00</updated><id>https://hzi09.github.io/feed.xml</id><title type="html">HyunJi’s Blog</title><subtitle>AI 공부 중✍️</subtitle><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><entry><title type="html">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE</title><link href="https://hzi09.github.io/til/SQL_variable/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE" /><published>2025-01-19T00:00:00+09:00</published><updated>2025-01-19T00:00:00+09:00</updated><id>https://hzi09.github.io/til/SQL_variable</id><content type="html" xml:base="https://hzi09.github.io/til/SQL_variable/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="mysql에서-변수-사용하기">MySQL에서 변수 사용하기</h2>
+<ul>
+  <li>MySQL에서는 프로시저, 쿼리의 동적 생성 및 실행 시 유용하게 사용할 수 있는 다양한 변수를 제공</li>
+  <li>MySQL 변수의 사용법과 함께 SET, PREPARE, EXECUTE 명령어에 대해 정리</li>
+</ul>
+
+<h3 id="1-mysql-변수의-종류">1. MySQL 변수의 종류</h3>
+<ul>
+  <li>MySQL에서 변수는 크게 세 가지로 나뉨
+    <ul>
+      <li>사용자 변수
+        <ul>
+          <li>@로 시작하며, 세션 스코프에 한정됩니다.</li>
+          <li>예: <code class="language-plaintext highlighter-rouge">SET @var_name = 'Hello';</code></li>
+        </ul>
+      </li>
+      <li>로컬 변수
+        <ul>
+          <li>저장 프로시저나 함수 내부에서 선언하여 사용</li>
+          <li>예: <code class="language-plaintext highlighter-rouge">DECLARE var_name VARCHAR(50);</code></li>
+        </ul>
+      </li>
+      <li>시스템 변수
+        <ul>
+          <li>서버의 설정과 관련된 변수</li>
+          <li>예: <code class="language-plaintext highlighter-rouge">SET GLOBAL max_connections = 1000;</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-사용자-변수-사용하기">2. 사용자 변수 사용하기</h3>
+
+<ul>
+  <li>사용자 변수는 세션 내에서 사용 가능하며, 특정 값을 저장하고 쿼리에서 재사용할 수 있음</li>
+  <li>예제
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">-- 사용자 변수 설정</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Alice'</span><span class="p">;</span>
+
+  <span class="c1">-- 사용자 변수 사용</span>
+  <span class="k">SELECT</span> <span class="o">@</span><span class="n">name</span><span class="p">;</span>  <span class="c1">-- 결과: Alice</span>
+
+  <span class="c1">-- 사용자 변수를 활용한 동적 쿼리</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="k">table_name</span> <span class="o">=</span> <span class="s1">'users'</span><span class="p">;</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="k">sql</span> <span class="o">=</span> <span class="n">CONCAT</span><span class="p">(</span><span class="s1">'SELECT * FROM '</span><span class="p">,</span> <span class="o">@</span><span class="k">table_name</span><span class="p">);</span>
+  <span class="k">PREPARE</span> <span class="n">stmt</span> <span class="k">FROM</span> <span class="o">@</span><span class="k">sql</span><span class="p">;</span>
+  <span class="k">EXECUTE</span> <span class="n">stmt</span><span class="p">;</span>
+  <span class="k">DEALLOCATE</span> <span class="k">PREPARE</span> <span class="n">stmt</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>주의
+    <ul>
+      <li>사용자 변수는 명시적으로 데이터 타입을 선언하지 않으며, 처음 할당된 값에 따라 데이터 타입이 결정</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="3-동적-sql과-prepareexecute">3. 동적 SQL과 PREPARE/EXECUTE</h3>
+
+<ul>
+  <li>MySQL에서 동적 SQL은 쿼리를 실행 시점에 동적으로 생성하여 실행할 수 있게 함</li>
+  <li>이를 위해 <code class="language-plaintext highlighter-rouge">PREPARE</code>, <code class="language-plaintext highlighter-rouge">EXECUTE</code>, <code class="language-plaintext highlighter-rouge">DEALLOCATE PREPARE</code>를 사용합니다.</li>
+</ul>
+
+<h4>PREPARE와 EXECUTE 사용법</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">PREPARE</code>: 동적 SQL 문장을 준비</li>
+  <li><code class="language-plaintext highlighter-rouge">EXECUTE</code>: 준비된 SQL 문장을 실행</li>
+  <li><code class="language-plaintext highlighter-rouge">DEALLOCATE PREPARE</code>: 준비된 문장을 삭제하여 리소스를 해제</li>
+  <li>예제: 동적 SQL 실행
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">-- 테이블 이름과 조건을 변수로 설정</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="k">table_name</span> <span class="o">=</span> <span class="s1">'orders'</span><span class="p">;</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="n">condition</span> <span class="o">=</span> <span class="s1">'status = </span><span class="se">\"</span><span class="s1">shipped</span><span class="se">\"</span><span class="s1">'</span><span class="p">;</span>
+
+  <span class="c1">-- 동적 SQL 문 생성</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="k">sql</span> <span class="o">=</span> <span class="n">CONCAT</span><span class="p">(</span><span class="s1">'SELECT * FROM '</span><span class="p">,</span> <span class="o">@</span><span class="k">table_name</span><span class="p">,</span> <span class="s1">' WHERE '</span><span class="p">,</span> <span class="o">@</span><span class="n">condition</span><span class="p">);</span>
+
+  <span class="c1">-- PREPARE, EXECUTE, DEALLOCATE 사용</span>
+  <span class="k">PREPARE</span> <span class="n">stmt</span> <span class="k">FROM</span> <span class="o">@</span><span class="k">sql</span><span class="p">;</span>
+  <span class="k">EXECUTE</span> <span class="n">stmt</span><span class="p">;</span>
+  <span class="k">DEALLOCATE</span> <span class="k">PREPARE</span> <span class="n">stmt</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="4-동적-sql에서-바인딩-변수-사용하기">4. 동적 SQL에서 바인딩 변수 사용하기</h3>
+
+<ul>
+  <li>바인딩 변수를 사용하면 동적 SQL에서 더 안전하고 효율적으로 데이터를 처리할 수 있음</li>
+  <li><code class="language-plaintext highlighter-rouge">?</code>를 사용한 바인딩 변수는 동적 SQL을 더 안전하게 만듦</li>
+  <li>예제: 바인딩 변수 사용
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">-- 변수 설정</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'pending'</span><span class="p">;</span>
+  <span class="k">SET</span> <span class="o">@</span><span class="k">sql</span> <span class="o">=</span> <span class="s1">'SELECT * FROM orders WHERE status = ?'</span><span class="p">;</span>
+
+  <span class="c1">-- PREPARE와 EXECUTE 사용</span>
+  <span class="k">PREPARE</span> <span class="n">stmt</span> <span class="k">FROM</span> <span class="o">@</span><span class="k">sql</span><span class="p">;</span>
+  <span class="k">EXECUTE</span> <span class="n">stmt</span> <span class="k">USING</span> <span class="o">@</span><span class="n">status</span><span class="p">;</span>
+  <span class="k">DEALLOCATE</span> <span class="k">PREPARE</span> <span class="n">stmt</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 211-220</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 72</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  SQL문제가 어려워지면서 모르는 것들이 나오기 시작했다.. 그래서 SQL에 대한 공부도 조금 필요하지 않을까 싶다. 뭐.. 나중에 자격증 따려면 하긴 해야니까.. 오늘도 알차게 마무리!</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="MySQL" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수</title><link href="https://hzi09.github.io/til/Python_all_any/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수" /><published>2025-01-18T00:00:00+09:00</published><updated>2025-01-18T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Python_all_any</id><content type="html" xml:base="https://hzi09.github.io/til/Python_all_any/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="any와-all-함수">any()와 all() 함수</h2>
+<ul>
+  <li>any()와 all() 함수는 Python에서 제공하는 내장 함수</li>
+  <li>주로 조건을 만족하는지를 확인하거나 데이터를 간단히 검사하는 데 사용</li>
+  <li>이 두 함수는 iterable(반복 가능한 객체)을 입력으로 받아, 조건을 만족하는지 여부를 각각 확인</li>
+</ul>
+
+<h3 id="any-함수">any() 함수</h3>
+
+<ol>
+  <li>정의
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">any()</code> 함수는 iterable의
+        <ul>
+          <li>요소 중 하나라도 참(True)인 값이 있으면 <code class="language-plaintext highlighter-rouge">True</code>를 반환</li>
+          <li>모두 거짓(False)일 경우 <code class="language-plaintext highlighter-rouge">False</code>를 반환</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>사용법
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">any</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>iterable: 리스트, 튜플, 문자열 등 반복 가능한 객체.</li>
+    </ul>
+  </li>
+  <li>동작 원리
+    <ul>
+      <li>iterable의 각 요소를 순회하며, 값이 True로 평가되는 요소를 찾음</li>
+      <li>첫 번째 True를 만나면 즉시 True를 반환</li>
+      <li>iterable에 모든 요소가 False이면 False를 반환</li>
+    </ul>
+  </li>
+  <li>예제
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># 리스트에서 하나라도 참인 값이 있는 경우
+</span> <span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">([</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">]))</span>  <span class="c1"># 출력: True
+</span>
+ <span class="c1"># 모두 거짓인 경우
+</span> <span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">([</span><span class="bp">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">""</span><span class="p">]))</span>       <span class="c1"># 출력: False
+</span>
+ <span class="c1"># 빈 iterable의 경우
+</span> <span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">([]))</span>                   <span class="c1"># 출력: False
+</span>
+ <span class="c1"># 조건에 따른 사용 예
+</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+ <span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">num</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">))</span>  <span class="c1"># 출력: True
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="all-함수">all() 함수</h3>
+
+<ol>
+  <li>정의
+    <ul>
+      <li>all() 함수는 iterable의
+        <ul>
+          <li>모든 요소가 참(True)일 경우에만 <code class="language-plaintext highlighter-rouge">True</code>를 반환</li>
+          <li>하나라도 거짓(False)인 값이 있으면 <code class="language-plaintext highlighter-rouge">False</code>를 반환</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>사용법
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">all</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>iterable: 리스트, 튜플, 문자열 등 반복 가능한 객체.</li>
+    </ul>
+  </li>
+  <li>동작 원리
+    <ul>
+      <li>iterable의 각 요소를 순회하며, 값이 False로 평가되는 요소를 찾음</li>
+      <li>첫 번째 False를 만나면 즉시 False를 반환</li>
+      <li>iterable에 모든 요소가 True이면 True를 반환</li>
+    </ul>
+  </li>
+  <li>예제
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># 리스트에서 모든 값이 참인 경우
+</span> <span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">([</span><span class="bp">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">]))</span>   <span class="c1"># 출력: True
+</span>
+ <span class="c1"># 하나라도 거짓인 경우
+</span> <span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">([</span><span class="bp">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"hello"</span><span class="p">]))</span>   <span class="c1"># 출력: False
+</span>
+ <span class="c1"># 빈 iterable의 경우
+</span> <span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">([]))</span>                   <span class="c1"># 출력: True
+</span>
+ <span class="c1"># 조건에 따른 사용 예
+</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+ <span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">))</span>  <span class="c1"># 출력: True
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="any와-all-비교">any()와 all() 비교</h2>
+<ul>
+  <li>
+    <p>any()와 all() 비교표</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">함수</th>
+          <th style="text-align: center">동작</th>
+          <th style="text-align: center">반환값</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">any()</code></td>
+          <td style="text-align: center">하나라도 참이면 <code class="language-plaintext highlighter-rouge">True</code> 반환</td>
+          <td style="text-align: center">모든 요소가 거짓이면 <code class="language-plaintext highlighter-rouge">False</code></td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><code class="language-plaintext highlighter-rouge">all()</code></td>
+          <td style="text-align: center">모두 참이어야 <code class="language-plaintext highlighter-rouge">True</code> 반환</td>
+          <td style="text-align: center">하나라도 거짓이면 <code class="language-plaintext highlighter-rouge">False</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>예제 비교</p>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>  <span class="c1"># 출력: True (1, 2는 참이므로)
+</span>  <span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>  <span class="c1"># 출력: False (0이 거짓이므로)
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="사용법">사용법</h2>
+<h3 id="1-조건-확인">1. 조건 확인</h3>
+<ul>
+  <li>데이터 중 특정 조건을 만족하는 값이 있는지 확인할 때 <code class="language-plaintext highlighter-rouge">any()</code>를 사용</li>
+  <li>모든 값이 조건을 만족하는지 확인할 때 <code class="language-plaintext highlighter-rouge">all()</code>을 사용</li>
+</ul>
+
+<h3 id="2-입력-검증">2. 입력 검증</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">user_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="s">"name"</span><span class="p">,</span> <span class="s">"email"</span><span class="p">,</span> <span class="s">""</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">input</span> <span class="o">==</span> <span class="s">""</span> <span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">user_inputs</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"모든 입력값을 채워주세요."</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">user_inputs</span> <span class="k">if</span> <span class="nb">input</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"모든 입력값이 유효합니다."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="3-중단-로직">3. 중단 로직</h3>
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">any()</code>와 <code class="language-plaintext highlighter-rouge">all()</code>은 단축 평가(short-circuit evaluation)를 지원하므로, 불필요한 계산을 줄일 수 있음</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">conditions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">]</span>
+
+  <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">conditions</span><span class="p">):</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"하나 이상의 조건이 참입니다."</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">conditions</span><span class="p">):</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"모든 조건이 참입니다."</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"하나 이상의 조건이 거짓입니다."</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="요약">요약</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">any()</code>: 하나라도 참이면 True</li>
+  <li><code class="language-plaintext highlighter-rouge">all()</code>: 모두 참이어야 True</li>
+  <li>두 함수 모두 iterable을 순회하며, 간단한 조건 확인과 검증에 유용</li>
+  <li><code class="language-plaintext highlighter-rouge">any()</code>와 <code class="language-plaintext highlighter-rouge">all()</code>은 단순하지만 강력한 도구로, 다양한 상황에서 활용할 수 있음</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 201-210</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 76</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  코딩테스트 하면서 처음 알게된 any와 all함수 잘 쓰면 코테에서 많이 사용할 수 있을 것 같다👀 오늘 공부 야무지게 하려고 했는데, 체력 이슈로 완벽하게 늦잠자고 강아지들이랑 놀다보니 하루가 다 가버렸다. 내일은 좀 공부에 몰입헤야지🥲🥲</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="Python" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)</title><link href="https://hzi09.github.io/til/Django_Cookie_Session/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)" /><published>2025-01-17T00:00:00+09:00</published><updated>2025-01-17T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Django_Cookie_Session</id><content type="html" xml:base="https://hzi09.github.io/til/Django_Cookie_Session/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="http의-특징">HTTP의 특징</h2>
+
+<ul>
+  <li>HTTP는 상태를 유지하지 않는(stateless) 프로토콜</li>
+  <li>따라서, 사용자가 로그인 시 입력한 아이디와 비밀번호 정보는 HTTP 통신 중 POST 방식으로 서버에 전달되지만, 이 정보는 저장되지 않음</li>
+  <li>이를 해결하기 위해 로그인 유지 기능이 필요하며, 이를 구현하는 방법으로 <strong>쿠키(Cookie)</strong>와 <strong>세션(Session)</strong>을 사용</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="쿠키cookie">🍪쿠키(Cookie)</h2>
+<h3 id="쿠키란">쿠키란?</h3>
+<ul>
+  <li>쿠키는 클라이언트(웹 브라우저) 로컬에 저장되는 키-값 쌍으로 이루어진 작은 데이터 파일</li>
+  <li>이를 통해 서버와 클라이언트 간 상태 정보를 유지할 수 있음</li>
+</ul>
+
+<h3 id="쿠키의-특징">쿠키의 특징</h3>
+<ul>
+  <li>만료 시점
+    <ul>
+      <li>쿠키에는 유효기간을 설정할 수 있음</li>
+      <li>브라우저가 종료되더라도 유효기간이 남아 있으면 쿠키는 유지</li>
+    </ul>
+  </li>
+  <li>구성 요소
+    <ul>
+      <li><strong>이름</strong>: 각 쿠키를 식별하는 고유 이름</li>
+      <li><strong>값</strong>: 쿠키와 관련된 데이터</li>
+      <li><strong>유효시간</strong>: 쿠키의 유지 시간</li>
+      <li><strong>도메인</strong>: 쿠키를 전송할 도메인</li>
+      <li><strong>경로</strong>: 쿠키를 전송할 경로</li>
+    </ul>
+  </li>
+  <li>용량 제한
+    <ul>
+      <li>하나의 쿠키는 최대 4KB</li>
+      <li>한 도메인당 최대 20개</li>
+      <li>전체 브라우저에서 최대 300개</li>
+    </ul>
+  </li>
+  <li>동작 방식
+    <ol>
+      <li>클라이언트가 페이지 요청</li>
+      <li>서버가 쿠키 생성</li>
+      <li>HTTP 응답 헤더에 쿠키 포함</li>
+      <li>브라우저가 쿠키를 저장</li>
+      <li>같은 요청 시 HTTP 헤더에 쿠키 포함</li>
+      <li>서버는 쿠키를 읽어 상태를 업데이트</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="쿠기의-활용-예시">쿠기의 활용 예시</h3>
+<ul>
+  <li>로그인 시 “아이디와 비밀번호 저장” 여부</li>
+  <li>로그인하지 않은 상태에서 장바구니에 담긴 품목 유지</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="세션session">세션(Session)</h2>
+<h3 id="세션이란">세션이란?</h3>
+<ul>
+  <li>세션은 일정 시간 동안 같은 사용자로부터 들어오는 일련의 요청을 하나의 상태로 보고, 그 상태를 유지하는 기술</li>
+  <li>서버에서 정보를 관리하며, 클라이언트를 식별하기 위해 세션 ID를 사용</li>
+</ul>
+
+<h3 id="세션의-특징">세션의 특징</h3>
+<ul>
+  <li>만료 시점
+    <ul>
+      <li>브라우저가 종료되거나 세션 유효시간이 끝날 때</li>
+    </ul>
+  </li>
+  <li>장단점
+    <ul>
+      <li>장점 : 클라이언트 정보가 서버에 저장되어 보안에 강함</li>
+      <li>단점 : 사용자가 많아지면 서버 메모리 사용량이 증가하여 성능 저하 발생 가능</li>
+    </ul>
+  </li>
+  <li>동작 방식
+    <ol>
+      <li>클라이언트가 서버에 접속 시 세션 ID 발급</li>
+      <li>클라이언트는 세션 ID를 쿠키에 저장</li>
+      <li>이후 요청 시 세션 ID를 서버로 전달</li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="쿠키와-세션의-비교">쿠키와 세션의 비교</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>항목</strong></th>
+      <th style="text-align: center"><strong>쿠키</strong></th>
+      <th style="text-align: center"><strong>세션</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>저장 위치</strong></td>
+      <td style="text-align: center">클라이언트</td>
+      <td style="text-align: center">서버</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>보안</strong></td>
+      <td style="text-align: center">상대적으로 낮음</td>
+      <td style="text-align: center">상대적으로 높음</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>속도</strong></td>
+      <td style="text-align: center">빠름</td>
+      <td style="text-align: center">느림</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>유효 시간</strong></td>
+      <td style="text-align: center">설정된 만료 시간까지 유지</td>
+      <td style="text-align: center">브라우저 종료 시 삭제 가능</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<h2 id="활용--로그인-유지-기능-구현">활용 : 로그인 유지 기능 구현</h2>
+<h3 id="쿠키-생성">쿠키 생성</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">set_cookie(name, value, max_age=None)</code></li>
+  <li>인수
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">name</code>: 쿠키 이름(필수)</li>
+      <li><code class="language-plaintext highlighter-rouge">value</code>: 저장할 값(필수)</li>
+      <li><code class="language-plaintext highlighter-rouge">max_age</code>: 쿠키 유효시간(초, 선택)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="쿠키-읽기">쿠키 읽기</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">request.COOKIES[name]</code></li>
+  <li>쿠키는 딕셔너리와 비슷한 속성을 가지며, 쿠키 데이터를 문자열로 반환</li>
+</ul>
+
+<h3 id="django-예제-코드">Django 예제 코드</h3>
+
+<h4>로그인</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># 이미 로그인 쿠키가 있는 경우 처리
+</span>    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">COOKIES</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">COOKIES</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span>  <span class="c1"># 쿠키에서 저장된 사용자 이름을 가져옴
+</span>        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">COOKIES</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>  <span class="c1"># 쿠키에서 저장된 비밀번호를 가져옴
+</span>        <span class="c1"># 사용자 인증
+</span>        <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># 인증 성공 시
+</span>            <span class="n">auth</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>  <span class="c1"># 사용자 세션 생성 및 로그인
+</span>            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">"account:home"</span><span class="p">)</span>  <span class="c1"># 홈 페이지로 리다이렉트
+</span>
+    <span class="c1"># POST 요청 처리: 로그인 폼 제출 시
+</span>    <span class="k">elif</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'username'</span><span class="p">]</span>  <span class="c1"># 입력받은 사용자 이름
+</span>        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">[</span><span class="s">'password'</span><span class="p">]</span>  <span class="c1"># 입력받은 비밀번호
+</span>        <span class="c1"># 사용자 인증
+</span>        <span class="n">user</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># 인증 성공 시
+</span>            <span class="n">auth</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>  <span class="c1"># 사용자 세션 생성 및 로그인
+</span>            <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="s">"account:home"</span><span class="p">)</span>  <span class="c1"># 홈 페이지로 리다이렉트
+</span>
+            <span class="c1"># 로그인 유지 체크박스가 선택된 경우 쿠키 설정
+</span>            <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'keep_login'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'TRUE'</span><span class="p">:</span>
+                <span class="n">response</span><span class="p">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>  <span class="c1"># 쿠키에 사용자 이름 저장
+</span>                <span class="n">response</span><span class="p">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">'password'</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>  <span class="c1"># 쿠키에 비밀번호 저장
+</span>            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># 인증 실패 시
+</span>            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'account/login.html'</span><span class="p">,</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="s">'Invalid credentials'</span><span class="p">})</span>
+
+    <span class="c1"># 기본 로그인 페이지 렌더링
+</span>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'account/login.html'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4>로그아웃</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># 홈 페이지 렌더링
+</span>    <span class="n">response</span> <span class="o">=</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'account/home.html'</span><span class="p">)</span>
+    <span class="c1"># 쿠키 삭제
+</span>    <span class="n">response</span><span class="p">.</span><span class="n">delete_cookie</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span>  <span class="c1"># 사용자 이름 쿠키 삭제
+</span>    <span class="n">response</span><span class="p">.</span><span class="n">delete_cookie</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>  <span class="c1"># 비밀번호 쿠키 삭제
+</span>    <span class="c1"># 사용자 로그아웃
+</span>    <span class="n">auth</span><span class="p">.</span><span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>  <span class="c1"># 홈 페이지 응답 반환
+</span></code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 191-200</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 82-83</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 심화 강의 13-14강</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />WIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘은 동생 생일이었다. 영국에 가는 중이라고…🥹 부러워.. 나는 12시간 앉아서 공부하고 있는데.. 나도 언능 취뽀해서 해외여행 다녀야지😁!! 이번주도 마무리!! 내일은 조금 쉬엄쉬엄 공부해야지😭 이번주는 유독 컨디션도 안좋고 잠도 잘 못깨는 일주일이었다. 다시 영양제 잘 챙겨야지..💊</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="Django" /><category term="Cookie" /><category term="Session" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기</title><link href="https://hzi09.github.io/til/Week8_WIL/" rel="alternate" type="text/html" title="[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기" /><published>2025-01-17T00:00:00+09:00</published><updated>2025-01-17T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Week8_WIL</id><content type="html" xml:base="https://hzi09.github.io/til/Week8_WIL/"><![CDATA[<p><img src="/assets/images/WIL.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="facts">FACTS</h1>
+<p>  이번주도 꾸준히 코드카타도 하고 심화강의도 들었다. 강의 자체는 짧은 편인데, 어려워서 그런가 진도가 조금 느린 것 같다.</p>
+
+<h3>🪄이번주에 한 것들</h3>
+
+<ul>
+  <li>코드카타
+    <ul>
+      <li>알고리즘 코드카타 : 10문제씩</li>
+      <li>SQL 코드카타 : 매일 1-2문제씩</li>
+    </ul>
+  </li>
+  <li>코딩테스트
+    <ul>
+      <li>백준 코테 : 매일 1문제씩</li>
+    </ul>
+  </li>
+  <li>Django 기초 강의 필요한 부분만 다시 듣기</li>
+  <li>Django 심화 강의 14강까지 듣기</li>
+  <li>Django 개인과제 : 메인과제 끝내기</li>
+</ul>
+
+<p><br /></p>
+
+<h1 id="feelings">FEELINGS</h1>
+
+<p>  이번주는 공부가 유독하기 싫었는데, 몸도 안좋고… 컨디션도 안좋고… 이렇게 아침에 못일어난 것도 진짜 오랜만인거 같다. 이제 아침형인간이 아니야😭 주말에도 공부하니까 조금 체력적으로 딸리는 거 같다. 20대의 나는 정말 대단한 체력을 가졌구나를 한번 더 깨달아버린.</p>
+
+<p><br /></p>
+
+<h1 id="findings">FINDINGS</h1>
+
+<p>  이제 코딩테스트가 조금씩 어려워지면서 새로운 함수를 많이 만나고 있다. 진짜 내가 알던 함수가 아주 적었다는 점. 하나씩 배워나가는 재미가 있다.</p>
+
+<p>  이번주는 또 장고 메인과제를 혼자 했는데, 혼자서 해낼 수 있어서 진짜 뿌듯했다. 스탠다드반 과제를 매일매일 한 보람이 있었다. 장고는 눈에 보이는 결과가 있어서 할 때마다 뿌듯하고 작동되면 더 뿌듯한 거 같다.</p>
+
+<p><br /></p>
+
+<h1 id="future">FUTURE</h1>
+
+<p>  이 기세로 주말에는 장고 심화 강의 마저 듣고 도전과제도 해야지! DRF 쪽이 조금 어려워서 걱정되는데, 또 공부하면 할 수 있지 않을까?🤔</p>
+
+<h3>📝다음주에 해야할 것</h3>
+
+<ul>
+  <li>코드카타
+    <ul>
+      <li>알고리즘 코드카타 : 5~10문제씩</li>
+      <li>SQL 코드카타 : 매일 2문제씩</li>
+    </ul>
+  </li>
+  <li>코딩테스트
+    <ul>
+      <li>백준 코테 : 매일 1문제씩</li>
+    </ul>
+  </li>
+  <li>Django 기초 강의 필요한 부분만 다시 듣기</li>
+  <li>Django 심화 강의
+    <ul>
+      <li>16강까지 듣기</li>
+      <li>필요한 부분 다시 듣기</li>
+    </ul>
+  </li>
+  <li>Django 개인과제 끝내고 제출하기!</li>
+</ul>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="WIL" /><category term="내일배움캠프" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 51일차_[Django] Model Field</title><link href="https://hzi09.github.io/til/Django_Field/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 51일차_[Django] Model Field" /><published>2025-01-16T00:00:00+09:00</published><updated>2025-01-16T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Django_Field</id><content type="html" xml:base="https://hzi09.github.io/til/Django_Field/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+
+<ul>
+  <li>Django의 모델 필드는 데이터베이스 테이블의 열(column)을 정의하는 데 사용되며 다양한 데이터 타입에 맞는 필드 클래스가 제공</li>
+  <li>공식문서 : <a href="https://docs.djangoproject.com/en/4.2/ref/models/fields/#module-django.db.models.fields">🔗Model field reference</a></li>
+</ul>
+
+<h2 id="1-문자열-관련-필드">1. 문자열 관련 필드</h2>
+<h3 id="charfield">CharField</h3>
+<ul>
+  <li>고정 길이의 문자열 데이터를 저장할 때 사용</li>
+  <li>주요 옵션
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">max_length</code>: 문자열의 최대 길이를 지정 (필수)</li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+  <span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 최대 100자의 문자열 저장
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="textfield">TextField</h3>
+<ul>
+  <li>긴 텍스트 데이터를 저장할 때 사용함</li>
+  <li>길이 제한이 없으나 데이터베이스 성능상 너무 긴 데이터를 저장하는 것은 권장하지 않음</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">BlogPost</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">content</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">TextField</span><span class="p">()</span>  <span class="c1"># 긴 텍스트 저장
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3>차이점</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">CharField</code>: 필수적으로 max_length를 지정해야 하며, 길이 제한이 있음.</li>
+  <li><code class="language-plaintext highlighter-rouge">TextField</code>: 길이 제한이 없으나, 일반적으로 더 큰 데이터를 저장하는 데 적합</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-숫자-관련-필드">2. 숫자 관련 필드</h2>
+
+<h3 id="integerfield">IntegerField</h3>
+<ul>
+  <li>정수를 저장할 때 사용</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">quantity</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">IntegerField</span><span class="p">()</span>  <span class="c1"># 정수 저장
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="floatfield">FloatField</h3>
+<ul>
+  <li>부동 소수점 숫자를 저장할 때 사용함</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">price</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">FloatField</span><span class="p">()</span>  <span class="c1"># 소수점 포함 숫자 저장
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="decimalfield">DecimalField</h3>
+<ul>
+  <li>정확한 소수점 연산이 필요한 경우 사용</li>
+  <li>소수점 이하 자리수와 전체 자리수를 지정할 수 있음</li>
+  <li>주요 옵션
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">max_digits</code>: 전체 자리수 지정</li>
+      <li><code class="language-plaintext highlighter-rouge">decimal_places</code>: 소수점 이하 자리수 지정</li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Invoice</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">amount</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">DecimalField</span><span class="p">(</span><span class="n">max_digits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 최대 10자리, 소수점 이하 2자리
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3>차이점</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">FloatField</code>: 근사치를 저장하므로, 금융 계산에는 적합하지 않음</li>
+  <li><code class="language-plaintext highlighter-rouge">DecimalField</code>: 금융 및 정밀한 계산이 필요한 경우 적합</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3날짜시간-관련-필드">3.날짜/시간 관련 필드</h2>
+<h3 id="datefield">DateField</h3>
+<ul>
+  <li>날짜를 저장할 때 사용함</li>
+  <li>주요 옵션
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">auto_now</code>: 객체가 저장될 때 현재 날짜로 자동 갱신</li>
+      <li><code class="language-plaintext highlighter-rouge">auto_now_add</code>: 객체가 처음 생성될 때 현재 날짜로 설정</li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">event_date</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">DateField</span><span class="p">()</span>  <span class="c1"># 날짜 저장
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="datetimefield">DateTimeField</h3>
+<ul>
+  <li>날짜와 시간을 저장할 때 사용</li>
+  <li><code class="language-plaintext highlighter-rouge">DateField</code>와 옵션 동일</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># 생성 시점 저장
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3>차이점</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">DateField</code>: 날짜만 저장</li>
+  <li><code class="language-plaintext highlighter-rouge">DateTimeField</code>: 날짜와 시간을 함께 저장</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="4-boolean-관련-필드">4. Boolean 관련 필드</h2>
+<h3 id="booleanfield">BooleanField</h3>
+<ul>
+  <li>True 또는 False 값을 저장</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">is_completed</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  <span class="c1"># 기본값은 False
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="5관계형-필드">5.관계형 필드</h2>
+<h3 id="foreignkey">ForeignKey</h3>
+<ul>
+  <li>다른 모델과의 1:N 관계를 정의할 때 사용</li>
+  <li>주요 옵션
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">on_delete</code>: 참조된 객체가 삭제될 때의 동작 지정 (CASCADE, SET_NULL 등)
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">CASCADE</code> : 참조된 객체가 삭제되면, 해당 객체를 참조하는 모든 객체도 함께 삭제</li>
+          <li><code class="language-plaintext highlighter-rouge">SET_NULL</code> : 참조된 객체가 삭제되면, 참조하는 객체의 필드를 NULL로 설정 하며, 사용하기 위해서는 <code class="language-plaintext highlighter-rouge">null=True</code> 옵션도 추가해야함</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+  <span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Author</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># 1:N 관계 정의
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="onetoonefield">OneToOneField</h3>
+<ul>
+  <li>다른 모델과의 1:1 관계를 정의할 때 사용</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">UserProfile</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">)</span>  <span class="c1"># 1:1 관계 정의
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="manytomanyfield">ManyToManyField</h3>
+<ul>
+  <li>다른 모델과의 N:N 관계를 정의할 때 사용</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+  <span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">enrolled_students</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Student</span><span class="p">)</span>  <span class="c1"># N:N 관계 정의
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="6-기타-필드">6. 기타 필드</h2>
+<h3 id="emailfield">EmailField</h3>
+<ul>
+  <li>이메일 주소를 저장하며, 형식 검증을 제공</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Contact</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">EmailField</span><span class="p">()</span>  <span class="c1"># 이메일 형식 검증 포함
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="urlfield">URLField</h3>
+<ul>
+  <li>URL을 저장하며, 형식 검증을 제공</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Bookmark</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">URLField</span><span class="p">()</span>  <span class="c1"># URL 형식 검증 포함
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="filefield">FileField</h3>
+<ul>
+  <li>파일 경로를 저장하며 파일 업로드를 지원</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Document</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="nb">file</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">FileField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">'documents/'</span><span class="p">)</span>  <span class="c1"># 파일 업로드 경로 지정
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="imagefield">ImageField</h3>
+<ul>
+  <li>이미지 파일을 저장하며, FileField를 상속받아 이미지 검증 기능이 추가</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">avatar</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">'avatars/'</span><span class="p">)</span>  <span class="c1"># 이미지 업로드 경로 지정
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타181-190</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 81</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 심화 강의 11-12강</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  모델 만들때마다 필드를 찾으러 다녀서 좀 자주 쓰는 것들을 추려서 정리했다. 이제 여기서 필요한거 찾아야지! 오늘은 공부가 잘 안되는 하루였던 것 같다. 코딩테스트도 10시 반이면 다 끝났는데 오늘은 계속 딴 짓하면서 했더니.. 11시 넘어서 끝났다ㅠㅠ 강의도 너무 오래걸렸다.. 내일은 더 열심히 해야지…</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 50일차_[Django] GET과 POST 요청 메서드</title><link href="https://hzi09.github.io/til/Django_GET_POST/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 50일차_[Django] GET과 POST 요청 메서드" /><published>2025-01-15T00:00:00+09:00</published><updated>2025-01-15T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Django_GET_POST</id><content type="html" xml:base="https://hzi09.github.io/til/Django_GET_POST/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="get과-post-요청-메서드">GET과 POST 요청 메서드</h2>
+<ul>
+  <li>웹 개발에서 HTTP 요청 메서드는 클라이언트와 서버 간의 데이터를 주고받을 때 중요한 역할을 함</li>
+  <li>특히, 장고(Django)와 같은 웹 프레임워크에서 자주 사용되는 두 가지 요청 메서드가 바로 <code class="language-plaintext highlighter-rouge">GET</code>과 <code class="language-plaintext highlighter-rouge">POST</code></li>
+  <li>이 두 메서드는 각각의 목적과 사용 방식에 차이가 있으며, 어떤 상황에서 어떤 메서드를 사용해야 할지 이해하는 것이 중요</li>
+</ul>
+
+<h3 id="1-get-요청이란">1. GET 요청이란?</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">GET</code>은 웹에서 데이터를 가져오는 데 사용되는 HTTP 요청 메서드</li>
+  <li>주로 조회나 검색 작업을 할 때 사용되며, 요청 URL에 데이터를 포함하여 서버로 전달</li>
+  <li>브라우저에서 URL을 통해 요청을 보내면 서버는 해당 요청에 맞는 데이터를 응답으로 반환</li>
+</ul>
+
+<h4>특징</h4>
+
+<ul>
+  <li>데이터 조회용으로 주로 사용됨</li>
+  <li>데이터는 쿼리스트링(query string)으로 URL에 포함되어 전송됨
+    <ul>
+      <li>예: http://example.com/search?query=django</li>
+    </ul>
+  </li>
+  <li>URL에 데이터가 노출되기 때문에 민감한 정보는 포함하지 않아야 함</li>
+  <li>URL에 포함된 데이터는 길이가 제한적(서버나 브라우저에 따라 제한이 있을 수 있음)</li>
+</ul>
+
+<h4>장고에서 GET 요청 처리하기</h4>
+
+<ul>
+  <li>장고에서는 <code class="language-plaintext highlighter-rouge">request.GET</code>을 사용하여 <code class="language-plaintext highlighter-rouge">GET</code> 요청으로 전달된 데이터를 처리할 수 있음
+    <ul>
+      <li>예를 들어, 사용자가 검색어를 입력하면 그 값을 URL을 통해 받아올 수 있음</li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+  <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+  <span class="k">def</span> <span class="nf">search_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">GET</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'query'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>  <span class="c1"># 'query' 파라미터 가져오기
+</span>      <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="sa">f</span><span class="s">'Search results for: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>위의 코드에서 <code class="language-plaintext highlighter-rouge">GET</code> 방식으로 전달된 query 파라미터를 가져와서 검색 결과를 보여주고 있음</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-post-요청이란">2. POST 요청이란?</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">POST</code>는 서버로 데이터를 전송하는 데 사용되는 HTTP 요청 메서드</li>
+  <li>주로 폼 제출, 데이터 저장, 서버 변경 작업을 할 때 사용</li>
+  <li><code class="language-plaintext highlighter-rouge">POST</code> 요청은 URL에 데이터를 포함시키지 않고, 요청 본문(body)에 데이터를 포함시켜 전송하기 때문에 더 안전하게 데이터를 전달할 수 있음</li>
+</ul>
+
+<h4>특징</h4>
+
+<ul>
+  <li>데이터 제출 및 변경 용도로 사용</li>
+  <li>데이터는 요청 본문에 포함되어 서버로 전달</li>
+  <li>데이터 크기에 제한이 없으므로, 대용량 데이터를 전송할 수 있음</li>
+  <li>민감한 정보도 URL에 노출되지 않기 때문에 보안적으로 더 안전</li>
+</ul>
+
+<h4>장고에서 POST 요청 처리하기</h4>
+
+<ul>
+  <li>장고에서는 <code class="language-plaintext highlighter-rouge">request.POST</code>를 사용하여 <code class="language-plaintext highlighter-rouge">POST</code> 요청으로 전달된 데이터를 처리할 수 있음
+    <ul>
+      <li>예를 들어, 사용자가 로그인 폼을 제출하면 그 값을 POST 방식으로 받아올 수 있음</li>
+    </ul>
+  </li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+  <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+  <span class="k">def</span> <span class="nf">login_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+          <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'username'</span><span class="p">)</span>
+          <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'password'</span><span class="p">)</span>
+
+          <span class="c1"># 로그인 로직 처리
+</span>          <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="sa">f</span><span class="s">'Hello, </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        
+      <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'login_form.html'</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>위의 코드에서 <code class="language-plaintext highlighter-rouge">POST</code> 방식으로 제출된 <code class="language-plaintext highlighter-rouge">username</code>과 <code class="language-plaintext highlighter-rouge">password</code>를 받아 로그인 처리를 진행</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="3-get과-post-요청의-차이점">3. GET과 POST 요청의 차이점</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">GET</code>과 <code class="language-plaintext highlighter-rouge">POST</code> 요청은 각각 다르게 동작하며, 사용하는 목적에 따라 선택해야 함</li>
+  <li>
+    <p>주요 차이점은 다음과 같음</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th><strong>특징</strong></th>
+          <th><strong>GET</strong></th>
+          <th><strong>POST</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>목적</strong></td>
+          <td>데이터 조회</td>
+          <td>데이터 제출 및 변경</td>
+        </tr>
+        <tr>
+          <td><strong>데이터 전송 위치</strong></td>
+          <td>URL의 쿼리스트링에 포함</td>
+          <td>요청 본문에 포함</td>
+        </tr>
+        <tr>
+          <td><strong>데이터 양</strong></td>
+          <td>전송할 수 있는 데이터 양 제한</td>
+          <td>데이터 양에 제한 없음</td>
+        </tr>
+        <tr>
+          <td><strong>보안</strong></td>
+          <td>민감한 정보 전송에 부적합</td>
+          <td>보안성이 높음</td>
+        </tr>
+        <tr>
+          <td><strong>사용 예시</strong></td>
+          <td>검색, 필터링, 페이지 조회</td>
+          <td>회원가입, 로그인, 폼 제출</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h4>GET 요청 예시: 검색 기능</h4>
+
+<ul>
+  <li>검색 페이지에서 사용자가 입력한 검색어를 GET 방식으로 서버에 전송하여 결과를 반환하는 예시</li>
+  <li>서버에서는 <code class="language-plaintext highlighter-rouge">GET</code> 방식으로 전달된 query 파라미터를 읽어 검색 결과를 처리</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"get"</span> <span class="na">action=</span><span class="s">"/search/"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"query"</span> <span class="na">placeholder=</span><span class="s">"검색어 입력"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>검색<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span></code></pre></figure>
+
+</div>
+
+<h4>POST 요청 예시: 로그인 폼</h4>
+
+<ul>
+  <li>로그인 페이지에서 사용자가 아이디와 비밀번호를 <code class="language-plaintext highlighter-rouge">POST</code> 방식으로 서버에 전송하는 예시</li>
+  <li>서버에서는 <code class="language-plaintext highlighter-rouge">POST</code> 방식으로 제출된 데이터를 읽어 사용자 인증을 진행</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">"/login/"</span><span class="nt">&gt;</span>
+    {% csrf_token %}
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">placeholder=</span><span class="s">"아이디"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">placeholder=</span><span class="s">"비밀번호"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>로그인<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span></code></pre></figure>
+
+</div>
+
+<p><br /></p>
+
+<h3 id="4-get과-post-선택-요령">4. GET과 POST 선택 요령</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">GET</code>은 데이터를 조회하거나, URL에 포함된 데이터를 기반으로 결과를 반환할 때 사용
+    <ul>
+      <li>예를 들어, 검색, 필터링, 페이지네이션 등의 작업에 적합</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">POST</code>는 데이터를 제출하거나, 서버에서 데이터를 변경하는 작업에 사용
+    <ul>
+      <li>예를 들어, 로그인, 회원가입, 폼 제출, 데이터 저장 등에서는 POST를 사용</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 171-180</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 70</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 메인과제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  과제하면서 잘 안되는 부분이 있어서 튜터님한테 물으러 갔다가.. 나의 부족함을 또 깨달아버린.. 코드는 문제가 없었지만, 내가 GET과 POST에 대한 지식이 부족했다. 코드에 대한 이해도도 부족하고 그냥 외워서 작성을 하고있었던 것.. 그래서 GET과 POST에 대해 공부했다ㅠㅠ 매일매일 공부해도 매일매일 모르는게 생기다니..</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="Django" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 49일차_[Python] 추상 클래스(Abstract Class)</title><link href="https://hzi09.github.io/til/Abstract_Class/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 49일차_[Python] 추상 클래스(Abstract Class)" /><published>2025-01-14T00:00:00+09:00</published><updated>2025-01-14T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Abstract_Class</id><content type="html" xml:base="https://hzi09.github.io/til/Abstract_Class/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="추상-클래스abstract-class란">추상 클래스(Abstract Class)란?</h2>
+<ul>
+  <li>Python에서 추상 클래스는 객체 지향 프로그래밍의 중요한 개념으로, 공통적인 인터페이스를 정의할 수 있도록 도와줌</li>
+  <li>추상 클래스는 스스로 인스턴스화될 수 없으며, 자식 클래스에서 반드시 구현해야 할 메서드를 정의</li>
+  <li>Python에서 객체 지향 설계를 더 깔끔하고 강력하게 만들어주는 도구</li>
+  <li>올바르게 사용하면 코드의 재사용성과 유지보수성을 크게 향상시킬 수 있음</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="추상-클래스의-주요-특징">추상 클래스의 주요 특징</h3>
+<ol>
+  <li>인스턴스화 불가: 추상 클래스 자체로는 객체를 생성할 수 없음</li>
+  <li>공통 인터페이스 제공: 여러 클래스가 동일한 인터페이스를 갖도록 강제</li>
+  <li>부분 구현 가능: 추상 클래스는 추상 메서드뿐만 아니라 일반 메서드도 포함할 수 있음</li>
+</ol>
+
+<h3 id="python에서의-추상-클래스-정의">Python에서의 추상 클래스 정의</h3>
+<ul>
+  <li>Python에서는 abc 모듈을 사용하여 추상 클래스를 정의</li>
+  <li>예시
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+  <span class="k">class</span> <span class="nc">Animal</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+      <span class="o">@</span><span class="n">abstractmethod</span>
+      <span class="k">def</span> <span class="nf">sound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">pass</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>위 코드에서 Animal 클래스는 추상 메서드 sound를 포함하고 있으며, 이를 구현하지 않은 채로는 인스턴스화할 수 없음</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="추상-클래스의-활용">추상 클래스의 활용</h3>
+
+<ul>
+  <li>추상 클래스는 공통된 인터페이스를 제공하여, 다양한 클래스가 동일한 방식으로 동작하도록 만듦
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+      <span class="k">def</span> <span class="nf">sound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="s">"Woof"</span>
+
+  <span class="k">class</span> <span class="nc">Cat</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+      <span class="k">def</span> <span class="nf">sound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="s">"Meow"</span>
+
+  <span class="c1"># Usage
+</span>  <span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Dog</span><span class="p">(),</span> <span class="n">Cat</span><span class="p">()]</span>
+  <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">animal</span><span class="p">.</span><span class="n">sound</span><span class="p">())</span>
+</code></pre></div>    </div>
+  </li>
+  <li>출력
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Woof
+  Meow
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="abstractmethod-데코레이터">@abstractmethod 데코레이터</h3>
+<ul>
+  <li>@abstractmethod는 메서드가 반드시 하위 클래스에서 구현되어야 함을 명시</li>
+  <li>이를 구현하지 않으면 오류 발생
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Bird</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+      <span class="k">pass</span>
+
+  <span class="c1"># TypeError: Can't instantiate abstract class Bird with abstract methods sound
+</span>  <span class="n">bird</span> <span class="o">=</span> <span class="n">Bird</span><span class="p">()</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="일반-메서드-포함">일반 메서드 포함</h3>
+<ul>
+  <li>추상 클래스는 일반 메서드도 포함할 수 있음
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Vehicle</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+      <span class="o">@</span><span class="n">abstractmethod</span>
+      <span class="k">def</span> <span class="nf">start_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">pass</span>
+
+      <span class="k">def</span> <span class="nf">stop_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">print</span><span class="p">(</span><span class="s">"Engine stopped."</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 161-170</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 79-80</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 심화 강의 10강까지</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />장고 메인과제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘 공부 열심히 못한 거 같다.. 조금 반성. 언능 강의 듣고 장고 과제 해야지 했는데, 강의 듣기 싫어서 밍기적 거렸더니 하루가 후딱 지나가버렸네ㅎㅎ 앱만 만들고 끝나버린 나의 하루.. 정처기도 해야하는데 할 수 있을까 엉엉.. 하고싶은건 많고.. 쌓였는데.. 난 너무 게으르다.. 언제쯤 부지런할 수 있을까🥹🥹</p>
+
+<p><img src="https://github.com/user-attachments/assets/da0bc8d8-6eb6-4446-8ffd-30a0dc18b518" alt="image" class="align-center" style="width:35%;" /></p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="Python" /><category term="Class" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 48일차_[Django] 프로젝트 생성 연습</title><link href="https://hzi09.github.io/til/Django_Practice/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 48일차_[Django] 프로젝트 생성 연습" /><published>2025-01-13T00:00:00+09:00</published><updated>2025-01-13T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Django_Practice</id><content type="html" xml:base="https://hzi09.github.io/til/Django_Practice/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="accounts-앱-설정하기">accounts 앱 설정하기</h2>
+
+<ul>
+  <li>
+    <p>accounts/models.py</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+  <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">AbstractUser</span>
+  <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+    
+  <span class="c1"># Django 기본 User 모델을 확장하여 bio 필드 추가
+</span>  <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AbstractUser</span><span class="p">):</span>
+      <span class="n">bio</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">TextField</span><span class="p">()</span>
+    
+  <span class="k">class</span> <span class="nc">Profile</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+  		<span class="c1"># 1:1 관계를 설정하는 OneToOneField를 사용하여 User와 연결
+</span>  		<span class="c1"># 한명의 유저는 한개의 프로필을 가짐
+</span>      <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">)</span>
+      <span class="c1"># 주소는 50자까지 입력 가능
+</span>      <span class="n">address</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+      <span class="c1"># 우편번호는 6자까지 입력 가능
+</span>      <span class="n">zipcode</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        
+      <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">address</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>기본적으로 제공하는 필드</p>
+    <ul>
+      <li>id : PK</li>
+      <li>username</li>
+      <li>first_name</li>
+      <li>last_name</li>
+      <li>email</li>
+      <li>password</li>
+      <li>is_staff</li>
+      <li>is_activate</li>
+      <li>is_superuser</li>
+      <li>last_login</li>
+      <li>data_joined</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="blog-앱-설정하기">Blog 앱 설정하기</h2>
+
+<ul>
+  <li>
+    <p>blog/models.py</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+  <span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+    
+  <span class="c1"># 게시글 모델
+</span>  <span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="c1"># 작성자 정보를 나타내는 ForeignKey 필드, User 모델과 연결
+</span>      <span class="c1"># 작성자가 삭제되면 관련 게시글도 삭제
+</span>      <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">settings</span><span class="p">.</span><span class="n">AUTH_USER_MODEL</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">)</span>
+      <span class="c1"># 게시글의 내용
+</span>      <span class="n">message</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">TextField</span><span class="p">()</span>
+      <span class="c1"># 게시글 생성 시 자동으로 현재 시간 저장
+</span>      <span class="n">created_at</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now_add</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      <span class="c1"># 게시글 수정 시 자동으로 현재 시간 업데이트
+</span>      <span class="n">updated_at</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">auto_now</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      <span class="c1"># Tag와의 N:M 관계를 나타내는 ManyToManyField
+</span>      <span class="c1"># 태그는 선택적으로 설정 가능
+</span>      <span class="n">tag_set</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s">'Tag'</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+      <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">message</span>
+    
+  <span class="c1"># 태그 모델
+</span>  <span class="k">class</span> <span class="nc">Tag</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+  		<span class="c1"># 태그 이름은 최대 44자
+</span>      <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">44</span><span class="p">)</span>
+    
+      <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span>
+</code></pre></div>    </div>
+  </li>
+  <li>blog/urls.py
+    <ul>
+      <li>만약 /blog/에서 보여주고 싶다면?
+        <ul>
+          <li>route 인자를 <code class="language-plaintext highlighter-rouge">''</code> 로 설정하면 됨!!</li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+    
+  <span class="kn">from</span> <span class="nn">blog</span> <span class="kn">import</span> <span class="n">views</span>
+    
+  <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+  		<span class="c1"># 위치인자(route='', view=views.post_list)
+</span>      <span class="n">path</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">post_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'post_list'</span><span class="p">),</span>
+      <span class="n">path</span><span class="p">(</span><span class="s">'post_new/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">post_new</span><span class="p">,),</span>
+  <span class="p">]</span>
+</code></pre></div>    </div>
+  </li>
+  <li>blog/views.py
+    <ol>
+      <li>view func : 요청 처리 로직</li>
+      <li>데이터 처리 : 데이터베이스 핸들링(읽고, 쓰고, 쓰고, 수정, 삭제 등등)</li>
+      <li>응답반환(랜더링) 템플릿</li>
+    </ol>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+  <span class="kn">from</span> <span class="nn">blog.forms</span> <span class="kn">import</span> <span class="n">PostForm</span>
+  <span class="kn">from</span> <span class="nn">blog.models</span> <span class="kn">import</span> <span class="n">Post</span>
+    
+  <span class="c1"># 게시글 목록을 보여주는 뷰
+</span>  <span class="k">def</span> <span class="nf">post_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+  		<span class="c1"># 모든 Post 객체를 가져옴
+</span>      <span class="n">posts</span> <span class="o">=</span> <span class="n">Post</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">all</span><span class="p">()</span>
+      <span class="c1"># render 함수로 템플릿을 렌더링
+</span>  		<span class="c1"># request와 template_name은 필수인자!
+</span>  		<span class="c1"># context : DB에서 데이터 들고와서 템플릿에 던져주기 
+</span>      <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s">'blog/post_list.html'</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s">'posts'</span><span class="p">:</span> <span class="n">posts</span><span class="p">})</span>
+    
+  <span class="c1"># 새로운 게시글을 작성하는 뷰
+</span>  <span class="k">def</span> <span class="nf">post_new</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+  		<span class="c1"># POST 요청일 경우
+</span>      <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+  		    <span class="c1"># 받은 데이터로 PostForm 인스턴스 생성
+</span>          <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">)</span>
+            
+          <span class="c1"># 다른 사용자가 수정을 하지 못하도록 하기
+</span>          <span class="c1"># form 데이터가 유효한 경우 처리
+</span>          <span class="k">if</span> <span class="n">form</span><span class="p">.</span><span class="n">is_valid</span><span class="p">():</span>
+  		        <span class="c1"># DB 저장 전에 Post 객체 생성
+</span>              <span class="n">post</span> <span class="o">=</span> <span class="n">form</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+              <span class="c1"># 현재 로그인한 사용자를 작성자로 설정
+</span>              <span class="n">post</span><span class="p">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">user</span>
+              <span class="c1"># DB에 저장
+</span>              <span class="n">post</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+              <span class="c1"># 게시글 목록 페이지로 보내기
+</span>              <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'post_list'</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+  		    <span class="c1"># POST 요청이 아니면 빈 Form을 보여줌
+</span>          <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">()</span>
+      <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s">'blog/post_new.html'</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s">'form'</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+</code></pre></div>    </div>
+
+    <ul>
+      <li>HTTP Method
+        <ul>
+          <li>GET: 리소스를 조회하는 데 사용 서버에 전달하고 싶은 데이터는 query(parameter, query string)을 통해 전</li>
+          <li>POST: 데이터를 추가하거나 등록하는 데 사용</li>
+          <li>PUT: 리소스를 대체하거나 수정하는 데 사용합니다. 해당 리소스가 없으면 새롭게 생성</li>
+          <li>DELETE: 리소스를 삭제하는 데 사용</li>
+          <li>PATCH: 리소스의 부분을 변경하거나 수정하는 데 사용</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>blog/forms.py
+    <ol>
+      <li>HTML 폼을 자동 생성</li>
+      <li>사용자가 입력한 데이터를 검증 → 데이터베이스 상호작용</li>
+    </ol>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+  <span class="kn">from</span> <span class="nn">blog.models</span> <span class="kn">import</span> <span class="n">Post</span>
+    
+  <span class="c1"># Post 작성을 위한 Form 정의
+</span>  <span class="k">class</span> <span class="nc">PostForm</span><span class="p">(</span><span class="n">forms</span><span class="p">.</span><span class="n">ModelForm</span><span class="p">):</span>
+      <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+  		    <span class="c1"># Form과 연결된 모델 지정
+</span>          <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+          <span class="c1"># Form에 포함될 필드
+</span>          <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">'message'</span><span class="p">,</span> <span class="s">'tag_set'</span><span class="p">]</span>
+</code></pre></div>    </div>
+  </li>
+  <li>post_list.html</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 전체 페이지 제목 --&gt;</span>
+<span class="nt">&lt;h1&gt;</span>Post_list<span class="nt">&lt;/h1&gt;</span>
+
+<span class="c">&lt;!-- 게시글 목록을 보여주는 리스트 --&gt;</span>
+<span class="nt">&lt;ui&gt;</span>
+        <span class="c">&lt;!-- posts 리스트를 반복하여 각 게시글의 내용을 출력 --&gt;</span>
+    {% for post in posts %}
+            <span class="c">&lt;!-- 게시글의 message 필드 출력 --&gt;</span>
+        <span class="nt">&lt;p&gt;</span>{{ post.message }}<span class="nt">&lt;/p&gt;</span>
+    {% endfor %}
+<span class="nt">&lt;/ui&gt;</span></code></pre></figure>
+
+</div>
+
+<ul>
+  <li>post_new.html</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 페이지 제목 --&gt;</span>
+<span class="nt">&lt;h1&gt;</span>post_new<span class="nt">&lt;/h1&gt;</span>
+
+<span class="c">&lt;!-- 게시글 작성 폼 --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+    {% csrf_token %}
+    <span class="c">&lt;!-- Form 객체를 &lt;p&gt; 태그 형식으로 렌더링 --&gt;</span>
+    {{ form.as_p }}
+    <span class="c">&lt;!-- 제출 버튼 --&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>Submit<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span></code></pre></figure>
+
+</div>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 151-160</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 69</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 심화 강의 5강까지</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />스탠다드반 과제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  저번주 금요일에 학습반에서 진행했던 내용을 바탕으로 내용을 조금 추가하고, 주석을 달면서 어떤식으로 작성하는지 익혔다. 수요일까지 메인과제 끝내봐야지..! 내일까지 DRF 강의 다 듣고 빨리 과제 시작해야겠다.</p>
+
+<p>  그리고.. 장고문법도 해결했다. 어휴, 왜 저렇게 나오는지.. 그래도 내가 선택한 테마니까 꾸역꾸역 참아야지..ㅎㅎ</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="Django" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 47일차_[Django] Django에서 사용되는 HTML 문법</title><link href="https://hzi09.github.io/til/Django_HTML_1/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 47일차_[Django] Django에서 사용되는 HTML 문법" /><published>2025-01-12T00:00:00+09:00</published><updated>2025-01-12T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Django_HTML_1</id><content type="html" xml:base="https://hzi09.github.io/til/Django_HTML_1/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+
+<ul>
+  <li>Django는 강력한 템플릿 엔진을 제공하여 서버에서 데이터를 처리하고 HTML 파일로 전달하는 기능을 지원</li>
+  <li>Django 템플릿에서 자주 사용하는 HTML 문법과 관련 태그를 정리</li>
+  <li>추가적인 문법은 <a href="https://docs.djangoproject.com/en/stable/topics/templates/">Django 공식 문서</a> 참고!</li>
+</ul>
+
+<h2 id="1-변수-출력">1. 변수 출력</h2>
+<ul>
+  <li>
+    <p>Django 템플릿에서 데이터를 HTML에 삽입하려면 아래와 같은 문법을 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/f532be20-a0db-4b82-8f1c-7a3f22685e23" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-조건문">2. 조건문</h2>
+<ul>
+  <li>
+    <p>조건문은 아래와 같이 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/d872352f-9528-4452-a3ba-e5be187e17a5" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/26ffd144-2b60-4ab8-bbe4-67bdba517c0f" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3-반복문">3. 반복문</h2>
+
+<ul>
+  <li>
+    <p>반복문은 아래와 같이 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/0067cca5-30e4-4c1f-9be6-d6c70f59c9ed" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/4285069f-ad7b-4636-85e0-a869a243c16a" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="4-필터-사용">4. 필터 사용</h2>
+<ul>
+  <li>Django 템플릿에서는 변수를 출력할 때 필터를 사용할 수 있음</li>
+  <li>
+    <p>필터는 <code class="language-plaintext highlighter-rouge">|</code>를 사용해 적용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/358b44ef-ed0a-43c1-9eab-182c304840f7" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/6f7a99b7-e28e-4951-9918-eef957a809b3" alt="image" /></p>
+  </li>
+  <li>주요 필터
+    <ul>
+      <li>upper: 문자열을 대문자로 변환</li>
+      <li>lower: 문자열을 소문자로 변환</li>
+      <li>date: 날짜 형식 지정</li>
+      <li>length: 리스트 또는 문자열의 길이 반환</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="5-주석">5. 주석</h2>
+<ul>
+  <li>Django 템플릿에서 주석은 <code class="language-plaintext highlighter-rouge">{# #}</code>를 사용</li>
+  <li>
+    <p>브라우저에 표시되지 않음</p>
+
+    <p><img src="https://github.com/user-attachments/assets/a5166b99-9f4f-4e43-aade-050ab9c9226d" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="6-include-태그">6. include 태그</h2>
+<ul>
+  <li>
+    <p>HTML 파일을 분리하여 재사용할 때 include 태그를 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/de7cbfbd-6eeb-4d02-92ec-26529d0f9cec" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/cee18faf-3411-4cfa-b183-545133da8d12" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="7-url-태그">7. url 태그</h2>
+<ul>
+  <li>
+    <p>Django URL의 이름을 사용해 링크를 생성할 때 <strong>url</strong> 태그를 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/3b93f410-7447-4596-ba0d-1d93fa4e079a" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/73f6532f-3b1b-4e8a-9f83-d9baa881b1ce" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="8-정적-파일-사용">8. 정적 파일 사용</h2>
+<ul>
+  <li>
+    <p>CSS, JavaScript, 이미지 등 정적 파일을 사용할 때 <code class="language-plaintext highlighter-rouge">static</code> 태그를 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/472f9ca7-411a-46fb-b670-915691951f8a" alt="image" /></p>
+  </li>
+  <li>
+    <p>정적 파일을 사용하려면 템플릿 상단에 <code class="language-plaintext highlighter-rouge">load static</code>를 추가해야 함</p>
+
+    <p><img src="https://github.com/user-attachments/assets/5797b3e6-d569-46a9-bae6-a4aaf86fb077" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="9-csrf_token">9. csrf_token</h2>
+<ul>
+  <li>
+    <p>Django에서 폼을 제출할 때 보안을 위해 CSRF 토큰을 추가해야 함</p>
+
+    <p><img src="https://github.com/user-attachments/assets/584fe4fb-cab3-41a4-9d54-8be1e80d3fa3" alt="image" /></p>
+  </li>
+</ul>
+
+<h2 id="10-커스텀-태그와-필터">10. 커스텀 태그와 필터</h2>
+<ul>
+  <li>Django는 기본 제공 기능 외에도 커스텀 태그와 필터를 작성할 수 있음</li>
+  <li>
+    <p>커스텀 태그를 사용하려면 템플릿에서 로드해야 함</p>
+
+    <p><img src="https://github.com/user-attachments/assets/7eb5d08d-6ec4-4ad6-97e5-7d6d12f98b78" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/c11eb07a-dda9-4d6b-9bda-2ba0d8bf9015" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Django 기초 강의 완강</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Django 심화 강의 2강까지</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 131-140</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 67, 68, 77, 78</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />LeetHub 연동하고 테스트</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘은 장고 기초 강의를 드디어 끝냈다. 스탠다드반 과제도 하려고 했는데, LeetHub 연동에 애를 먹어서 시간이 지체되어버렸다. 내일 과제발제 끝나면 호록 끝내야지. 심화강의도 이번주까지 다 듣는 걸 목표로 해야겠다. 과제를 해야하는데 강의를 다 못들어서 어쩌나 싶기도 하구..🥹
+  장고 문법이 백틱안으로 안들어가져서 코드를 다 이미지로 대체했다.. 이게 무슨일이람.. 이건 방법을 좀 찾아봐야 할것 같다.</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">[TIL] 내일배움캠프 46일차_[HTML] HTML 기초 문법 정리</title><link href="https://hzi09.github.io/til/Django_HTML/" rel="alternate" type="text/html" title="[TIL] 내일배움캠프 46일차_[HTML] HTML 기초 문법 정리" /><published>2025-01-11T00:00:00+09:00</published><updated>2025-01-11T00:00:00+09:00</updated><id>https://hzi09.github.io/til/Django_HTML</id><content type="html" xml:base="https://hzi09.github.io/til/Django_HTML/"><![CDATA[<p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="1-html">1. HTML</h2>
+<ul>
+  <li>HTML은 웹페이지의 구조를 정의하는 마크업 언어</li>
+  <li>모든 HTML 문서는 태그(tag)를 사용하여 콘텐츠를 구조화</li>
+  <li>태그는 보통 <code class="language-plaintext highlighter-rouge">&lt;</code>와 <code class="language-plaintext highlighter-rouge">&gt;</code>로 감싸여 있으며, 열고 닫는 형태로 사용됨</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="html-문서의-기본-구조">HTML 문서의 기본 구조</h3>
+<ul>
+  <li>HTML 문서는 아래와 같은 기본 구조를 가짐</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span> <span class="c">&lt;!-- HTML5 문서임을 선언 --&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span> <span class="c">&lt;!-- 언어 설정 --&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span> <span class="c">&lt;!-- 문서의 문자 인코딩 설정 --&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span> <span class="c">&lt;!-- 반응형 웹 설정 --&gt;</span>
+    <span class="nt">&lt;title&gt;</span>문서 제목<span class="nt">&lt;/title&gt;</span> <span class="c">&lt;!-- 브라우저 탭에 표시될 제목 --&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- 본문 내용 --&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>HTML 기초 문법<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;p&gt;</span>HTML은 HyperText Markup Language의 약자입니다.<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>   </code></pre></figure>
+
+</div>
+
+<p><br /></p>
+
+<h2 id="2-주요-태그">2. 주요 태그</h2>
+
+<h3 id="제목-태그">제목 태그</h3>
+<ul>
+  <li>제목을 표시할 때 사용</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code>은 가장 큰 제목, <code class="language-plaintext highlighter-rouge">&lt;h6&gt;</code>은 가장 작은 제목</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h1&gt;</span>제목 1<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h2&gt;</span>제목 2<span class="nt">&lt;/h2&gt;</span>
+<span class="nt">&lt;h3&gt;</span>제목 3<span class="nt">&lt;/h3&gt;</span></code></pre></figure>
+
+</div>
+
+<h1>제목 1</h1>
+<h2>제목 2</h2>
+<h3>제목 3</h3>
+<hr />
+
+<h3 id="문단-태그">문단 태그</h3>
+<ul>
+  <li>문단을 작성할 때 사용</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;p&gt;</span>이것은 문단입니다.<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>HTML은 간단한 마크업 언어입니다.<span class="nt">&lt;/p&gt;</span></code></pre></figure>
+
+</div>
+
+<p>이것은 문단입니다.</p>
+<p>HTML은 간단한 마크업 언어입니다.</p>
+<hr />
+
+<h3 id="리스트-태그">리스트 태그</h3>
+<ul>
+  <li>순서 없는 리스트 : <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code>과 <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code>사용</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ul&gt;</span>
+    <span class="nt">&lt;li&gt;</span>사과<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>바나나<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>체리<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span></code></pre></figure>
+
+</div>
+
+<ul>
+    <li>사과</li>
+    <li>바나나</li>
+    <li>체리</li>
+</ul>
+<hr />
+
+<ul>
+  <li>순서 있는 리스트 : <code class="language-plaintext highlighter-rouge">&lt;ol&gt;</code>과 <code class="language-plaintext highlighter-rouge">&lt;li&gt;</code> 사용</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ol&gt;</span>
+    <span class="nt">&lt;li&gt;</span>첫 번째<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>두 번째<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>세 번째<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ol&gt;</span></code></pre></figure>
+
+</div>
+
+<ol>
+    <li>첫 번째</li>
+    <li>두 번째</li>
+    <li>세 번째</li>
+</ol>
+<hr />
+
+<h3 id="링크-태그">링크 태그</h3>
+<ul>
+  <li>링크를 생성할 때 <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> 태그를 사용
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">href</code>: 링크 주소</li>
+      <li><code class="language-plaintext highlighter-rouge">target="_blank"</code>: 새 탭에서 열기</li>
+    </ul>
+  </li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://www.google.com"</span> <span class="na">target=</span><span class="s">"_blank"</span><span class="nt">&gt;</span>구글로 이동<span class="nt">&lt;/a&gt;</span></code></pre></figure>
+
+</div>
+
+<p><a href="https://www.google.com" target="_blank">구글로 이동</a></p>
+
+<hr />
+
+<h3 id="이미지-태그">이미지 태그</h3>
+<ul>
+  <li>이미지를 삽입할 때 <img /> 태그를 사용
+    <ul>
+      <li>src: 이미지 경로</li>
+      <li>alt: 이미지가 로드되지 않을 때 표시할 텍스트</li>
+      <li>width/height: 이미지 크기 조절</li>
+    </ul>
+  </li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"image.jpg"</span> <span class="na">alt=</span><span class="s">"이미지 설명"</span> <span class="na">width=</span><span class="s">"300"</span><span class="nt">&gt;</span></code></pre></figure>
+
+</div>
+
+<hr />
+
+<h3 id="강조-태그">강조 태그</h3>
+<ul>
+  <li>텍스트를 강조하거나 스타일을 추가할 때 사용</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;strong&gt;</span>굵게 표시<span class="nt">&lt;/strong&gt;</span>
+<span class="nt">&lt;em&gt;</span>기울임 표시<span class="nt">&lt;/em&gt;</span>
+<span class="nt">&lt;u&gt;</span>밑줄 표시<span class="nt">&lt;/u&gt;</span></code></pre></figure>
+
+</div>
+
+<p><strong>굵게 표시</strong>
+<em>기울임 표시</em>
+<u>밑줄 표시</u></p>
+<hr />
+
+<p><br /></p>
+
+<h2 id="3-html-속성-attributes">3. HTML 속성 (Attributes)</h2>
+<ul>
+  <li>HTML 태그에는 속성을 추가하여 태그의 동작이나 스타일을 정의할 수 있음</li>
+  <li>속성은 <code class="language-plaintext highlighter-rouge">속성이름="값"</code> 형식으로 작성</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://www.example.com"</span> <span class="na">target=</span><span class="s">"_blank"</span><span class="nt">&gt;</span>링크<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"logo.png"</span> <span class="na">alt=</span><span class="s">"로고 이미지"</span><span class="nt">&gt;</span></code></pre></figure>
+
+</div>
+
+<p><br /></p>
+
+<h2 id="4-주석">4. 주석</h2>
+<ul>
+  <li>HTML에서 주석은 <code class="language-plaintext highlighter-rouge">&lt;!--</code>와 <code class="language-plaintext highlighter-rouge">--&gt;</code> 사이에 작성</li>
+  <li>브라우저에 표시되지 않음</li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- 이 부분은 주석입니다 --&gt;</span></code></pre></figure>
+
+</div>
+
+<p><br /></p>
+
+<h2 id="5-폼-태그">5. 폼 태그</h2>
+<ul>
+  <li>사용자로부터 데이터를 입력받을 때 사용
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">action</code>: 데이터를 보낼 URL</li>
+      <li><code class="language-plaintext highlighter-rouge">method</code>: 데이터 전송 방식 (<code class="language-plaintext highlighter-rouge">GET</code> 또는 <code class="language-plaintext highlighter-rouge">POST</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/submit"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"name"</span><span class="nt">&gt;</span>이름:<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"name"</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>제출<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span></code></pre></figure>
+
+</div>
+
+<p><br /></p>
+
+<h2 id="6-표table-태그">6. 표(Table) 태그</h2>
+<ul>
+  <li>데이터를 표로 정리할 때 사용
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">&lt;table&gt;</code>: 표 생성</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;tr&gt;</code>: 행(Row)</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;th&gt;</code>: 제목 셀</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;td&gt;</code>: 데이터 셀</li>
+    </ul>
+  </li>
+</ul>
+
+<div style="margin-left: 2em;">
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;th&gt;</span>이름<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>나이<span class="nt">&lt;/th&gt;</span>
+        <span class="nt">&lt;th&gt;</span>직업<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;td&gt;</span>홍길동<span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span>25<span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;td&gt;</span>개발자<span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span></code></pre></figure>
+
+</div>
+
+<table border="1">
+    <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>직업</th>
+    </tr>
+    <tr>
+        <td>홍길동</td>
+        <td>25</td>
+        <td>개발자</td>
+    </tr>
+</table>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="7-html5-추가-요소">7. HTML5 추가 요소</h2>
+
+<ul>
+  <li>시맨틱 태그: 문서 구조를 명확히 함
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">&lt;header&gt;</code>: 머리말</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code>: 내비게이션</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;section&gt;</code>: 섹션</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;article&gt;</code>: 독립적인 콘텐츠</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;footer&gt;</code>: 바닥글</li>
+    </ul>
+  </li>
+  <li>미디어 태그:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">&lt;audio&gt;</code>: 오디오 삽입</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;video&gt;</code>: 비디오 삽입</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>더 필요한 내용은 <a href="https://developer.mozilla.org/ko/docs/Web/HTML">HTML 공식 문서</a> 참고!</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 121-130</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 64</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  장고를 하면서 HTML 문법을 잘 모르겠어서 정리! 두고두고 보면서 웹페이지 잘 만들어봐야지!</p>]]></content><author><name>Lee Hyun Ji</name><email>hzi284914@gmail.com</email></author><category term="TIL" /><category term="TIL" /><category term="내일배움캠프" /><category term="HTML" /><summary type="html"><![CDATA[]]></summary></entry></feed>

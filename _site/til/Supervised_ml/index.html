@@ -1,0 +1,1168 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 36일차_[ML] ch2.개인과제 - 1. 지도학습 | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 36일차_[ML] ch2.개인과제 - 1. 지도학습">
+<meta property="og:url" content="https://hzi09.github.io/til/Supervised_ml/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-12-30T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/Supervised_ml/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 36일차_[ML] ch2.개인과제 - 1. 지도학습">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2024-12-30T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/Supervised_ml/" itemprop="url">[TIL] 내일배움캠프 36일차_[ML] ch2.개인과제 - 1. 지도학습
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-12-30T00:00:00+09:00">December 30, 2024</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#과제-내용">과제 내용</a><ul><li><a href="#주제">💡주제</a></li><li><a href="#목표">🎯목표</a></li><li><a href="#학습내용">📖학습내용</a></li></ul></li><li><a href="#️문제-풀이">✍️문제 풀이</a><ul><li><a href="#데이터셋-탐색-및-전처리">데이터셋 탐색 및 전처리</a><ul><li><a href="#1-데이터-확인">1. 데이터 확인</a></li><li><a href="#2-데이터-전처리">2. 데이터 전처리</a></li><li><a href="#3-특성과-타겟-변수-분리">3. 특성과 타겟 변수 분리</a></li><li><a href="#4-모델-선택-및-훈련">4. 모델 선택 및 훈련</a></li><li><a href="#5-모델-평가">5. 모델 평가</a></li></ul></li></ul></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="과제-내용">과제 내용</h2>
+<h3 id="주제">💡주제</h3>
+<p>주택 가격 예측 모델 구축</p>
+
+<h3 id="목표">🎯목표</h3>
+<p>주어진 주택 데이터셋을 사용하여 주택 가격을 예측하는 회귀 모델을 구축합니다.</p>
+
+<h3 id="학습내용">📖학습내용</h3>
+<ul>
+  <li>지도 학습의 기본 개념과 회귀 분석을 이해하고, 실제 데이터에 적용하는 능력</li>
+  <li>데이터 전처리 및 탐색: 데이터의 품질을 높이는 방법과 특징 선택의 중요성</li>
+  <li>여러 회귀 모델의 이해: 다양한 회귀 기법의 원리와 적용 방법</li>
+  <li>모델 성능 평가: 성능 지표의 이해 및 비교 분석을 통해 최적의 모델 선택</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="️문제-풀이">✍️문제 풀이</h2>
+<h3 id="데이터셋-탐색-및-전처리">데이터셋 탐색 및 전처리</h3>
+<h4 id="1-데이터-확인">1. 데이터 확인</h4>
+
+<ul>
+  <li>머신러닝을 진행하기 전에 데이터를 불러오고 확인
+    <ul>
+      <li>CSV 파일 데이터 불러오기 : <code class="language-plaintext highlighter-rouge">read_csv()</code></li>
+      <li>데이터 미리보기(5개의 행만 확인) : <code class="language-plaintext highlighter-rouge">head()</code></li>
+      <li>데이터셋의 기본 정보 확인 : <code class="language-plaintext highlighter-rouge">info()</code>
+        <ul>
+          <li>데이터 타입, 인덱스 개수, 컬럼명 등을 확인 가능</li>
+        </ul>
+      </li>
+      <li>데이터 정보 탐색 : <code class="language-plaintext highlighter-rouge">describe()</code>
+        <ul>
+          <li>각 컬럼별 데이터의 개수, 평균값, 최대값 등을 확인 가능</li>
+        </ul>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="c1"># 데이터 불러오기
+</span><span class="n">housing</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'housingdata.csv'</span><span class="p">)</span>
+
+<span class="c1"># 데이터 미리보기
+</span><span class="n">housing</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1"># 데이터셋 기본 정보 확인
+</span><span class="n">housing</span><span class="p">.</span><span class="n">info</span><span class="p">()</span> 
+
+<span class="c1"># 데이터 정보 탐색
+</span><span class="n">housing</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span> 
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>위 데이터를 시각화해서 확인
+    <ul>
+      <li>히스토그램(Histogram) : <code class="language-plaintext highlighter-rouge">hist()</code>
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">bins</code> : 가로축 구간의 개수는 좀 여유있게 50으로 결정</li>
+          <li><code class="language-plaintext highlighter-rouge">figsize</code> : 가로길이와 세로길이는 작성하면서 여유있게 지정해주었다.(x=20, y=15)</li>
+        </ul>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">housing</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="2-데이터-전처리">2. 데이터 전처리</h4>
+
+<ul>
+  <li>결측치 처리
+    <ul>
+      <li>결측치의 개수 확인 : <code class="language-plaintext highlighter-rouge">isna().sum()</code>
+        <ul>
+          <li>CRIM, ZN, INDUS, CHAS, AGE, LSTAT 컬럼에 20개씩의 결측치가 확인됨
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># 결측치 개수 확인
+</span> <span class="n">housing</span><span class="p">.</span><span class="n">isna</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span>
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>결측치 비율 확인
+        <ul>
+          <li>결측치의 개수를 전체 데이터의 길이로 나눈후 *100을 하면 결측치의 비율을 확인할 수 있음
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># 결측치 비율 확인
+</span> <span class="n">missing_percentage</span><span class="o">=</span> <span class="p">(</span><span class="n">housing</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">housing</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>결과
+        <ul>
+          <li>그렇게 높은 수치는 아니라서 그냥 삭제를 할까 하다가, 결측치처리를 진행
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CRIM       3.952569
+ZN         3.952569
+INDUS      3.952569
+CHAS       3.952569
+NOX        0.000000
+RM         0.000000
+AGE        3.952569
+DIS        0.000000
+RAD        0.000000
+TAX        0.000000
+PTRATIO    0.000000
+B          0.000000
+LSTAT      3.952569
+MEDV       0.000000
+dtype: float64
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>결측치 처리
+    <ul>
+      <li>수치형데이터는 <code class="language-plaintext highlighter-rouge">mean</code>과 <code class="language-plaintext highlighter-rouge">median</code> 중 고민하였지만, 데이터 범위가 큰 데이터도 있어서 중앙값으로 대체</li>
+      <li>범주형 데이터는 <code class="language-plaintext highlighter-rouge">most_frequent</code>(최빈값)로 대체
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 결측치 처리
+</span><span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+
+<span class="c1"># 수치형데이터 결측치 &gt; 중앙값 대체
+</span><span class="n">imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s">'median'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'CRIM'</span><span class="p">,</span> <span class="s">'ZN'</span><span class="p">,</span> <span class="s">'INDUS'</span><span class="p">,</span> <span class="s">'AGE'</span><span class="p">,</span> <span class="s">'LSTAT'</span><span class="p">]</span> <span class="p">:</span>
+    <span class="n">housing</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">imputer</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="n">col</span><span class="p">]])</span>
+
+<span class="c1"># 범주형 데이터 결측치 &gt; 최빈값 대체
+</span><span class="n">imputer2</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span> <span class="s">'most_frequent'</span><span class="p">)</span>
+
+<span class="n">housing</span><span class="p">[</span><span class="s">'CHAS'</span><span class="p">]</span> <span class="o">=</span> <span class="n">imputer2</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s">'CHAS'</span><span class="p">]])</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>이상치 처리
+    <ul>
+      <li>이상치 처리 전에 기존의 데이터와 비교를 하고 싶어서 <code class="language-plaintext highlighter-rouge">housing_processed</code> 변수를 만들어서 데이터를 복사(<code class="language-plaintext highlighter-rouge">copy()</code>)해 넣어줌</li>
+      <li>이상치는 IQR 방식으로 처리하였으며 경계값으로 대체하는 방법을 채택
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">numeric_cols</span> <span class="o">=</span> <span class="n">housing</span><span class="p">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">number</span><span class="p">]).</span><span class="n">columns</span> <span class="c1"># 수치형 데이터를 가진 열들의 이름 가져오기
+</span><span class="n">housing_processed</span> <span class="o">=</span> <span class="n">housing</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_cols</span><span class="p">:</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">housing</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">housing</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">outliers</span> <span class="o">=</span> <span class="p">((</span><span class="n">housing</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">housing</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">))</span>
+    <span class="n">outlier_count</span> <span class="o">=</span> <span class="n">outliers</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">outlier_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># 이상치를 경계값으로 대체 (Winsorization)
+</span>        <span class="n">housing_processed</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">housing_processed</span><span class="p">[</span><span class="n">col</span><span class="p">].</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">upper_bound</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li>이상치 처리 전 후를 시각화하여 표현
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이상치 처리 전 데이터 시각화
+</span><span class="n">housing</span><span class="p">.</span><span class="n">boxplot</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Before Boxplot'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 이상치 처리 후 데이터 시각화
+</span><span class="n">housing_processed</span><span class="p">.</span><span class="n">boxplot</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'After Boxplot'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>        </div>
+        <ul>
+          <li>결과
+  <img src="https://github.com/user-attachments/assets/8d30ff39-9477-4947-9d3f-f26e1fdfae7e" alt="image" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>상관관계
+    <ul>
+      <li>학습을 시작하기 전에 타겟 데이터와 상관관계를 확인 : <code class="language-plaintext highlighter-rouge">corr()</code></li>
+      <li>상관관계가 높은 순으로 데이터 확인하기
+        <ul>
+          <li>데이터를 절대값으로 바꾸어준 후 : <code class="language-plaintext highlighter-rouge">avs()</code></li>
+          <li>값을 기준으로 내림차순 정렬 : <code class="language-plaintext highlighter-rouge">sort_values(ascending=False)</code>
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 데이터 상관관계 확인
+</span>  <span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">housing_processed</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span>
+  <span class="n">corr_matrix</span><span class="p">[</span><span class="s">'MEDV'</span><span class="p">].</span><span class="nb">abs</span><span class="p">().</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div>            </div>
+          </li>
+          <li>결과
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  MEDV       1.000000
+  LSTAT      0.782941
+  RM         0.697645
+  INDUS      0.553140
+  TAX        0.543545
+  PTRATIO    0.523993
+  CRIM       0.522140
+  NOX        0.506505
+  AGE        0.454330
+  RAD        0.452679
+  DIS        0.333079
+  B          0.321250
+  ZN              NaN
+  CHAS            NaN
+  Name: MEDV, dtype: float64
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>시각화 분석 : 선형 회귀선 확인
+        <ul>
+          <li>MEDV와 얼마나 선형적인 관계가 있는지 확인
+            <ul>
+              <li><code class="language-plaintext highlighter-rouge">ZN</code>과 <code class="language-plaintext highlighter-rouge">CHAS</code>는 선형관계가 없다고 판단되어서 추가하지 않음</li>
+              <li>오른쪽 아래로 내려가는 선 : 음의 상관관계</li>
+              <li>오른쪽 위로 올라가는 선 : 양의 상관관계
+                <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="c1"># 시각화 분석
+</span><span class="n">plot_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'MEDV'</span><span class="p">,</span> <span class="s">'LSTAT'</span><span class="p">,</span> <span class="s">'RM'</span><span class="p">,</span> <span class="s">'INDUS'</span><span class="p">,</span> <span class="s">'TAX'</span><span class="p">,</span> <span class="s">'PTRATIO'</span><span class="p">,</span> <span class="s">'CRIM'</span><span class="p">,</span> <span class="s">'NOX'</span><span class="p">,</span> <span class="s">'AGE'</span><span class="p">,</span> <span class="s">'RAD'</span><span class="p">,</span> <span class="s">'DIS'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">]</span>
+<span class="n">plot_housing</span> <span class="o">=</span> <span class="n">housing</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">plot_cols</span><span class="p">]</span>
+
+<span class="c1"># 선형 회귀선 표시
+</span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plot_cols</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="p">:</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="p">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">plot_cols</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">plot_housing</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+</code></pre></div>                </div>
+                <p><img src="https://github.com/user-attachments/assets/8063c063-441f-4cc4-84f6-9ef0813b44d9" alt="image" /></p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>상관관계 히트맵 확인
+        <ul>
+          <li>상관관계를 시각적으로 명확하게 확인할 수 있는 히트맵을 사용</li>
+          <li><code class="language-plaintext highlighter-rouge">DIS</code>와 <code class="language-plaintext highlighter-rouge">B</code>가 상관관계가 낮은 걸 확인 가능
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 상관관계 히트맵
+</span>  <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+  <span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">plot_housing</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'coolwarm'</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s">'.2f'</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Correlation Heatmap'</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>            </div>
+            <p><img src="https://github.com/user-attachments/assets/f0ba40d7-80d2-45a5-9d75-1ac1bd4b9c00" alt="image" /></p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="3-특성과-타겟-변수-분리">3. 특성과 타겟 변수 분리</h4>
+<ul>
+  <li>사용할 특성(독립변수)는 ‘LSTAT’, ‘RM’, ‘INDUS’, ‘TAX’, ‘PTRATIO’, ‘CRIM’, ‘NOX’, ‘AGE’, ‘RAD’</li>
+  <li>타겟 변수(말그대로 예측할 데이터)는 ‘MEDV’
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 특성과 타겟 변수 분리
+</span>  <span class="n">X</span> <span class="o">=</span> <span class="n">housing_processed</span><span class="p">[[</span><span class="s">'LSTAT'</span><span class="p">,</span> <span class="s">'RM'</span><span class="p">,</span> <span class="s">'INDUS'</span><span class="p">,</span> <span class="s">'TAX'</span><span class="p">,</span> <span class="s">'PTRATIO'</span><span class="p">,</span> <span class="s">'CRIM'</span><span class="p">,</span> <span class="s">'NOX'</span><span class="p">,</span> <span class="s">'AGE'</span><span class="p">,</span> <span class="s">'RAD'</span><span class="p">]]</span>  <span class="c1"># 독립 변수
+</span>  <span class="n">y</span> <span class="o">=</span> <span class="n">housing_processed</span><span class="p">[</span><span class="s">'MEDV'</span><span class="p">]</span>  <span class="c1"># 타겟 변수
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="4-모델-선택-및-훈련">4. 모델 선택 및 훈련</h4>
+<ul>
+  <li>선형회귀, 다항회귀, 의사결정나무, 랜덤포레스트, 리지 회귀, 라쏘 회귀에 대해서 훈련을 진행</li>
+  <li>이 내용은 작성하기에는 너무 길어서 깃허브에만 올려놨음!
+    <ul>
+      <li>참고 링크 : <a href="https://github.com/hzi09/Assignment/tree/main/CH2_Assignment">hyunji’s github</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="5-모델-평가">5. 모델 평가</h4>
+<ul>
+  <li>모델 별로 성능(MAE, MSE, R2)를 구하여 결과를 비교
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 모델별 성능 저장
+</span>  <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+      <span class="s">'Model'</span><span class="p">:</span> <span class="p">[</span><span class="s">'Linear Regression'</span><span class="p">,</span> <span class="s">'Polynomial Regression'</span><span class="p">,</span> <span class="s">'Decision Tree'</span><span class="p">,</span> <span class="s">'Random Forest'</span><span class="p">,</span> <span class="s">'Ridge Regression'</span><span class="p">,</span> <span class="s">'Lasso Regression'</span><span class="p">],</span>
+      <span class="s">'MAE'</span><span class="p">:</span> <span class="p">[</span><span class="n">lr_mae</span><span class="p">,</span> <span class="n">pr_mae</span><span class="p">,</span> <span class="n">tree_mae</span><span class="p">,</span> <span class="n">rf_mae</span><span class="p">,</span> <span class="n">ri_mae</span><span class="p">,</span> <span class="n">ls_mae</span><span class="p">],</span>
+      <span class="s">'MSE'</span><span class="p">:</span> <span class="p">[</span><span class="n">lr_mse</span><span class="p">,</span> <span class="n">pr_mse</span><span class="p">,</span> <span class="n">tree_mse</span><span class="p">,</span> <span class="n">rf_mse</span><span class="p">,</span> <span class="n">ri_mse</span><span class="p">,</span> <span class="n">ls_mse</span><span class="p">],</span>
+      <span class="s">'R2'</span><span class="p">:</span> <span class="p">[</span><span class="n">lr_r2</span><span class="p">,</span> <span class="n">pr_r2</span><span class="p">,</span> <span class="n">tree_r2</span><span class="p">,</span> <span class="n">rf_r2</span><span class="p">,</span> <span class="n">ri_r2</span><span class="p">,</span> <span class="n">ls_r2</span><span class="p">]</span>
+  <span class="p">})</span>
+
+  <span class="c1"># 서브플롯 생성
+</span>  <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>  
+
+  <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">'skyblue'</span><span class="p">,</span> <span class="s">'green'</span><span class="p">,</span> <span class="s">'purple'</span><span class="p">]</span>
+
+  <span class="c1"># 그래프를 각각 생성
+</span>  <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="s">'MAE'</span><span class="p">,</span> <span class="s">'MSE'</span><span class="p">,</span> <span class="s">'R2'</span><span class="p">],</span> <span class="n">colors</span><span class="p">):</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">'Model'</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="n">metric</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s"> Comparison'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s"> Value'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Model'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+      <span class="c1"># x축 기울기
+</span>      <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">'Model'</span><span class="p">])))</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">'Model'</span><span class="p">],</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+
+  <span class="c1"># 레이아웃 조정 및 출력
+</span>  <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>    
+</code></pre></div>    </div>
+    <p><img src="https://github.com/user-attachments/assets/70521ddb-ffc9-46f1-af3d-983b2c4827fb" alt="image" /></p>
+  </li>
+  <li>
+    <p>라쏘회귀가 R2값이 가장 높은 것으로 확인되었다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: right"> </th>
+          <th style="text-align: right">선형회귀</th>
+          <th style="text-align: right">다항회귀</th>
+          <th style="text-align: right">의사결정나무</th>
+          <th style="text-align: right">랜덤포레스트</th>
+          <th style="text-align: right">리지회귀</th>
+          <th style="text-align: right">라쏘회귀</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: right">Mean Absolute Error (MAE)</td>
+          <td style="text-align: right">2.4453</td>
+          <td style="text-align: right">2.1346</td>
+          <td style="text-align: right">2.6892</td>
+          <td style="text-align: right">1.9230</td>
+          <td style="text-align: right">2.4510</td>
+          <td style="text-align: right">1.8711</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">Mean Squared Error (MSE)</td>
+          <td style="text-align: right">13.0004</td>
+          <td style="text-align: right">8.7704</td>
+          <td style="text-align: right">13.7651</td>
+          <td style="text-align: right">6.3052</td>
+          <td style="text-align: right">13.0244</td>
+          <td style="text-align: right">5.9593</td>
+        </tr>
+        <tr>
+          <td style="text-align: right">R² Score</td>
+          <td style="text-align: right">0.7342</td>
+          <td style="text-align: right">0.8207</td>
+          <td style="text-align: right">0.7186</td>
+          <td style="text-align: right">0.8711</td>
+          <td style="text-align: right">0.7337</td>
+          <td style="text-align: right">0.8781</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 41-44</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 47-48</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />프로그래머스 입문 DAY 25 → 2문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />머신러닝 과제 마무리하고 README 작성하기</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />장고 강의 1-4강</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  틀린 부분이 많아서 부족한 지도학습이지만, 그래도 기록용으로 작성..! 나중에 머신러닝을 제대로 공부하면 이 내용을 제대로 수정하고 싶다. 못했던 도전과제도 같이ㅎㅎ</p>
+
+<p>  내일 머신러닝 과제 제출이라서 호다닥 제출하기 위해서 README까지 야무지게 작성중이다. 오늘은 스탠다드반에서 머신러닝에 관련된 내용을 배웠는데, 과제를 하기 전에 배웠으면 훨씬 더 의미가 있지 않았을까 싶다. 그래도 과제하면서 접했던 것들을 다시 봐서 반가웠다.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D" class="page__taxonomy-item p-category" rel="tag">머신러닝</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%A7%80%EB%8F%84%ED%95%99%EC%8A%B5" class="page__taxonomy-item p-category" rel="tag">지도학습</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2024-12-30T00:00:00+09:00">December 30, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/pandas8/" class="pagination--pager" title="[TIL] 내일배움캠프 35일차_[Python] 인덱스, 데이터프레임">이전</a>
+    
+    
+      <a href="/til/Supervised_ml2/" class="pagination--pager" title="[TIL] 내일배움캠프 36일차_[ML] ch2.개인과제 - 1. 지도학습(도전과제)">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

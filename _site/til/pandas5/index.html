@@ -1,0 +1,1157 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 32일차_[Pandas] 데이터 변형하기 | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 32일차_[Pandas] 데이터 변형하기">
+<meta property="og:url" content="https://hzi09.github.io/til/pandas5/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-12-26T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/pandas5/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 32일차_[Pandas] 데이터 변형하기">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2024-12-26T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/pandas5/" itemprop="url">[TIL] 내일배움캠프 32일차_[Pandas] 데이터 변형하기
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-12-26T00:00:00+09:00">December 26, 2024</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#데이터-정렬과-병합">데이터 정렬과 병합</a><ul><li><a href="#1-데이터-정렬">1. 데이터 정렬</a></li><li><a href="#2-데이터-병합">2. 데이터 병합</a></li></ul></li><li><a href="#그룹화-및-집계-피벗테이블">그룹화 및 집계, 피벗테이블</a><ul><li><a href="#1-데이터-그룹화-및-집계">1. 데이터 그룹화 및 집계</a></li><li><a href="#2-피벗테이블-사용하기">2. 피벗테이블 사용하기</a></li></ul></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="데이터-정렬과-병합">데이터 정렬과 병합</h2>
+<h3 id="1-데이터-정렬">1. 데이터 정렬</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 예시 데이터프레임 생성
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'이름'</span><span class="p">:</span> <span class="p">[</span><span class="s">'철수'</span><span class="p">,</span> <span class="s">'영희'</span><span class="p">,</span> <span class="s">'민수'</span><span class="p">,</span> <span class="s">'지수'</span><span class="p">],</span>
+    <span class="s">'나이'</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+    <span class="s">'직업'</span><span class="p">:</span> <span class="p">[</span><span class="s">'학생'</span><span class="p">,</span> <span class="s">'회사원'</span><span class="p">,</span> <span class="s">'학생'</span><span class="p">,</span> <span class="s">'프리랜서'</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4> sort_values()를 사용한 값(Value) 기준 정렬 </h4>
+
+<ul>
+  <li>
+    <p>특정 열의 값을 기준으로 데이터를 오름차순 또는 내림차순(<code class="language-plaintext highlighter-rouge">ascending=Fals</code>)으로 정렬 가능</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># '나이' 기준으로 오름차순 정렬
+</span>  <span class="n">sorted_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'나이'</span><span class="p">)</span>
+    
+  <span class="c1"># '나이' 기준으로 내림차순 정렬
+</span>  <span class="n">sorted_df_desc</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'나이'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>오름차순 정렬 결과 :</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="n">이름</span>  <span class="n">나이</span>       <span class="n">직업</span>
+  <span class="mi">2</span>  <span class="n">민수</span>   <span class="mi">22</span>      <span class="n">학생</span>
+  <span class="mi">0</span>  <span class="n">철수</span>   <span class="mi">25</span>      <span class="n">학생</span>
+  <span class="mi">1</span>  <span class="n">영희</span>   <span class="mi">30</span>    <span class="n">회사원</span>
+  <span class="mi">3</span>  <span class="n">지수</span>   <span class="mi">35</span>  <span class="n">프리랜서</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> sort_values() 를 사용한 여러 열 기준 정렬 </h4>
+
+<ul>
+  <li>
+    <p>여러 열을 기준으로 정렬. 우선순위에 따라 첫 번째 열부터 정렬</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># '직업'을 기준으로, 같은 직업 내에서 '나이' 오름차순 정렬
+</span>  <span class="n">sorted_df_multi</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s">'직업'</span><span class="p">,</span> <span class="s">'나이'</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">sorted_df_multi</span><span class="p">)</span>
+    
+  <span class="c1"># '이름'은 오름차순으로 '나이'는 내림차순으로 정렬
+</span>  <span class="n">sorted_df_multi</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s">'나이'</span><span class="p">,</span> <span class="s">'이름'</span><span class="p">],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">]))</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">sorted_df_multi</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> sort_index() 를 사용한 인덱스 기준 정렬 </h4>
+
+<ul>
+  <li>
+    <p>인덱스를 기준으로 데이터를 정렬</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 인덱스 기준으로 정렬
+</span>  <span class="n">sorted_index_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sort_index</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">sorted_index_df</span><span class="p">)</span>
+    
+  <span class="c1"># 인덱스를 내림차순으로 정렬
+</span>  <span class="n">sorted_index_df_desc</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">sorted_index_df_desc</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-데이터-병합">2. 데이터 병합</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 예시 데이터프레임 생성
+</span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s">'이름'</span><span class="p">:</span> <span class="p">[</span><span class="s">'철수'</span><span class="p">,</span> <span class="s">'영희'</span><span class="p">,</span> <span class="s">'민수'</span><span class="p">],</span>
+    <span class="s">'나이'</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">22</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s">'이름'</span><span class="p">:</span> <span class="p">[</span><span class="s">'철수'</span><span class="p">,</span> <span class="s">'영희'</span><span class="p">,</span> <span class="s">'지수'</span><span class="p">],</span>
+    <span class="s">'직업'</span><span class="p">:</span> <span class="p">[</span><span class="s">'학생'</span><span class="p">,</span> <span class="s">'회사원'</span><span class="p">,</span> <span class="s">'프리랜서'</span><span class="p">]</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h4> merge() 를 사용한 데이터프레임 병합 </h4>
+
+<ul>
+  <li>SQL의 JOIN과 유사하게 두 데이터프레임을 공통 열을 기준으로 병합</li>
+  <li>
+    <p>inner join을 사용하기 때문에 공통 열이 없는 데이터는 삭제함</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># '이름'을 기준으로 병합
+</span>  <span class="n">merged_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">'이름'</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과 :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     이름  나이    직업
+  0  철수   25   학생
+  1  영희   30  회사원
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> 다양한 merge() 방식 </h4>
+
+<ul>
+  <li>유일 값이 아닌 경우에 중복값이 많이 생길 수 있음</li>
+  <li>여러번 merge 할 수 있음</li>
+  <li><code class="language-plaintext highlighter-rouge">how = ''</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">inner</code> (기본값): 공통된 데이터만 병합.</li>
+      <li><code class="language-plaintext highlighter-rouge">outer</code>: 공통되지 않은 데이터도 포함하여 병합, 없는 값은 NaN으로 채움.</li>
+      <li><code class="language-plaintext highlighter-rouge">left</code>: 왼쪽 데이터프레임 기준으로 병합.</li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">right</code>: 오른쪽 데이터프레임 기준으로 병합.</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># outer join을 사용한 병합
+</span><span class="n">merged_df_outer</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">'이름'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">'outer'</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>결과 :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     이름   나이       직업
+  0  철수  25.0      학생
+  1  영희  30.0    회사원
+  2  민수  22.0      NaN
+  3  지수   NaN  프리랜서
+    
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> concat() 을 사용한 데이터프레임 연결 </h4>
+
+<ul>
+  <li>
+    <p>행 또는 열 단위로 데이터프레임을 연결</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 행 단위로 데이터프레임 연결
+</span>  <span class="n">concat_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">concat_df</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과 :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      이름    나이       직업
+  0   철수  25.0       NaN
+  1   영희  30.0       NaN
+  2   민수  22.0       NaN
+  0   철수   NaN      학생
+  1   영희   NaN    회사원
+  2   지수   NaN  프리랜서
+    
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>열 단위로 연결하고 싶다면 <code class="language-plaintext highlighter-rouge">axis = 1</code> 지정</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 열 단위로 데이터프레임 연결
+</span>  <span class="n">concat_df_axis1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> join() 을 사용항 데이터프레임 병합 </h4>
+
+<ul>
+  <li>
+    <p>인덱스를 기준으로 데이터 프레임을 병합할 때 사용</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 예시 데이터프레임 생성
+</span>  <span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+      <span class="s">'직업'</span><span class="p">:</span> <span class="p">[</span><span class="s">'학생'</span><span class="p">,</span> <span class="s">'회사원'</span><span class="p">,</span> <span class="s">'프리랜서'</span><span class="p">],</span>
+      <span class="s">'연봉'</span><span class="p">:</span> <span class="p">[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">]</span>
+  <span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'철수'</span><span class="p">,</span> <span class="s">'영희'</span><span class="p">,</span> <span class="s">'지수'</span><span class="p">])</span>
+    
+  <span class="c1"># 인덱스를 기준으로 병합
+</span>  <span class="n">joined_df</span> <span class="o">=</span> <span class="n">df1</span><span class="p">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'이름'</span><span class="p">).</span><span class="n">join</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      나이       직업     연봉
+  이름
+  철수     25      학생  2000.0
+  영희     30    회사원  3000.0
+  민수     22      NaN     NaN
+
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="그룹화-및-집계-피벗테이블">그룹화 및 집계, 피벗테이블</h2>
+<h3 id="1-데이터-그룹화-및-집계">1. 데이터 그룹화 및 집계</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 예시 데이터프레임 생성
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'이름'</span><span class="p">:</span> <span class="p">[</span><span class="s">'철수'</span><span class="p">,</span> <span class="s">'영희'</span><span class="p">,</span> <span class="s">'민수'</span><span class="p">,</span> <span class="s">'지수'</span><span class="p">,</span> <span class="s">'철수'</span><span class="p">,</span> <span class="s">'영희'</span><span class="p">],</span>
+    <span class="s">'과목'</span><span class="p">:</span> <span class="p">[</span><span class="s">'수학'</span><span class="p">,</span> <span class="s">'수학'</span><span class="p">,</span> <span class="s">'과학'</span><span class="p">,</span> <span class="s">'과학'</span><span class="p">,</span> <span class="s">'영어'</span><span class="p">,</span> <span class="s">'영어'</span><span class="p">],</span>
+    <span class="s">'점수'</span><span class="p">:</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">88</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4> groupby() 를 사용한 그룹화 </h4>
+
+<ul>
+  <li>특정 열을 기준으로 그룹화</li>
+  <li>
+    <p>활용할 수 있는 상태로만 만들어줌!</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># '이름'을 기준으로 그룹화
+</span>  <span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'이름'</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> 집계함수 사용하기 </h4>
+
+<ul>
+  <li>
+    <p>그룹화한 데이터에 대해 다양한 집계 함수(<code class="language-plaintext highlighter-rouge">mean</code>, <code class="language-plaintext highlighter-rouge">sum</code>, <code class="language-plaintext highlighter-rouge">count</code> 등)를 사용 가능</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 각 학생의 평균 점수 계산
+</span>  <span class="n">mean_scores</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">[</span><span class="s">'점수'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>여러 집계 함수를 동시에 사용 가능</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">grouped</span><span class="p">[</span><span class="s">'점수'</span><span class="p">].</span><span class="n">agg</span><span class="p">([</span><span class="s">'sum'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">])</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과 :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        sum  mean
+  이름
+  민수    95  95.0
+  영희   173  86.5
+  철수   165  82.5
+  지수    80  80.0
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> 여러 열을 기준으로 그룹화하기 </h4>
+
+<ul>
+  <li>
+    <p>여러 열을 기준으로 그룹화도 가능</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">grouped_multi</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'이름'</span><span class="p">,</span> <span class="s">'과목'</span><span class="p">])[</span><span class="s">'점수'</span><span class="p">].</span><span class="nb">sum</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">grouped_multi</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  이름  과목
+  민수  과학    95
+  영희  수학    85
+        영어    88
+  철수  수학    90
+        영어    75
+  지수  과학    80
+  Name: 점수, dtype: int64
+    
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-피벗테이블-사용하기">2. 피벗테이블 사용하기</h3>
+
+<ul>
+  <li>데이터를 요약하는 강력한 도구</li>
+  <li>엑셀의 피벗테이블과 유사하며, 특정 기준에 따라 데이터 재구조화 가능</li>
+</ul>
+
+<h4> `pivot_table()` 기본 사용법 </h4>
+
+<ul>
+  <li>
+    <p>데이터를 요약하고, 특정 기준에 따라 재구조화</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 피벗테이블 생성: '이름'을 인덱스로, '과목'을 컬럼으로 하여 점수의 평균(mean) 계산
+</span>  <span class="n">pivot</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s">'이름'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s">'과목'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s">'점수'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s">'mean'</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과 :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  과목   과학    수학    영어
+  이름
+  민수  95.0   NaN   NaN
+  영희   NaN  85.0  88.0
+  철수   NaN  90.0  75.0
+  지수  80.0   NaN   NaN
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4>  여러 집계 함수 사용하기  </h4>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">aggfunc</code>에 여러 집계함수를 지정한다면, 다양한 요약 통계를 얻을 수 있음</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 점수의 합계와 평균을 계산하는 피벗테이블 생성
+</span>  <span class="n">pivot_multi</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s">'이름'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s">'과목'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s">'점수'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="p">[</span><span class="s">'sum'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">])</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          sum          mean
+  과목     과학   수학   영어   과학   수학   영어
+  이름
+  민수   95.0   NaN   NaN  95.0   NaN   NaN
+  영희    NaN  85.0  88.0   NaN  85.0  88.0
+  철수    NaN  90.0  75.0   NaN  90.0  75.0
+  지수   80.0   NaN   NaN  80.0   NaN   NaN
+
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> margins 옵션을 사용하여 전체 합계 추가하기 </h4>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">margins=True</code> 옵션을 사용하면, 각 행과 열의 <strong>합계</strong>가 추가된 피벗테이블을 생성 가능</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># 각 이름별, 과목별 총합을 포함한 피벗테이블 생성
+</span>  <span class="n">pivot_with_totals</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s">'이름'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s">'과목'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s">'점수'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s">'sum'</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>결과 :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  과목      과학    수학    영어     All
+  이름
+  민수    95.0   NaN   NaN    95.0
+  영희     NaN  85.0  88.0   173.0
+  철수     NaN  90.0  75.0   165.0
+  지수    80.0   NaN   NaN    80.0
+  All   175.0  175.0  163.0  513.0
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 35-37</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 43-44</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코테 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />프로그래머스 코딩테스트 Day 24</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />머신러닝 과제 ~ing</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  너무.. 어려운 머신러닝.. 하루종일 붙잡고 있는중.. 최대한 내일까지 해서 주말에는 장고 강의 들어야겠다ㅠㅠ</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#pandas" class="page__taxonomy-item p-category" rel="tag">Pandas</a><span class="sep">, </span>
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2024-12-26T00:00:00+09:00">December 26, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/pandas4/" class="pagination--pager" title="[TIL] 내일배움캠프 31일차_[Pandas] 데이터 확인, 필터링, 타입 변환">이전</a>
+    
+    
+      <a href="/til/Week5_WIL/" class="pagination--pager" title="[WIL] 내일배움캠프 5주차 - AI 서비스 개발 9기">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

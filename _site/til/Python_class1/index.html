@@ -1,0 +1,1447 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 사전캠프 3일차_[Python] 강의 1주차 | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 사전캠프 3일차_[Python] 강의 1주차">
+<meta property="og:url" content="https://hzi09.github.io/til/Python_class1/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-10-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/Python_class1/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 사전캠프 3일차_[Python] 강의 1주차">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2024-10-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/Python_class1/" itemprop="url">[TIL] 내일배움캠프 사전캠프 3일차_[Python] 강의 1주차
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-10-23T00:00:00+09:00">October 23, 2024</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#0-jupyter-notebook-실행법">0. Jupyter Notebook 실행법</a></li><li><a href="#1-변수">1. 변수</a></li><li><a href="#2-연산자">2. 연산자</a></li><li><a href="#3-데이터-타입">3. 데이터 타입</a></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL1.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+
+<h2 id="0-jupyter-notebook-실행법">0. Jupyter Notebook 실행법</h2>
+
+<ol>
+  <li>Windows에서 ‘cmd’를 입력하여 명령 프롬프트 실행</li>
+  <li>‘jupyter notebook’을 입력하여 실행
+    <ul>
+      <li>안될경우 폴더의 위치 확인 필요
+        <ul>
+          <li>상위 폴더로 이동하는 명령어 ‘cd ..’</li>
+          <li>하위 폴더로 이동하는 명령어 ‘cd ./ 폴더명’ (./ 생략가능)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="1-변수">1. 변수</h2>
+
+<h3> 변수 </h3>
+
+<ul>
+  <li>데이터를 저장하는 공간</li>
+  <li>값을 저장하고 그 값을 꺼내 사용
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">'banana'</span>
+
+<span class="c1"># 값을 꺼내서 사용하기
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>  <span class="c1"># 10
+</span><span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>  <span class="c1"># banana
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 변수 선언과 할당 </h3>
+
+<ul>
+  <li>변수를 선언할 때 별도의 키워드를 사용하지 않고, 사용하고 싶은 이름으로 선언</li>
+  <li><code class="language-plaintext highlighter-rouge">=</code> 기호를 사용하여 변수를 선언하고 값을 할당</li>
+  <li>⭐할당 연산자 <code class="language-plaintext highlighter-rouge">=</code>의 의미
+    <ul>
+      <li>연산자는 수학의 등호와 다름</li>
+      <li>컴퓨터에서 <code class="language-plaintext highlighter-rouge">=</code>를 “같다”라는 의미가 아닌 <strong>“할당하다”</strong>라는 의미로 해석</li>
+    </ul>
+  </li>
+</ul>
+
+<h3> 변수 이름 규칙 </h3>
+
+<ul>
+  <li>문자(A-Z, a-z), 숫자(0-9), 밑줄(_)만 사용 가능
+    <ul>
+      <li>숫자로 시작X
+        <ul>
+          <li>ex. 1st_place(❌), place_1st(⭕)</li>
+        </ul>
+      </li>
+      <li>대소문자 구분
+        <ul>
+          <li>ex. Age, age, AGE는 모두 다른 변수로 인식</li>
+        </ul>
+      </li>
+      <li>파이썬의 예약어는 변수 사용 불가
+        <ul>
+          <li>ex. for, if, class 등</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>의미를 알기 쉽게, 규칙에 맞게 이름을 짓는 것이 중요
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>         <span class="c1"># 나쁜 예: 의미를 알기 어려움
+</span><span class="n">user_age</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># 좋은 예: 변수의 역할을 알기 쉬움
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 여러 번수에 한 번에 값 할당 </h3>
+
+<ul>
+  <li>동시에 값 할당
+    <ul>
+      <li>Python에서는 여러 변수에 동시에 값을 할당 가능
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>같은 값 할당
+    <ul>
+      <li>여러 변수에 동일한 값 할당
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">=</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">100</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3> 메모리 관리 </h3>
+
+<ul>
+  <li>변수의 범위
+    <ul>
+      <li>변수는 어디에서 선언되었는지에 따라 접근할 수 있는 범위가 달라지며, 이 범위를 <strong>스코프(Scope)</strong>라 함</li>
+    </ul>
+  </li>
+  <li>변수의 스코프
+    <ul>
+      <li>전역 변수(Global Variable) : 프로그램 전체에서 접근할 수 있는 변수</li>
+      <li>지역 변수(Local Variable) : 특정 코드 블록이나 함수 내에서만 접근할 수 있는 변수</li>
+    </ul>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
+     <span class="n">message</span> <span class="o">=</span> <span class="s">"Hello"</span> <span class="c1"># 지역 변수
+</span>     <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="n">greet</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>   <span class="c1"># 에러 발생: 'message'는 함수 내에서만 사용 가능
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-연산자">2. 연산자</h2>
+
+<h3> 산술 연산자(Arithmetic Operators) </h3>
+
+<ul>
+  <li>
+    <p>기본적인 수학 연산을 수행</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">+</td>
+          <td style="text-align: center">덧셈</td>
+          <td style="text-align: center">3 + 2</td>
+          <td style="text-align: center">5</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">-</td>
+          <td style="text-align: center">뺄셈</td>
+          <td style="text-align: center">5 - 2</td>
+          <td style="text-align: center">3</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">*</td>
+          <td style="text-align: center">곱셈</td>
+          <td style="text-align: center">4 * 3</td>
+          <td style="text-align: center">12</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">/</td>
+          <td style="text-align: center">나눗셈</td>
+          <td style="text-align: center">10 / 2</td>
+          <td style="text-align: center">5.0</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">%</td>
+          <td style="text-align: center">나머지</td>
+          <td style="text-align: center">7 % 3</td>
+          <td style="text-align: center">1</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">**</td>
+          <td style="text-align: center">거듭제곱</td>
+          <td style="text-align: center">2 ** 3</td>
+          <td style="text-align: center">8</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">//</td>
+          <td style="text-align: center">몫</td>
+          <td style="text-align: center">7 // 3</td>
+          <td style="text-align: center">2</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 13
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 7
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 30
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 3.3333...
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 1
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 1000
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">//</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># 3
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 비교 연산자(Comparison Operators) </h3>
+
+<ul>
+  <li>
+    <p>비교 연산자는 두 값을 비교하여 참(True) 또는 거짓(False)을 반환</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">+</td>
+          <td style="text-align: center">덧셈</td>
+          <td style="text-align: center">3 + 2</td>
+          <td style="text-align: center">5</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">-</td>
+          <td style="text-align: center">뺄셈</td>
+          <td style="text-align: center">5 - 2</td>
+          <td style="text-align: center">3</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">*</td>
+          <td style="text-align: center">곱셈</td>
+          <td style="text-align: center">4 * 3</td>
+          <td style="text-align: center">12</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">/</td>
+          <td style="text-align: center">나눗셈</td>
+          <td style="text-align: center">10 / 2</td>
+          <td style="text-align: center">5.0</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">%</td>
+          <td style="text-align: center">나머지</td>
+          <td style="text-align: center">7 % 3</td>
+          <td style="text-align: center">1</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">**</td>
+          <td style="text-align: center">거듭제곱</td>
+          <td style="text-align: center">2 ** 3</td>
+          <td style="text-align: center">8</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">//</td>
+          <td style="text-align: center">몫</td>
+          <td style="text-align: center">7 // 3</td>
+          <td style="text-align: center">2</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="err">​</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># False
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># True
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span>   <span class="c1"># True
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">)</span>   <span class="c1"># False
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># True
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># False
+</span></code></pre></div>    </div>
+
+    <p class="notice--info">⭐ ==연산자와 =연산자 헷갈리지 않도록 주의!
+ == 연산자는 “같다”는 의미
+ = 연산자 “할당”의 의미</p>
+  </li>
+</ul>
+
+<h3> 논리 연산자(Logical Operators) </h3>
+
+<ul>
+  <li>논리 연산자는 논리값(True, False)을 결합하여 새로운 논리값을 반환</li>
+  <li>
+    <p>논리식을 표현할 때 사용</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">and</td>
+          <td style="text-align: center">값이 같음</td>
+          <td style="text-align: center">3 == 3</td>
+          <td style="text-align: center">True</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">or</td>
+          <td style="text-align: center">값이 다름</td>
+          <td style="text-align: center">3 != 4</td>
+          <td style="text-align: center">True</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">not</td>
+          <td style="text-align: center">큼</td>
+          <td style="text-align: center">5 &gt; 2</td>
+          <td style="text-align: center">True</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">and</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># False
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># True
+</span><span class="k">print</span><span class="p">(</span><span class="ow">not</span> <span class="n">a</span><span class="p">)</span>   <span class="c1"># False
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 대입 연산자(Assignment Operators) </h3>
+
+<ul>
+  <li>대입 연산자는 변수에 값을 할당할 때 사용</li>
+  <li>
+    <p>기본적인 = 외에도 여러 복합 대입 연산자가 있음</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">=</td>
+          <td style="text-align: center">값 할당</td>
+          <td style="text-align: center">x = 5</td>
+          <td style="text-align: center">x = 5</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">+=</td>
+          <td style="text-align: center">더한 후 할당</td>
+          <td style="text-align: center">x += 3</td>
+          <td style="text-align: center">x = x + 3</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">-=</td>
+          <td style="text-align: center">뺀 후 할당</td>
+          <td style="text-align: center">x -= 3</td>
+          <td style="text-align: center">x = x - 3</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">*=</td>
+          <td style="text-align: center">곱한 후 할당</td>
+          <td style="text-align: center">x *= 2</td>
+          <td style="text-align: center">x = x * 2</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">/=</td>
+          <td style="text-align: center">나눈 후 할당</td>
+          <td style="text-align: center">x /= 2</td>
+          <td style="text-align: center">x = x / 2</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">%=</td>
+          <td style="text-align: center">나머지를 구한 후 할당</td>
+          <td style="text-align: center">x %= 2</td>
+          <td style="text-align: center">x = x % 2</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">**=</td>
+          <td style="text-align: center">거듭제곱 후 할당</td>
+          <td style="text-align: center">x **= 2</td>
+          <td style="text-align: center">x = x ** 2</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">//=</td>
+          <td style="text-align: center">몫을 구한 후 할당</td>
+          <td style="text-align: center">x //= 2</td>
+          <td style="text-align: center">x = x // 2</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3> 비트 연산자(Bitwise Operators) </h3>
+
+<ul>
+  <li>
+    <p>비트 연산자는 이진수(bit) 수준에서 연산을 수행</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">&amp;</td>
+          <td style="text-align: center">비트 AND</td>
+          <td style="text-align: center">5 &amp; 3</td>
+          <td style="text-align: center">1</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">|</td>
+          <td style="text-align: center">비트 OR</td>
+          <td style="text-align: center">5 | 7</td>
+          <td style="text-align: center">7</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">^</td>
+          <td style="text-align: center">비트 XOR</td>
+          <td style="text-align: center">5 ^ 3</td>
+          <td style="text-align: center">6</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">~</td>
+          <td style="text-align: center">비트 NOT (보수)</td>
+          <td style="text-align: center">~5</td>
+          <td style="text-align: center">-6</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">«</td>
+          <td style="text-align: center">왼쪽 시프트 (Left Shift)</td>
+          <td style="text-align: center">5 « 1</td>
+          <td style="text-align: center">10</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">»</td>
+          <td style="text-align: center">오른쪽 시프트 (Right Shift)</td>
+          <td style="text-align: center">5 » 1</td>
+          <td style="text-align: center">2</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>         <span class="c1"># 이진수로 101
+</span><span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>         <span class="c1"># 이진수로 011
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># 1 (이진수 001)
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># 7 (이진수 111)
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">^</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># 6 (이진수 110)
+</span><span class="k">print</span><span class="p">(</span><span class="o">~</span><span class="n">a</span><span class="p">)</span>     <span class="c1"># -6 (이진수 보수)
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 10 (이진수 1010)
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 2 (이진수 010)
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 멤버십 연산자(Membership Operators) </h3>
+
+<ul>
+  <li>
+    <p>멤버십 연산자는 특정 값이 시퀀스(문자열, 리스트, 튜플 등)에 속해 있는지 확인</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">in</td>
+          <td style="text-align: center">시퀀스에 값이 포함되어 있는지 확인</td>
+          <td style="text-align: center">“a” in “apple”</td>
+          <td style="text-align: center">True</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">not in</td>
+          <td style="text-align: center">시퀀스에 값이 포함되어 있지 않은지 확인</td>
+          <td style="text-align: center">“b” not in “apple”</td>
+          <td style="text-align: center">True</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s">"apple"</span><span class="p">,</span> <span class="s">"banana"</span><span class="p">,</span> <span class="s">"cherry"</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"apple"</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">)</span> <span class="c1"># True
+</span><span class="k">print</span><span class="p">(</span><span class="s">"grape"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">)</span> <span class="c1"># True
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 식별 연산자(Identity Operators) </h3>
+
+<ul>
+  <li>
+    <p>식별 연산자는 두 변수가 동일한 객체를 가리키는지 확인</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">연산자</th>
+          <th style="text-align: center">기능</th>
+          <th style="text-align: center">예시</th>
+          <th style="text-align: center">결과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">is</td>
+          <td style="text-align: center">두 변수가 동일 객체인지 확인</td>
+          <td style="text-align: center">a is b</td>
+          <td style="text-align: center">True or False</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">is not</td>
+          <td style="text-align: center">두 변수가 동일하지 않은 객체인지 확인</td>
+          <td style="text-align: center">a is not b</td>
+          <td style="text-align: center">True or False</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s">"apple"</span><span class="p">,</span> <span class="s">"banana"</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s">"apple"</span><span class="p">,</span> <span class="s">"banana"</span><span class="p">]</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">x</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="n">z</span><span class="p">)</span>       <span class="c1"># True (z는 x를 가리킴)
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="n">y</span><span class="p">)</span>       <span class="c1"># False (x와 y는 내용은 같지만, 다른 객체)
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>       <span class="c1"># True (x와 y는 값이 동일함)
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">y</span><span class="p">)</span>   <span class="c1"># True (x와 y는 다른 객체)
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3-데이터-타입">3. 데이터 타입</h2>
+
+<h3> 데이터 타입이란? </h3>
+<ul>
+  <li>데이터 타입은 말 그대로 데이터의 종류를 나타냄</li>
+  <li>Python에서 변수에 값을 저장할 때, 그 값이 숫자인지, 문자(텍스트)인지, 논리값인지 구분하는 것이 중요</li>
+  <li>데이터 타입을 알아야 해당 데이터에 적합한 연산이나 처리 가능</li>
+</ul>
+
+<h3> 숫자형(Numeric Types)  </h3>
+
+<ul>
+  <li>숫자형 데이터는 기본적인 산술연산자(+, -, *, /) 사용 가능</li>
+  <li>정수형 (int)
+    <ul>
+      <li>정수형은 소수점 없이 정수를 나타냄</li>
+      <li>ex. 10, 5, 0</li>
+    </ul>
+  </li>
+  <li>실수형(float)
+    <ul>
+      <li>실수형은 소수점을 포함한 숫자를 나타냄</li>
+      <li>ex. 3.14, 0.001, 2.0</li>
+    </ul>
+  </li>
+  <li>복소수형(complex)
+    <ul>
+      <li>Python은 복소수(complex number)도 지원</li>
+      <li>ex. 1 + 2j, 3 - 4j</li>
+    </ul>
+  </li>
+</ul>
+
+<h3> 문자형(String Type) </h3>
+
+<ul>
+  <li>문자형(String)
+    <ul>
+      <li>문자, 단어, 문장을 저장하는 데이터 타입</li>
+      <li>작은따옴표 <code class="language-plaintext highlighter-rouge">'</code> 또는 큰따옴표 <code class="language-plaintext highlighter-rouge">"</code>를 사용하여 표현
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span> <span class="o">=</span> <span class="s">"Alice"</span>
+<span class="n">greeting</span> <span class="o">=</span> <span class="s">'Hello, World!'</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>여러 줄 문자열
+    <ul>
+      <li>여러 줄에 걸쳐 텍스트를 작성하려면 삼중 따옴표 <code class="language-plaintext highlighter-rouge">'''</code> 또는 <code class="language-plaintext highlighter-rouge">"""</code>를 사용
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">message</span> <span class="o">=</span> <span class="s">"""삼중 따옴표를 사용하면
+여러줄에 걸쳐 텍스트 작성이 가능합니다."""</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>문자열 연결과 반복
+    <ul>
+      <li>연결(Concatenation) : + 연산자로 문자열을 연결</li>
+      <li>반복(Replication) : * 연산자로 문자열을 반복
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">full_name</span> <span class="o">=</span> <span class="s">"Alice"</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="s">"Smith"</span>  <span class="c1"># Alice Smith
+</span><span class="n">repeated_greeting</span> <span class="o">=</span> <span class="s">"Hello! "</span> <span class="o">*</span> <span class="mi">3</span>    <span class="c1"># Hello! Hello! Hello!
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>문자열 인덱싱과 슬라이싱
+    <ul>
+      <li>문자열은 인덱스를 통해 개별 문자에 접근할 수 있으며, 슬라이싱을 통해 부분 문자열을 추출
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text</span> <span class="o">=</span> <span class="s">"Python"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>   <span class="c1"># 'P'
+</span><span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span> <span class="c1"># 'yth'
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3> 불리언(Boolean) </h3>
+
+<ul>
+  <li>불리언(Boolean)
+    <ul>
+      <li>참(True) 또는 거짓(False)을 나타내는 데이터 타입</li>
+      <li>불리언 값은 주로 조건문에서 사용되며, True와 False 두 가지 값만 가질 수 있음
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">is_sunny</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">is_raining</span> <span class="o">=</span> <span class="bp">False</span>  
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>불리언 연산
+    <ul>
+      <li>불리언 타입은 논리 연산자(and, or, not)와 함께 사용</li>
+    </ul>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">b</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">and</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># False
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="n">b</span><span class="p">)</span>   <span class="c1"># True
+</span><span class="k">print</span><span class="p">(</span><span class="ow">not</span> <span class="n">a</span><span class="p">)</span>    <span class="c1"># False
+</span></code></pre></div>    </div>
+  </li>
+  <li>비교 연산
+    <ul>
+      <li>비교 연산자(==, !=, &gt;, &lt; 등)를 사용한 결과는 불리언 값으로 반환</li>
+    </ul>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">20</span>
+  
+<span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># False
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">)</span>   <span class="c1"># True
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br />
+​</p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<p>  Python의 기본을 공부했다. 아직은 쉬운 부분이라 막힘없이 잘 해내고 있다. 항상 문제인건 반복문이랑 조건문이던데.. ㅎㅎ 걱정스럽다.주피터 노트북은 예전에 일주일동안 배우면서 사용해서 쉬운데 VSCode나 파이참이 아직 어렵다. 계속 사용하다보면 익숙해지지 않을까..</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a><span class="sep">, </span>
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2024-10-23T00:00:00+09:00">October 23, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/AI_terminology/" class="pagination--pager" title="[TIL] 내일배움캠프 사전캠프 2일차_[AI] AI를 이해하기 위한 필수용어">이전</a>
+    
+    
+      <a href="/python_boj/python_1008/" class="pagination--pager" title="[백준][Python] 1008. A/B">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

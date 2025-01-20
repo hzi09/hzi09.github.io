@@ -1,0 +1,1140 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 29일차_[Python] 클래스와 속성  | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 29일차_[Python] 클래스와 속성">
+<meta property="og:url" content="https://hzi09.github.io/til/Class2/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-12-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/Class2/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 29일차_[Python] 클래스와 속성">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2024-12-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/Class2/" itemprop="url">[TIL] 내일배움캠프 29일차_[Python] 클래스와 속성
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-12-23T00:00:00+09:00">December 23, 2024</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#1-클래스와-객체">1. 클래스와 객체</a></li><li><a href="#2-속성">2. 속성</a></li><li><a href="#3-메서드의-종류">3. 메서드의 종류</a></li><li><a href="#4-상속">4. 상속</a></li><li><a href="#5-가변-인수">5. 가변 인수</a></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+
+<h2 id="1-클래스와-객체">1. 클래스와 객체</h2>
+<ul>
+  <li>클래스(class)
+    <ul>
+      <li>객체를 생성하기 위한 설계도 또는 툴</li>
+      <li>객체가 가질 속성(데이터)과 메서드(행동)을 정의</li>
+    </ul>
+  </li>
+  <li>객체
+    <ul>
+      <li>클래스를 기반으로 생성된 실제 데이터 구조</li>
+      <li>클래스에서 정의한 속성과 메서드를 가짐</li>
+    </ul>
+  </li>
+  <li>예제
+    <ul>
+      <li>아래의 코드에서 <code class="language-plaintext highlighter-rouge">Car</code>는 클래스이고, <code class="language-plaintext highlighter-rouge">car1</code>, <code class="language-plaintext highlighter-rouge">car2</code>는 객체</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Car</span><span class="p">:</span>  <span class="c1"># 클래스 정의
+</span>    <span class="n">brand</span> <span class="o">=</span> <span class="s">"Tesla"</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="s">"Model S"</span>
+
+<span class="c1"># 객체 생성
+</span><span class="n">car1</span> <span class="o">=</span> <span class="n">Car</span><span class="p">()</span>
+<span class="n">car2</span> <span class="o">=</span> <span class="n">Car</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">car1</span><span class="p">.</span><span class="n">brand</span><span class="p">)</span>  <span class="c1"># 출력: Tesla
+</span><span class="k">print</span><span class="p">(</span><span class="n">car2</span><span class="p">.</span><span class="n">model</span><span class="p">)</span>  <span class="c1"># 출력: Model S
+</span></code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="2-속성">2. 속성</h2>
+<ul>
+  <li><strong>속성(attribute</strong>)을 만들 때는 <code class="language-plaintext highlighter-rouge">__init__</code> 메서드 안에서 <code class="language-plaintext highlighter-rouge">self.속성</code>에 값을 할당</li>
+</ul>
+
+<h3>__init__</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">__init__</code>
+    <ul>
+      <li>클래스를 통해 객체를 생성할 때 특정 속성을 초기화하는 메서드</li>
+      <li>객체 생성 시 자동으로 호출됨</li>
+      <li>이렇게 앞뒤로 __(언더바 두개)가 붙은 메서드는 파이썬이 자동으로 호출해주는 메서드로 <strong>스페셜메서드(special method)</strong> 혹은 <strong>매직 메서드(magic method)</strong>라고 부름</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">self</code>
+    <ul>
+      <li>현재 생성된 객체 자신을 참조</li>
+      <li>메서드 내부에서 인스턴스 변수(속성)를 설정하거나 접근할 때 반드시 self를 사용해야함
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  <span class="c1"># 인스턴스 변수 초기화
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+<span class="c1"># 객체 생성
+</span><span class="n">person1</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s">"Alice"</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">person1</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 출력: Alice
+</span><span class="k">print</span><span class="p">(</span><span class="n">person1</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># 출력: 25
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3> 클래스 속성과 인스턴스 속성</h3>
+
+<ul>
+  <li>클래스 속성
+    <ul>
+      <li>클래스 자체에 정의되며, 모든 인스턴스가 공유함</li>
+      <li>동일한 값을 여러 인스턴스가 공유해야 할 때 사용
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="s">"Canine"</span>  <span class="c1"># 클래스 속성
+</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  <span class="c1"># 인스턴스 속성
+</span>
+<span class="n">dog1</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">"Buddy"</span><span class="p">)</span>
+<span class="n">dog2</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">"Charlie"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">dog1</span><span class="p">.</span><span class="n">species</span><span class="p">)</span>  <span class="c1"># 출력: Canine
+</span><span class="k">print</span><span class="p">(</span><span class="n">dog2</span><span class="p">.</span><span class="n">species</span><span class="p">)</span>  <span class="c1"># 출력: Canine
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>인스턴스 속성
+    <ul>
+      <li>각 객체마다 독립적으로 존재하며, 객체 생성 시 정의됨</li>
+      <li>객체마다 다른 값을 저장할 수 있음
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">dog1</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 출력: Buddy
+</span><span class="k">print</span><span class="p">(</span><span class="n">dog2</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 출력: Charlie
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3> 속성 사용하기 </h3>
+
+<ul>
+  <li>속성 확인
+    <ul>
+      <li>객체의 속성을 확인하려면 <code class="language-plaintext highlighter-rouge">__dict__</code>를 사용</li>
+    </ul>
+  </li>
+  <li>동적 속성 추가
+    <ul>
+      <li>객체 생성 후에도 속성 추가 가능</li>
+    </ul>
+  </li>
+  <li>클래스와 인스턴스의 관계
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">isinstance()</code> : 객체가 특정 클래스의 인스턴스인지 확인합니다.</li>
+      <li><code class="language-plaintext highlighter-rouge">type()</code> : 객체의 정확한 클래스를 반환합니다.
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  <span class="c1"># 인스턴스 변수 초기화
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+<span class="c1"># 속성 확인
+</span><span class="k">print</span><span class="p">(</span><span class="n">person1</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>  <span class="c1"># 출력: {'name': 'Alice', 'age': 25'}
+</span>
+<span class="c1"># 동적 속성 추가
+</span><span class="n">person1</span><span class="p">.</span><span class="n">city</span> <span class="o">=</span> <span class="s">"New York"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">person1</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>  <span class="c1"># 출력: {'name': 'Alice', 'age': 25, 'city': 'New York'}
+</span>
+<span class="c1"># 해당 클래스의 인스턴스인지 확인
+</span><span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">person1</span><span class="p">,</span> <span class="n">Person</span><span class="p">))</span>  <span class="c1"># 출력: True
+</span>
+<span class="c1"># 객체의 정확한 클래스를 반환
+</span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">person1</span><span class="p">))</span>                <span class="c1"># 출력: &lt;class '__main__.Person'&gt;
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3-메서드의-종류">3. 메서드의 종류</h2>
+
+<h3>인스턴스 메서드</h3>
+
+<ul>
+  <li>객체에서 호출되며, 첫 번째 매개변수로 self를 받음</li>
+  <li>주로 객체의 상태(속성)에 접근하거나 수정할 때 사용
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+      <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">value</span> <span class="o">+=</span> <span class="n">num</span>
+          <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">value</span>
+
+  <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculator</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">calc</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 출력: 15
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 클래스 메서드 </h3>
+
+<ul>
+  <li>클래스 자체에 동작을 정의</li>
+  <li>첫 번째 매개변수로 cls를 사용하며, 클래스 속성에 접근 가능</li>
+  <li><code class="language-plaintext highlighter-rouge">@classmethod</code> 데코레이터를 사용
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Example</span><span class="p">:</span>
+      <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 클래스 속성
+</span>
+      <span class="o">@</span><span class="nb">classmethod</span>
+      <span class="k">def</span> <span class="nf">increment_count</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+          <span class="n">cls</span><span class="p">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+  <span class="n">Example</span><span class="p">.</span><span class="n">increment_count</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">Example</span><span class="p">.</span><span class="n">count</span><span class="p">)</span>  <span class="c1"># 출력: 1
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 정적 메서드 </h3>
+
+<ul>
+  <li>클래스와 인스턴스에 독립적이며, 특정 작업을 수행할 때 사용</li>
+  <li><code class="language-plaintext highlighter-rouge">@staticmethod</code> 데코레이터를 사용
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Math</span><span class="p">:</span>
+      <span class="o">@</span><span class="nb">staticmethod</span>
+      <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+          <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>  <span class="c1"># 출력: 30
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="4-상속">4. 상속</h2>
+<ul>
+  <li>상속은 기존 클래스를 기반으로 새로운 클래스를 정의하는 객체 지향 프로그래밍의 중요한 기능</li>
+  <li>상속을 통해 코드의 <strong>재사용성</strong>을 높이고, 기존 클래스를 확장하거나 기능 수정 가능</li>
+</ul>
+
+<h3> 기본 상속 구조 </h3>
+
+<ul>
+  <li>상속을 정의할 때, 새로운 클래스(하위 클래스)가 기존 클래스(상위 클래스)를 참조</li>
+  <li>하위 클래스는 상위 클래스의 모든 속성과 메서드를 상속받음</li>
+  <li>하위 클래스에서 필요에 따라 속성이나 메서드를 <strong>재정의(override)</strong>할 수 있습니다.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>  <span class="c1"># 상위 클래스
+</span>      <span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="s">"Hello from Parent!"</span>
+
+  <span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>  <span class="c1"># 하위 클래스
+</span>      <span class="k">pass</span>
+
+  <span class="n">child</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="n">greet</span><span class="p">())</span>  <span class="c1"># 출력: Hello from Parent!
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> 메서드 오버라이딩 </h3>
+
+<ul>
+  <li>하위 클래스에서 상위 클래스의 메서드를 다르게 정의할 수 있으며, 이를 메서드 오버라이딩이라고 함
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="s">"Hello from Parent!"</span>
+
+  <span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+      <span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># 메서드 재정의
+</span>          <span class="k">return</span> <span class="s">"Hello from Child!"</span>
+
+  <span class="n">child</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="n">greet</span><span class="p">())</span>  <span class="c1"># 출력: Hello from Child!
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4>super()</h4>
+
+<ul>
+  <li>하위 클래스에서 상위 클래스의 메서드나 속성을 호출 가능
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Parent</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="s">"Hello from Parent!"</span>
+
+  <span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+      <span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="n">parent_message</span> <span class="o">=</span> <span class="nb">super</span><span class="p">().</span><span class="n">greet</span><span class="p">()</span>  <span class="c1"># 상위 클래스 메서드 호출
+</span>          <span class="k">return</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">parent_message</span><span class="si">}</span><span class="s"> And hello from Child!"</span>
+
+  <span class="n">child</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">child</span><span class="p">.</span><span class="n">greet</span><span class="p">())</span>  
+  <span class="c1"># 출력: Hello from Parent! And hello from Child!
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="5-가변-인수">5. 가변 인수</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">*args</code>와 <code class="language-plaintext highlighter-rouge">**kwargs</code>는 함수나 메서드에서 가변적인 인수를 처리할 때 사용</li>
+  <li>이를 활용하면 클래스의 초기화 시 더 유연하게 속성을 설정 가능</li>
+</ul>
+
+<h3> *args: 위치 인수 처리 </h3>
+
+<ul>
+  <li>*args는 여러 개의 위치 인수를 하나의 튜플로 처리</li>
+  <li>몇 개의 인수가 들어올지 모를 때 사용
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s">"Alice"</span><span class="p">,</span> <span class="s">"A"</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 출력: Alice
+</span>  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">grade</span><span class="p">)</span>  <span class="c1"># 출력: A
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> 동적으로 속성 추가 </h4>
+
+<ul>
+  <li>*args를 활용하면 인수의 수나 순서에 따라 속성을 동적으로 추가 가능
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">FlexibleStudent</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+          <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+              <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s">"attr</span><span class="si">{</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s">"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+  <span class="n">student</span> <span class="o">=</span> <span class="n">FlexibleStudent</span><span class="p">(</span><span class="s">"Alice"</span><span class="p">,</span> <span class="s">"A"</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">attr1</span><span class="p">)</span>  <span class="c1"># 출력: Alice
+</span>  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">attr2</span><span class="p">)</span>  <span class="c1"># 출력: A
+</span>  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">attr3</span><span class="p">)</span>  <span class="c1"># 출력: 18
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3> **kwargs: 키워드 인수 처리 </h3>
+
+<ul>
+  <li>**kwargs는 여러 개의 키워드 인수를 하나의 딕셔너리로 처리</li>
+  <li>이름이 명확한 속성을 유연하게 설정할 때 사용
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>  <span class="c1"># 키가 없으면 기본값 None 반환
+</span>          <span class="bp">self</span><span class="p">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"grade"</span><span class="p">)</span>
+
+  <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Bob"</span><span class="p">,</span> <span class="n">grade</span><span class="o">=</span><span class="s">"B"</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 출력: Bob
+</span>  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">grade</span><span class="p">)</span>  <span class="c1"># 출력: B
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4> 모든 키워드 인수를 속성으로 설정 </h4>
+
+<ul>
+  <li>**kwargs를 활용하여 전달된 모든 키워드 인수를 객체 속성으로 자동 설정할 수 있음
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">FlexibleStudent</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+          <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+              <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+  <span class="n">student</span> <span class="o">=</span> <span class="n">FlexibleStudent</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"Charlie"</span><span class="p">,</span> <span class="n">grade</span><span class="o">=</span><span class="s">"A"</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 출력: Charlie
+</span>  <span class="k">print</span><span class="p">(</span><span class="n">student</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># 출력: 20
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 29-31</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 39-40</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />스탠다드반 클래스 과제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />프로그래머스 코딩테스트 Day 23 → 2개</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />머신러닝 공부</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘은 발제도 있고, 머신러닝 실습 강의와 보충 강의까지 있어서 하루가 호다닥 지나갔다. 한게 없지는 않고 공부는 했으니까 만족만족~ 클래스 과제로 ‘크리스마스 할일 추천(추천안해줌)’을 만들었는데, 엄청 고민한 거 치고는 재미없게 만들어진듯.. 그래도 클래스 메서드 부분은 확실하게 공부한 것 같다.</p>
+
+<p>  벌써 29일차.. 시간이 너무 빠르게 지나간것 같다. 이번주랑 다음주는 수요일에 쉬어서 더 시간이 빠르게 지나갈 것 같다. 내일은 머신러닝 과제도 시작해야지🤯</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a><span class="sep">, </span>
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a><span class="sep">, </span>
+    
+      <a href="/tags/#%ED%81%B4%EB%9E%98%EC%8A%A4" class="page__taxonomy-item p-category" rel="tag">클래스</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2024-12-23T00:00:00+09:00">December 23, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/GIT_class_5/" class="pagination--pager" title="[TIL] 내일배움캠프 28일차_[Git] Github로 협업하기">이전</a>
+    
+    
+      <a href="/til/Machine_Learning/" class="pagination--pager" title="[TIL] 내일배움캠프 30일차_[ML] 머신러닝 알고리즘">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

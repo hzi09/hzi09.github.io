@@ -1,0 +1,927 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 24일차_[Git] .gitignore과 Branch | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 24일차_[Git] .gitignore과 Branch">
+<meta property="og:url" content="https://hzi09.github.io/til/GIT_class_4/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-12-18T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/GIT_class_4/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 24일차_[Git] .gitignore과 Branch">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2024-12-18T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/GIT_class_4/" itemprop="url">[TIL] 내일배움캠프 24일차_[Git] .gitignore과 Branch
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-12-18T00:00:00+09:00">December 18, 2024</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#gitignore">.gitignore</a><ul><li><a href="#gitignore란">.gitignore란?</a></li><li><a href="#gitignore-생성-및-적용">.gitignore 생성 및 적용</a><ul><li><a href="#생성해보기">💡생성해보기</a></li></ul></li></ul></li><li><a href="#branch">Branch</a><ul><li><a href="#branch브랜치란">Branch(브랜치)란?</a><ul><li><a href="#브랜치-생성">브랜치 생성</a></li><li><a href="#브랜치를-두개-생성하면-어떻게-될까">브랜치를 두개 생성하면 어떻게 될까?🤔</a></li></ul></li></ul></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+<h2 id="gitignore">.gitignore</h2>
+<h3 id="gitignore란">.gitignore란?</h3>
+<ul>
+  <li>.gitignore 파일이란 Git 버전 관리에서 제외할 파일 목록을 의미</li>
+  <li>git으로 프로젝트를 관리할 때, 그 프로젝트 안의 특정파일을 Git으로 관리할 필요가 없는 경우
+    <ul>
+      <li>예를 들면, 로그파일, 민감정보, 불필요한 시스템 파일 등등</li>
+    </ul>
+  </li>
+  <li>.gitignore은 git으로 관리한다면 꼭 있어야 함!!</li>
+</ul>
+
+<h3 id="gitignore-생성-및-적용">.gitignore 생성 및 적용</h3>
+<ul>
+  <li><a href="http://gitignore.io">gitignore.io</a>에서 간단하게 생성 가능</li>
+  <li>
+    <p>운영체제, 개발환경(IDE), 프로그래밍 언어를 검색하면 자동으로 생성된다!</p>
+
+    <p><img src="https://github.com/user-attachments/assets/1e227bc0-5537-4e90-93bc-82a840764d81" alt="image" /></p>
+  </li>
+</ul>
+
+<h4 id="생성해보기">💡생성해보기</h4>
+
+<ul>
+  <li>일단 사용중인 폴더에 ‘.gitignore’을 생성해줍니다.
+    <ul>
+      <li>
+        <p>VSCode에서는 이렇게 생성됨!</p>
+
+        <p><img src="https://github.com/user-attachments/assets/831815c6-ceac-4b1e-bba8-9a8d42723301" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+  <li>사용중인 운영체제, 개발환경(IDE), 프로그래밍 언어을 넣어줍니다.
+    <ul>
+      <li>여러개라면 여러개 넣으면 됨!</li>
+      <li>
+        <p>만들어 두고 나중에 추가하는 방법도 있으니, 먼저 사용 중인 것만 넣어 생성</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center">운영체제</th>
+              <th style="text-align: center">개발환경(IDE)</th>
+              <th style="text-align: center">프로그래밍 언어</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">Windows</td>
+              <td style="text-align: center">VisualStudioCode</td>
+              <td style="text-align: center">Python</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><img src="https://github.com/user-attachments/assets/bb16833e-347a-4f1c-af9d-ace322d88e5c" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>이렇게 작성하고 생성을 눌러주면 아래와 같이 코드가 생성!</p>
+
+    <p><img src="https://github.com/user-attachments/assets/a914d0ca-12f6-4f1c-8591-0c096b4e247f" alt="image" /></p>
+  </li>
+  <li>이 코드를 ctrl + A 를 눌러 모두 선택한 후 복사하여 미리 만들어둔 ‘.gitignore’ 파일에 붙여넣어주면 적용 완료!</li>
+</ul>
+
+<h2 id="branch">Branch</h2>
+<h3 id="branch브랜치란">Branch(브랜치)란?</h3>
+<ul>
+  <li>브랜치는 원래 나뭇가지라는 뜻</li>
+  <li>특정 커밋을 가리키는 포인터(⭐⭐⭐⭐⭐)
+    <ul>
+      <li>모든 커밋은 브랜치에 쌓임!</li>
+    </ul>
+  </li>
+  <li>브랜치는 아주 가벼운 포인터이기 때문에 많이 만들어도 됨!
+    <ul>
+      <li>생각없이 많이 만들어도 됨!!!</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="브랜치-생성">브랜치 생성</h4>
+<ul>
+  <li>브랜치는 switch 명령어로 생성한다!</li>
+</ul>
+
+<pre><code class="language-Bash">git switch -c {branch-name}
+</code></pre>
+<ul>
+  <li>
+    <p>‘feature-A’라는 이름의 branch를 생성하였다.
+  <img src="https://github.com/user-attachments/assets/368b6f61-362c-45f6-b2f3-223e081b65d0" alt="image" /></p>
+  </li>
+  <li>브랜치 내에서 생성을 하게 되면 main에는 영향을 주지 않는다!</li>
+  <li>예를들어 A 브랜치에서 커밋4를 생성하게 되면 다음과 같이 커밋이 쌓인다.
+    <ul>
+      <li>main에는 커밋1, 커밋2, 커밋3</li>
+      <li>
+        <p>A에는 커밋1, 커밋2, 커밋3, 커밋4</p>
+
+        <p><img src="https://github.com/user-attachments/assets/c0cd1a7b-70fb-4c09-9b48-06daeea6f256" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+  <li>다른 브랜치로 가서 확인해보면 A에서 만든 ‘커밋4’는 존재하지 않는다.
+    <ul>
+      <li>다른 브랜치로 이동하는 명령어
+        <pre><code class="language-Bash">git switch {branch-name}
+</code></pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="브랜치를-두개-생성하면-어떻게-될까">브랜치를 두개 생성하면 어떻게 될까?🤔</h4>
+<ul>
+  <li>A 브랜치 외에 B 브랜치를 생성하였다.</li>
+  <li>
+    <p>B 브랜치에서 커밋5와 커밋6를 실행하였다.</p>
+
+    <p><img src="https://github.com/user-attachments/assets/f2217615-999d-47d6-a5d3-33492c4f2fa4" alt="image" /></p>
+  </li>
+  <li>이럴 경우에는 브랜치에 다음과 같이 커밋이 쌓인다.
+    <ul>
+      <li>main : 커밋1, 커밋2, 커밋3</li>
+      <li>A : 커밋1, 커밋2, 커밋3, 커밋4</li>
+      <li>B : 커밋1, 커밋2, 커밋3, 커밋5, 커밋6</li>
+    </ul>
+  </li>
+  <li>이런식으로 main까지의 커밋을 저장하고 그 이후에 커밋을 쌓게 되는 형식이다.</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<p>  깃페이지에서 처음 써보는 TIL이라서 조금 어색하다. 전에 쓰던 TIL도 옮겨야 하는데, 아마 시간이 오래 걸리지 않을까 싶다.</p>
+
+<p>  오늘은 협업에 관련된 git을 배웠는데, 아직 초반이라 따라갈만 하다. 생각보다 쉬워서 그땐 왜 어려웠지 싶기도 하구.. 여튼 이제 생각보다 쉬워져서, 커밋과 푸시는 git bash로도 가능하게 되었다. 성장하는 코린이ㅎㅎ</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#gitignore" class="page__taxonomy-item p-category" rel="tag">.gitignore</a><span class="sep">, </span>
+    
+      <a href="/tags/#branch" class="page__taxonomy-item p-category" rel="tag">Branch</a><span class="sep">, </span>
+    
+      <a href="/tags/#git" class="page__taxonomy-item p-category" rel="tag">git</a><span class="sep">, </span>
+    
+      <a href="/tags/#github" class="page__taxonomy-item p-category" rel="tag">github</a><span class="sep">, </span>
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2024-12-18T00:00:00+09:00">December 18, 2024</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/python_boj/python_10871/" class="pagination--pager" title="[백준][Python] 10871. X보다 작은 수">이전</a>
+    
+    
+      <a href="/til/Recursion_Function/" class="pagination--pager" title="[TIL] 내일배움캠프 25일차_[Python] 재귀함수(Recursion Function)">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>

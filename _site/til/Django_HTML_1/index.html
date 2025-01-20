@@ -1,0 +1,953 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="index, follow">
+
+<!-- begin _includes/seo.html --><title>[TIL] 내일배움캠프 47일차_[Django] Django에서 사용되는 HTML 문법 | HyunJi’s Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Lee Hyun Ji">
+  
+  <meta property="article:author" content="Lee Hyun Ji">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="HyunJi's Blog">
+<meta property="og:title" content="[TIL] 내일배움캠프 47일차_[Django] Django에서 사용되는 HTML 문법">
+<meta property="og:url" content="https://hzi09.github.io/til/Django_HTML_1/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-01-12T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://hzi09.github.io/til/Django_HTML_1/">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="google4999430549aea986.html" />
+
+
+
+
+
+  <meta name="naver-site-verification" content="naverc2ce5139007e1cbf36861099d6b0b8c2.html">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="HyunJi's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+<!--수식을 정상적으로 실행하게 하기-->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!--여기까지-->
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicon.ico/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.ico/favicon.svg" />
+<link rel="shortcut icon" href="/assets/favicon.ico/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="HJ's BLOG" />
+<link rel="manifest" href="/assets/favicon.ico/site.webmanifest" />
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="HyunJi's Blog"></a>
+        
+        <a class="site-title" href="/">
+          HyunJi's Blog
+          <span class="site-subtitle">공부한 것을 기록합니다.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/tags"
+                
+                
+              >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/categories"
+                
+                
+              >Categories</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://hzi09.github.io/">
+        <img src="/assets/images/profile.png" alt="Lee Hyun Ji" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://hzi09.github.io/" itemprop="url">Lee Hyun Ji</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>🌠공부기록 보관소</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hzi284914@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="hzi284914@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Note</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/blog">BLOG(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/til">TIL(41)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Python</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_study">Python 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_boj">BOJ(53)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/python_programmers">Programmers(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">🗂️Git</span>
+        
+
+        
+        <ul>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/git_study">Git 공부기록(0)</a></li>
+          
+          
+          
+          
+          
+
+            <li><a href="/categories/github_page">GitHub Page(0)</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[TIL] 내일배움캠프 47일차_[Django] Django에서 사용되는 HTML 문법">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2025-01-12T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://hzi09.github.io/til/Django_HTML_1/" itemprop="url">[TIL] 내일배움캠프 47일차_[Django] Django에서 사용되는 HTML 문법
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-12T00:00:00+09:00">January 12, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#today-i-learn">👀Today I Learn</a><ul><li><a href="#1-변수-출력">1. 변수 출력</a></li><li><a href="#2-조건문">2. 조건문</a></li><li><a href="#3-반복문">3. 반복문</a></li><li><a href="#4-필터-사용">4. 필터 사용</a></li><li><a href="#5-주석">5. 주석</a></li><li><a href="#6-include-태그">6. include 태그</a></li><li><a href="#7-url-태그">7. url 태그</a></li><li><a href="#8-정적-파일-사용">8. 정적 파일 사용</a></li><li><a href="#9-csrf_token">9. csrf_token</a></li><li><a href="#10-커스텀-태그와-필터">10. 커스텀 태그와 필터</a></li></ul></li><li><a href="#today-i-thought">💡Today I Thought</a><ul><li><a href="#오늘의-체크리스트">오늘의 체크리스트</a></li><li><a href="#회고">회고</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/TIL2.png" alt="TIL" class="align-center" style="width:35%;" /></p>
+
+<h1 id="today-i-learn">👀Today I Learn</h1>
+
+<ul>
+  <li>Django는 강력한 템플릿 엔진을 제공하여 서버에서 데이터를 처리하고 HTML 파일로 전달하는 기능을 지원</li>
+  <li>Django 템플릿에서 자주 사용하는 HTML 문법과 관련 태그를 정리</li>
+  <li>추가적인 문법은 <a href="https://docs.djangoproject.com/en/stable/topics/templates/">Django 공식 문서</a> 참고!</li>
+</ul>
+
+<h2 id="1-변수-출력">1. 변수 출력</h2>
+<ul>
+  <li>
+    <p>Django 템플릿에서 데이터를 HTML에 삽입하려면 아래와 같은 문법을 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/f532be20-a0db-4b82-8f1c-7a3f22685e23" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-조건문">2. 조건문</h2>
+<ul>
+  <li>
+    <p>조건문은 아래와 같이 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/d872352f-9528-4452-a3ba-e5be187e17a5" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/26ffd144-2b60-4ab8-bbe4-67bdba517c0f" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3-반복문">3. 반복문</h2>
+
+<ul>
+  <li>
+    <p>반복문은 아래와 같이 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/0067cca5-30e4-4c1f-9be6-d6c70f59c9ed" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/4285069f-ad7b-4636-85e0-a869a243c16a" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="4-필터-사용">4. 필터 사용</h2>
+<ul>
+  <li>Django 템플릿에서는 변수를 출력할 때 필터를 사용할 수 있음</li>
+  <li>
+    <p>필터는 <code class="language-plaintext highlighter-rouge">|</code>를 사용해 적용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/358b44ef-ed0a-43c1-9eab-182c304840f7" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/6f7a99b7-e28e-4951-9918-eef957a809b3" alt="image" /></p>
+  </li>
+  <li>주요 필터
+    <ul>
+      <li>upper: 문자열을 대문자로 변환</li>
+      <li>lower: 문자열을 소문자로 변환</li>
+      <li>date: 날짜 형식 지정</li>
+      <li>length: 리스트 또는 문자열의 길이 반환</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="5-주석">5. 주석</h2>
+<ul>
+  <li>Django 템플릿에서 주석은 <code class="language-plaintext highlighter-rouge">{# #}</code>를 사용</li>
+  <li>
+    <p>브라우저에 표시되지 않음</p>
+
+    <p><img src="https://github.com/user-attachments/assets/a5166b99-9f4f-4e43-aade-050ab9c9226d" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="6-include-태그">6. include 태그</h2>
+<ul>
+  <li>
+    <p>HTML 파일을 분리하여 재사용할 때 include 태그를 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/de7cbfbd-6eeb-4d02-92ec-26529d0f9cec" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/cee18faf-3411-4cfa-b183-545133da8d12" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="7-url-태그">7. url 태그</h2>
+<ul>
+  <li>
+    <p>Django URL의 이름을 사용해 링크를 생성할 때 <strong>url</strong> 태그를 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/3b93f410-7447-4596-ba0d-1d93fa4e079a" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/73f6532f-3b1b-4e8a-9f83-d9baa881b1ce" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="8-정적-파일-사용">8. 정적 파일 사용</h2>
+<ul>
+  <li>
+    <p>CSS, JavaScript, 이미지 등 정적 파일을 사용할 때 <code class="language-plaintext highlighter-rouge">static</code> 태그를 사용</p>
+
+    <p><img src="https://github.com/user-attachments/assets/472f9ca7-411a-46fb-b670-915691951f8a" alt="image" /></p>
+  </li>
+  <li>
+    <p>정적 파일을 사용하려면 템플릿 상단에 <code class="language-plaintext highlighter-rouge">load static</code>를 추가해야 함</p>
+
+    <p><img src="https://github.com/user-attachments/assets/5797b3e6-d569-46a9-bae6-a4aaf86fb077" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="9-csrf_token">9. csrf_token</h2>
+<ul>
+  <li>
+    <p>Django에서 폼을 제출할 때 보안을 위해 CSRF 토큰을 추가해야 함</p>
+
+    <p><img src="https://github.com/user-attachments/assets/584fe4fb-cab3-41a4-9d54-8be1e80d3fa3" alt="image" /></p>
+  </li>
+</ul>
+
+<h2 id="10-커스텀-태그와-필터">10. 커스텀 태그와 필터</h2>
+<ul>
+  <li>Django는 기본 제공 기능 외에도 커스텀 태그와 필터를 작성할 수 있음</li>
+  <li>
+    <p>커스텀 태그를 사용하려면 템플릿에서 로드해야 함</p>
+
+    <p><img src="https://github.com/user-attachments/assets/7eb5d08d-6ec4-4ad6-97e5-7d6d12f98b78" alt="image" /></p>
+  </li>
+  <li>
+    <p>예시</p>
+
+    <p><img src="https://github.com/user-attachments/assets/c11eb07a-dda9-4d6b-9bda-2ba0d8bf9015" alt="image" /></p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="today-i-thought">💡Today I Thought</h1>
+
+<h2 id="오늘의-체크리스트">오늘의 체크리스트</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Django 기초 강의 완강</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Django 심화 강의 2강까지</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />알고리즘 코드카타 131-140</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />SQL 코드카타 67, 68, 77, 78</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />LeetHub 연동하고 테스트</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />백준 코딩테스트 1문제</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />TIL 작성</li>
+</ul>
+
+<h2 id="회고">회고</h2>
+<p>  오늘은 장고 기초 강의를 드디어 끝냈다. 스탠다드반 과제도 하려고 했는데, LeetHub 연동에 애를 먹어서 시간이 지체되어버렸다. 내일 과제발제 끝나면 호록 끝내야지. 심화강의도 이번주까지 다 듣는 걸 목표로 해야겠다. 과제를 해야하는데 강의를 다 못들어서 어쩌나 싶기도 하구..🥹
+  장고 문법이 백틱안으로 안들어가져서 코드를 다 이미지로 대체했다.. 이게 무슨일이람.. 이건 방법을 좀 찾아봐야 할것 같다.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%82%B4%EC%9D%BC%EB%B0%B0%EC%9B%80%EC%BA%A0%ED%94%84" class="page__taxonomy-item p-category" rel="tag">내일배움캠프</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">TIL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2025-01-12T00:00:00+09:00">January 12, 2025</time></p>
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/Django_HTML/" class="pagination--pager" title="[TIL] 내일배움캠프 46일차_[HTML] HTML 기초 문법 정리">이전</a>
+    
+    
+      <a href="/til/Django_Practice/" class="pagination--pager" title="[TIL] 내일배움캠프 48일차_[Django] 프로젝트 생성 연습">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">참고</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/SQL_variable/" rel="permalink">[TIL] 내일배움캠프 54일차_[MySQL] SET, PREPARE, EXECUTE
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-19T00:00:00+09:00">January 19, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Python_all_any/" rel="permalink">[TIL] 내일배움캠프 53일차_[Python] any(), all() 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-18T00:00:00+09:00">January 18, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Week8_WIL/" rel="permalink">[WIL] 내일배움캠프 8주차 - AI 서비스 개발 9기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/Django_Cookie_Session/" rel="permalink">[TIL] 내일배움캠프 52일차_[Django] 쿠키(Cookie)와 세션(Session)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-01-17T00:00:00+09:00">January 17, 2025</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<div style = 'text-align:left;'>
+    <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fhzi09&count_bg=%23AC63F1&title_bg=%23AC63F1&icon=baidu.svg&icon_color=%23FFFEFE&title=Visitor&edge_flat=false"/>
+    </a>
+</div>
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/hzi09" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="https://hzi09.github.io">HyunJi's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hzi09/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+  </body>
+</html>
