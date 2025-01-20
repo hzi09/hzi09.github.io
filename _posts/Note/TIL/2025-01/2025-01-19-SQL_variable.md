@@ -96,6 +96,8 @@ toc_sticky: True
     DEALLOCATE PREPARE stmt;
     ```
 
+<br>
+<br>
 
 # 💡Today I Thought
 
