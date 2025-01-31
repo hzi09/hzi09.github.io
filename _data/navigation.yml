@@ -34,6 +34,18 @@ docs :
         url : /categories/python_programmers
         category : Python_Programmers
 
+  - title : "🗂️MySQL"
+    children :
+      - title : "MySQL 공부기록"
+        url : /categories/sql_study
+        category : MySQL_study
+      - title : "Programmers"
+        url : /categories/sql_programmers
+        category : MySQL_Programmers
+      - title : "LeetCode"
+        url : /categories/sql_leet
+        category : MySQL_LeetCode
+
   - title : "🗂️Git"
     children :
       - title : "Git 공부기록"
