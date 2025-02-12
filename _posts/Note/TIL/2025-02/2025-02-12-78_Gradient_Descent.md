@@ -1,5 +1,5 @@
 ---
-title:  "[TIL] 내일배움캠프 00일차_[ML/DL] 경사 하강법(Gradient Descent)" 
+title:  "[TIL] 내일배움캠프 78일차_[ML/DL] 경사 하강법(Gradient Descent)" 
 
 categories: 
     - TIL
