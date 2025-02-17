@@ -331,3 +331,8 @@ defaults:
     values:
       sidebar:
         nav : "docs"
+
+robots:
+  user-agent: "*"
+  allow: "/"
+  sitemap: "https://hzi09.github.io/sitemap.xml"
