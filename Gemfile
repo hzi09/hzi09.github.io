@@ -8,3 +8,6 @@ gem "kramdown-parser-gfm"
 
 gem 'jekyll-sitemap'
 gem 'jekyll-feed'
+
+gem 'faraday-retry'
+gem 'base64'
