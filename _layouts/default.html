@@ -7,6 +7,9 @@
   <head>
     {% include head.html %}
     {% include head/custom.html %}
+{% if page.use_math %}
+	{% include mathjax_support.html %}
+{% endif %}
 
     <style> 
       ::-webkit-scrollbar{width: 16px;}
