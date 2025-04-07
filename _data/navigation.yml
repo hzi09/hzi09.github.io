@@ -33,6 +33,9 @@ docs :
       - title : "Programmers"
         url : /categories/python_programmers
         category : Python_Programmers
+      - title : "Algorithm"
+        url : /categories/python_algorithm
+        category : Python_Algorithm
 
   - title : "🗂️MySQL"
     children :
