@@ -353,3 +353,4 @@ sitemap:
   lastmod: true
   priority: true
   changefreq: true
+  xsl: false
