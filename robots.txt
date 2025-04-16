@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /private/
-Disallow: /admin/
 
 Sitemap: https://hzi09.github.io/sitemap.xml 
