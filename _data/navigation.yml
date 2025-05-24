@@ -4,13 +4,22 @@ main:
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   - title: "Tags"
     url: /tags/
-  - title : "Categories"
-    url : /categories/
+  - title: "Categories"
+    url: /categories/
   # - title: "Sample Collections"
   #   url: /collection-archive/
-  - title: "Sitemap"
-    url: /sitemap.xml
+  # - title: "Sitemap"
+  #   url: /sitemap.xml
 
+docs:
+  - title: "🗂️Note"
+    children:
+      - title: "BLOG"
+        url: /categories/blog
+        category: BLOG
+      - title: "TIL"
+        url: /categories/til
+        category: TIL
 
 docs :
   - title : "🗂️Note"
@@ -22,20 +31,14 @@ docs :
         url : /categories/til
         category : TIL
 
-  - title : "🗂️Python"
-    children :
-      - title : "Python 공부기록"
-        url : /categories/python_study
-        category : Python_study
-      - title : "BOJ"
-        url : /categories/python_boj
-        category : Python_BOJ
-      - title : "Programmers"
-        url : /categories/python_programmers
-        category : Python_Programmers
-      - title : "Algorithm"
-        url : /categories/python_algorithm
-        category : Python_Algorithm
+  - title: "🗂️JavaScript"
+    children:
+      - title: "JavaScript 공부기록"
+        url: /categories/js_study
+        category: MySQL_study
+      - title: "Programmers"
+        url: /categories/sql_programmers
+        category: MySQL_Programmers
 
   - title : "🗂️MySQL"
     children :
@@ -48,12 +51,3 @@ docs :
       - title : "LeetCode"
         url : /categories/sql_leet
         category : MySQL_LeetCode
-
-  - title : "🗂️Git"
-    children :
-      - title : "Git 공부기록"
-        url : /categories/git_study
-        category : Git_Study
-      - title : "GitHub Page"
-        url : /categories/github_page
-        category : GitHub_Page
