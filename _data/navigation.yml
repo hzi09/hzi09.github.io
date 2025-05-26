@@ -21,16 +21,6 @@ docs:
         url: /categories/til
         category: TIL
 
-docs :
-  - title : "🗂️Note"
-    children : 
-      - title : "BLOG"
-        url : /categories/blog
-        category : BLOG
-      - title : "TIL"
-        url : /categories/til
-        category : TIL
-
   - title: "🗂️Python"
     children:
       - title : "Python 공부기록"
