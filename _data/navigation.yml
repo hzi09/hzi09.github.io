@@ -23,36 +23,36 @@ docs:
 
   - title: "🗂️Python"
     children:
-      - title : "Python 공부기록"
-        url : /categories/python_study
-        category : Python_study
-      - title : "BOJ"
-        url : /categories/python_boj
-        category : Python_BOJ
-      - title : "Programmers"
-        url : /categories/python_programmers
-        category : Python_Programmers
-      - title : "Algorithm"
-        url : /categories/python_algorithm
-        category : Python_Algorithm
+      - title: "Python 공부기록"
+        url: /categories/python_study
+        category: Python_study
+      - title: "BOJ"
+        url: /categories/python_boj
+        category: Python_BOJ
+      - title: "Programmers"
+        url: /categories/python_programmers
+        category: Python_Programmers
+      - title: "Algorithm"
+        url: /categories/python_algorithm
+        category: Python_Algorithm
 
   - title: "🗂️JavaScript"
     children:
       - title: "JavaScript 공부기록"
-          url: /categories/js_study
-          category: JavaScript_study
-        - title: "Programmers"
-          url: /categories/js_programmers
-          category: JavaScript_Programmers
-    
-  - title : "🗂️MySQL"
-    children :
-      - title : "MySQL 공부기록"
-        url : /categories/sql_study
-        category : MySQL_study
-      - title : "Programmers"
-        url : /categories/sql_programmers
-        category : MySQL_Programmers
-      - title : "LeetCode"
-        url : /categories/sql_leet
-        category : MySQL_LeetCode
+        url: /categories/js_study
+        category: JavaScript_study
+      - title: "Programmers"
+        url: /categories/js_programmers
+        category: JavaScript_Programmers
+
+  - title: "🗂️MySQL"
+    children:
+      - title: "MySQL 공부기록"
+        url: /categories/sql_study
+        category: MySQL_study
+      - title: "Programmers"
+        url: /categories/sql_programmers
+        category: MySQL_Programmers
+      - title: "LeetCode"
+        url: /categories/sql_leet
+        category: MySQL_LeetCode
