@@ -6,27 +6,33 @@ layout: null
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
                 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- 메인 페이지 -->
+    <url>
+        <loc>{{ site.url }}</loc>
+        <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- 정적 페이지 -->
+    {% for page in site.pages %}
+        {% if page.layout != null and page.layout != 'feed' %}
+        <url>
+            <loc>{{ site.url }}{{ page.url }}</loc>
+            <lastmod>{{ page.last_modified_at | default: page.date | default: site.time | date_to_xmlschema }}</lastmod>
+            <changefreq>{% if page.sitemap.changefreq %}{{ page.sitemap.changefreq }}{% else %}monthly{% endif %}</changefreq>
+            <priority>{% if page.sitemap.priority %}{{ page.sitemap.priority }}{% else %}0.8{% endif %}</priority>
+        </url>
+        {% endif %}
+    {% endfor %}
+
+    <!-- 블로그 포스트 -->
     {% for post in site.posts %}
     <url>
         <loc>{{ site.url }}{{ post.url }}</loc>
-        {% if post.lastmod == null %}
-        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-        {% else %}
-        <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
-        {% endif %}
-
-        {% if post.sitemap.changefreq == null %}
-        <changefreq>weekly</changefreq>
-        {% else %}
-        <changefreq>{{ post.sitemap.changefreq }}</changefreq>
-        {% endif %}
-
-        {% if post.sitemap.priority == null %}
-        <priority>0.5</priority>
-        {% else %}
-        <priority>{{ post.sitemap.priority }}</priority>
-        {% endif %}
-
+        <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
+        <changefreq>{% if post.sitemap.changefreq %}{{ post.sitemap.changefreq }}{% else %}weekly{% endif %}</changefreq>
+        <priority>{% if post.sitemap.priority %}{{ post.sitemap.priority }}{% else %}0.5{% endif %}</priority>
     </url>
     {% endfor %}
 </urlset>
