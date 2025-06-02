@@ -82,7 +82,7 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification : Xo54V1ij5QspqgaWftvHEgWycGXyhlxMr2RcdKvykPY
+google_site_verification : XMYud2YheZJoBL-P1UTZSR4PXhvR-lj7pR-JKUaKs
 bing_site_verification   :
 naver_site_verification  : naver164e79fe6e43c52f89236e9b0ea1089a.html
 yandex_site_verification :
@@ -259,7 +259,7 @@ pagination:
 # Plugins (previously gems:)
 plugins:
   - jekyll-paginate
-  # - jekyll-sitemap  # 수동 sitemap 사용을 위해 비활성화
+  - jekyll-sitemap 
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
@@ -267,7 +267,7 @@ plugins:
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate
-  # - jekyll-sitemap  # 수동 sitemap 사용을 위해 비활성화
+  - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
