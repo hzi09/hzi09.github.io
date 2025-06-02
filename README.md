@@ -5,3 +5,4 @@
   - TIL(Today I Learn)
   - Python
   - MySQL
+  - javascript
